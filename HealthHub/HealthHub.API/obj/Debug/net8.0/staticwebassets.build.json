@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "+J7DKINzZKFuvReoqee5M07VtZ9EhFIIsdjjTTAq7Ws=",
+  "Source": "HealthHub.API",
+  "BasePath": "_content/HealthHub.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

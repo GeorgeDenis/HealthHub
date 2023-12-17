@@ -1,0 +1,15 @@
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\bin\Debug\net8.0\HealthHub.Infrastructure.deps.json
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\bin\Debug\net8.0\HealthHub.Infrastructure.runtimeconfig.json
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\bin\Debug\net8.0\HealthHub.Infrastructure.dll
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\bin\Debug\net8.0\HealthHub.Infrastructure.pdb
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.csproj.AssemblyReference.cache
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.AssemblyInfoInputs.cache
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.AssemblyInfo.cs
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.csproj.CoreCompileInputs.cache
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.sourcelink.json
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.dll
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\refint\HealthHub.Infrastructure.dll
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.pdb
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.genruntimeconfig.cache
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\ref\HealthHub.Infrastructure.dll
