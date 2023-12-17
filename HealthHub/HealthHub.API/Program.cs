@@ -57,7 +57,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1",
-        Title = "GloboTicket Ticket Management API",
+        Title = "HealthHub API",
 
     });
 
@@ -75,6 +75,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors("Open");
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

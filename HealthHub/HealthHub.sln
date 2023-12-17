@@ -17,15 +17,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{A9E7A280-947E-4C67-B6A7-2DA03B435921}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthHub.Identity", "HealthHub.Identity\HealthHub.Identity.csproj", "{40417227-8908-40A8-9010-1808BE901BEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthHub.Identity", "HealthHub.Identity\HealthHub.Identity.csproj", "{40417227-8908-40A8-9010-1808BE901BEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthHub.Infrastructure", "HealthHub.Infrastructure\HealthHub.Infrastructure.csproj", "{4067BC4F-B0DB-45A5-B716-378851BEBC21}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthHub.Infrastructure", "HealthHub.Infrastructure\HealthHub.Infrastructure.csproj", "{4067BC4F-B0DB-45A5-B716-378851BEBC21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthHub.Domain", "HealthHub.Domain\HealthHub.Domain.csproj", "{9192FEA4-AE98-4E1A-AD77-376962E0B419}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthHub.Domain", "HealthHub.Domain\HealthHub.Domain.csproj", "{9192FEA4-AE98-4E1A-AD77-376962E0B419}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthHub.Application", "HealthHub.Application\HealthHub.Application.csproj", "{AA5836C9-7ACB-431C-BED4-425D086DDA38}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthHub.Application", "HealthHub.Application\HealthHub.Application.csproj", "{AA5836C9-7ACB-431C-BED4-425D086DDA38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HealthHub.API", "HealthHub.API\HealthHub.API.csproj", "{8CF4467F-F357-4390-AB12-C0B3551F0314}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HealthHub.API", "HealthHub.API\HealthHub.API.csproj", "{8CF4467F-F357-4390-AB12-C0B3551F0314}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{C82227EF-4E78-4BCA-9AD1-0FBA540CB324}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,6 +70,7 @@ Global
 		{9192FEA4-AE98-4E1A-AD77-376962E0B419} = {A9E7A280-947E-4C67-B6A7-2DA03B435921}
 		{AA5836C9-7ACB-431C-BED4-425D086DDA38} = {B9A68B19-B852-40DB-87B6-1CE3FB6475FB}
 		{8CF4467F-F357-4390-AB12-C0B3551F0314} = {760F3712-3322-492B-9366-731E15785DC6}
+		{C82227EF-4E78-4BCA-9AD1-0FBA540CB324} = {16AFD523-9C42-4759-8177-E749B2CC9467}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9E8F0612-2536-4D15-BF8C-B0066B569EDA}
