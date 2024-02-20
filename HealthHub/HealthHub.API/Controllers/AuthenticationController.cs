@@ -77,6 +77,33 @@ namespace HealthHub.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+        //[HttpPost]
+        //[Route("reset-password")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<IActionResult> ResetPassword(ResetPasswordModel model)
+        //{
+        //    try
+        //    {
+        //        if (!ModelState.IsValid)
+        //        {
+        //            return BadRequest("Invalid payload");
+        //        }
+
+        //        var (status, message) = await _authService.ResetPassword(model);
+
+        //        if (status == 0)
+        //        {
+        //            return BadRequest(message);
+        //        }
+
+        //        return Ok(message);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _logger.LogError(ex.Message);
+        //        return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        //    }
+        //}
         [HttpPost]
         [Route("logout")]
         public async Task<IActionResult> Logout()
@@ -95,11 +122,15 @@ namespace HealthHub.API.Controllers
                     IsAuthenticated = false
                 };
             }
+            var claims = this.currentUserService.GetCurrentClaimsPrincipal().Claims
+               .GroupBy(c => c.Type)
+               .ToDictionary(g => g.Key, g => string.Join(", ", g.Select(c => c.Value)));
+
             return new CurrentUser
             {
                 IsAuthenticated = true,
                 UserName = this.currentUserService.GetCurrentUserId(),
-                Claims = this.currentUserService.GetCurrentClaimsPrincipal().Claims.ToDictionary(c => c.Type, c => c.Value)
+                Claims = claims
             };
         }
     }

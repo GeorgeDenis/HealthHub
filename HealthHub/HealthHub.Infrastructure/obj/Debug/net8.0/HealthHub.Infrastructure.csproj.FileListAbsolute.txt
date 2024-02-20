@@ -13,3 +13,8 @@ I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\refint\Health
 I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.pdb
 I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.genruntimeconfig.cache
 I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\ref\HealthHub.Infrastructure.dll
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\bin\Debug\net8.0\HealthHub.Application.dll
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\bin\Debug\net8.0\HealthHub.Domain.dll
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\bin\Debug\net8.0\HealthHub.Application.pdb
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\bin\Debug\net8.0\HealthHub.Domain.pdb
+I:\Licenta2024\HealthHub\HealthHub.Infrastructure\obj\Debug\net8.0\HealthHub.Infrastructure.csproj.CopyComplete

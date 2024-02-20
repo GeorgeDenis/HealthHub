@@ -354,7 +354,11 @@
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
+                "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
+              }
+            }
           }
         },
         "warningProperties": {

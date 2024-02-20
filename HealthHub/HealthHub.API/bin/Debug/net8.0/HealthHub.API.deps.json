@@ -1076,6 +1076,7 @@
       },
       "HealthHub.Infrastructure/1.0.0": {
         "dependencies": {
+          "HealthHub.Application": "1.0.0",
           "Microsoft.EntityFrameworkCore": "8.0.0",
           "Npgsql": "8.0.1",
           "Npgsql.EntityFrameworkCore.PostgreSQL": "8.0.0"

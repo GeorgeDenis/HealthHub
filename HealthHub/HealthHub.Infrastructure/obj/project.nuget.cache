@@ -1,10 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "QYAa4useJQwWWUBOovyz3LMlNjP+J2/9ZYL5vdPV9XEIBB2LSp/t9bS214FQeZG3GSB3UkCtsv4Daz9ggPIC5Q==",
+  "dgSpecHash": "N4VN0kmbOPbRPyY8yAn4VtrTRaaMHVE2dqugS5/C0GAZSEh1s+9iGAGrximMFS3KWNSKQMkKT2FF8x8jjnf7ew==",
   "success": true,
   "projectFilePath": "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\georg\\.nuget\\packages\\fluentvalidation\\11.8.1\\fluentvalidation.11.8.1.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\georg\\.nuget\\packages\\mediatr\\12.2.0\\mediatr.12.2.0.nupkg.sha512",
+    "C:\\Users\\georg\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\6.0.0\\microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\microsoft.codeanalysis.analyzers\\3.3.3\\microsoft.codeanalysis.analyzers.3.3.3.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\microsoft.codeanalysis.common\\4.5.0\\microsoft.codeanalysis.common.4.5.0.nupkg.sha512",

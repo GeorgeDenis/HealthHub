@@ -1,5 +1,7 @@
 ﻿using HealthHub.Application.Contracts.Identity;
 using HealthHub.Application.Models.Identity;
+using HealthHub.Application.Persistence;
+using HealthHub.Domain.Entities;
 using HealthHub.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -13,15 +15,17 @@ namespace HealthHub.Identity.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IUserRepository userRepository;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IConfiguration configuration;
-        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager)
+        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.configuration = configuration;
             this.signInManager = signInManager;
+            this.userRepository = userRepository;
         }
         public async Task<(int, string)> Registeration(RegistrationModel model, string role)
         {
@@ -52,7 +56,8 @@ namespace HealthHub.Identity.Services
 
             if (await roleManager.RoleExistsAsync(UserRoles.User))
                 await userManager.AddToRoleAsync(user, role);
-
+            var userDomain = User.Create(Guid.Parse(user.Id));
+            await userRepository.AddAsync(userDomain.Value);
             return (1, "User created successfully!");
         }
 
@@ -79,6 +84,7 @@ namespace HealthHub.Identity.Services
             string token = GenerateToken(authClaims);
             return (1, token);
         }
+
         public async Task<(int, string)> Logout()
         {
             await signInManager.SignOutAsync();

@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
+    <ProjectReference Include="..\HealthHub.Application\HealthHub.Application.csproj" />
   </ItemGroup>
 
 </Project>

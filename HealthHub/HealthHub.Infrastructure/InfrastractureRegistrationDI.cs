@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HealthHub.Application.Persistence;
+using HealthHub.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,11 +16,16 @@ namespace HealthHub.Infrastructure
                 options =>
                 options.UseNpgsql(
                     configuration.GetConnectionString
-                    ("ErgoConnection"),
+                    ("HealthHubConnection"),
                     builder =>
                     builder.MigrationsAssembly(
                         typeof(HealthHubContext)
                         .Assembly.FullName)));
+            services.AddScoped
+                (typeof(IAsyncRepository<>),
+                typeof(BaseRepository<>));
+            services.AddScoped<
+                IUserRepository, UserRepository>();
             return services;
         }
     }
