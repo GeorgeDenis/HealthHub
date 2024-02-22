@@ -24,12 +24,16 @@ namespace HealthHub.Application.Features.Users.Queries.GetAll
                     Username = u.Username,
                     Email = u.Email,
                     Bio = u.Bio,
+                    Age = u.Age,
+                    Height = u.Height,
+                    Gender = u.Gender,
                     Mobile = u.Mobile,
                     Location = u.Location,
                     StartingWeight = u.StartingWeight,
                     CurrentWeight = u.CurrentWeight,
                     GoalWeight = u.GoalWeight,
                     WeeklyGoal = u.WeeklyGoal,
+                    GoalType = u.GoalType,
                     Activity = u.Activity,
                     Roles = u.Roles
                 }).ToList();

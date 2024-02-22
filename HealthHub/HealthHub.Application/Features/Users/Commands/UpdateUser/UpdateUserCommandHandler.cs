@@ -33,10 +33,14 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
             request.Bio ??= user.Value.Bio;
             request.Mobile ??= user.Value.Mobile;
             request.Location ??= user.Value.Location;
+            request.Age ??= user.Value.Age;
+            request.Height ??= user.Value.Height;
+            request.Gender ??= user.Value.Gender;
             request.StartingWeight ??= user.Value.StartingWeight;
             request.CurrentWeight ??= user.Value.CurrentWeight;
             request.GoalWeight ??= user.Value.GoalWeight;
             request.WeeklyGoal ??= user.Value.WeeklyGoal;
+            request.GoalType ??= user.Value.GoalType;
             request.Activity ??= user.Value.Activity;
 
             var validator = new UpdateUserCommandValidator();
@@ -80,13 +84,17 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
                 Username = request.Username,
                 Email = request.Email,
                 Bio = request.Bio,
+                Age = request.Age,
+                Height = request.Height,
+                Gender = request.Gender,
                 Mobile = request.Mobile,
                 Location = request.Location,
                 StartingWeight = request.StartingWeight,
                 CurrentWeight = request.CurrentWeight,
                 GoalWeight = request.GoalWeight,
                 WeeklyGoal = request.WeeklyGoal,
-                Activity = (ActivityLevel)request.Activity
+                GoalType = request.GoalType,
+                Activity = request.Activity
             };
 
             var result = await userRepository.UpdateAsync(userDto);
@@ -106,12 +114,19 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
                 {
                     Name = result.Value.Name,
                     Username = result.Value.Username,
-
                     Email = result.Value.Email,
                     Bio = result.Value.Bio,
                     Mobile = result.Value.Mobile,
                     Location = result.Value.Location,
-                   
+                    Age = result.Value.Age,
+                    Height = result.Value.Height,
+                    Gender = result.Value.Gender,
+                    StartingWeight = result.Value.StartingWeight,
+                    CurrentWeight = result.Value.CurrentWeight,
+                    GoalWeight = result.Value.GoalWeight,
+                    WeeklyGoal = result.Value.WeeklyGoal,
+                    GoalType = result.Value.GoalType,
+                    Activity = result.Value.Activity              
                 }
             };
         }

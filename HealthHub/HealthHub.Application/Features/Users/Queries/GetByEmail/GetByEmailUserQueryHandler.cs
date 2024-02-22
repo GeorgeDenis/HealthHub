@@ -28,6 +28,9 @@ namespace HealthHub.Application.Features.Users.Queries.GetByEmail
                     Username = userDto.Username,
                     Email = userDto.Email,
                     Bio = userDto.Bio,
+                    Age = userDto.Age,
+                    Height = userDto.Height,
+                    Gender = userDto.Gender,
                     Mobile = userDto.Mobile,
                     Location = userDto.Location,
                     Roles = userDto.Roles,
@@ -35,6 +38,7 @@ namespace HealthHub.Application.Features.Users.Queries.GetByEmail
                     CurrentWeight = userDto.CurrentWeight,
                     GoalWeight = userDto.GoalWeight,
                     WeeklyGoal = userDto.WeeklyGoal,
+                    GoalType = userDto.GoalType,
                     Activity = userDto.Activity
                 }
             };

@@ -30,7 +30,10 @@ namespace HealthHub.Identity.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Activity")
+                    b.Property<int?>("Activity")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("Age")
                         .HasColumnType("integer");
 
                     b.Property<string>("Bio")
@@ -50,8 +53,17 @@ namespace HealthHub.Identity.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<int?>("Gender")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("GoalType")
+                        .HasColumnType("integer");
+
                     b.Property<float?>("GoalWeight")
                         .HasColumnType("real");
+
+                    b.Property<int?>("Height")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Location")
                         .HasColumnType("text");

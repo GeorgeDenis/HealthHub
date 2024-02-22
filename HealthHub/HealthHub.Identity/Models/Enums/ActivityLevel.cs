@@ -1,4 +1,4 @@
-﻿namespace HealthHub.Identity.Models
+﻿namespace HealthHub.Identity.Models.Enums
 {
     public enum ActivityLevel
     {

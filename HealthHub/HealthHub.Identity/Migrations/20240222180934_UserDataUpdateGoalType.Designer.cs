@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HealthHub.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240221153010_UpdatedUserProfile")]
-    partial class UpdatedUserProfile
+    [Migration("20240222180934_UserDataUpdateGoalType")]
+    partial class UserDataUpdateGoalType
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,7 +33,7 @@ namespace HealthHub.Identity.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Activity")
+                    b.Property<int?>("Activity")
                         .HasColumnType("integer");
 
                     b.Property<string>("Bio")
@@ -53,8 +53,17 @@ namespace HealthHub.Identity.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<int?>("Gender")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("GoalType")
+                        .HasColumnType("integer");
+
                     b.Property<float?>("GoalWeight")
                         .HasColumnType("real");
+
+                    b.Property<int?>("Height")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Location")
                         .HasColumnType("text");

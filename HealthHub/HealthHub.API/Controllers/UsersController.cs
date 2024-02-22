@@ -4,6 +4,7 @@ using HealthHub.Application.Features.Users.Commands.UpdateUser;
 using HealthHub.Application.Features.Users.Queries.GetAll;
 using HealthHub.Application.Features.Users.Queries.GetByEmail;
 using HealthHub.Application.Features.Users.Queries.GetById;
+using HealthHub.Application.Features.Users.Queries.GetCaloriesById;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -96,5 +97,34 @@ namespace HealthHub.API.Controllers
             }
             return Ok(result);
         }
+        [HttpGet("calories/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCaloriesById(string id)
+        {
+            var query = new GetCaloriesByIdQuery { UserId = Guid.Parse(id) };
+            var result = await Mediator.Send(query);
+            if (!result.Success)
+            {
+                if (result.Message == $"User with id {id} not found")
+                {
+                    return NotFound(result);
+                }
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        //[HttpGet("food/{code}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<IActionResult> GetFood(string code)
+        //{
+        //    var client = new HttpClient();
+        //    var response = await client.GetAsync($"https://world.openfoodfacts.net/api/v2/product/{code}");
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        var content = await response.Content.ReadAsStringAsync();
+        //        return Ok(content);
+        //    }
+        //    return BadRequest("Error");
+        //}
     }
 }

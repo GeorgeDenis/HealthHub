@@ -3,6 +3,7 @@ using HealthHub.Application.Models;
 using HealthHub.Application.Persistence;
 using HealthHub.Domain.Common;
 using HealthHub.Identity.Models;
+using HealthHub.Identity.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 
 namespace HealthHub.Identity.Services
@@ -130,6 +131,9 @@ namespace HealthHub.Identity.Services
         {
             user.Name = userDto.Name;
             user.UserName = userDto.Username;
+            user.Age = userDto.Age;
+            user.Height = userDto.Height;
+            user.Gender = (Models.Enums.Gender?)userDto.Gender;
             user.Email = userDto.Email;
             user.Bio = userDto.Bio;
             user.Mobile = userDto.Mobile;
@@ -138,7 +142,8 @@ namespace HealthHub.Identity.Services
             user.CurrentWeight = userDto.CurrentWeight;
             user.GoalWeight = userDto.GoalWeight;
             user.WeeklyGoal = userDto.WeeklyGoal;
-            user.Activity = (ActivityLevel)userDto.Activity;
+            user.GoalType = (Models.Enums.GoalType?)userDto.GoalType;
+            user.Activity = (ActivityLevel?)userDto.Activity;
 
 
         }
@@ -150,6 +155,9 @@ namespace HealthHub.Identity.Services
                 Name = user.Name,
                 Username = user.UserName,
                 Email = user.Email,
+                Age = user.Age,
+                Height = user.Height,
+                Gender = (Application.Features.Users.Gender?)user.Gender,
                 Bio = user.Bio,
                 Mobile = user.Mobile,
                 Location = user.Location,
@@ -157,7 +165,8 @@ namespace HealthHub.Identity.Services
                 CurrentWeight = user.CurrentWeight,
                 GoalWeight = user.GoalWeight,
                 WeeklyGoal = user.WeeklyGoal,
-                Activity = (Application.Features.ActivityLevel)user.Activity,
+                GoalType = (Application.Features.Users.GoalType?)user.GoalType,
+                Activity = (Application.Features.ActivityLevel?)user.Activity,
             };
         }
 
