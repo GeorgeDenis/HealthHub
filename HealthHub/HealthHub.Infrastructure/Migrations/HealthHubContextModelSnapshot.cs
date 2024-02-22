@@ -22,6 +22,31 @@ namespace HealthHub.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.PasswordResetCode", b =>
+                {
+                    b.Property<Guid>("PasswordResetCodeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ExpirationTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("PasswordResetCodeId");
+
+                    b.ToTable("PasswordResetCodes");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("UserId")

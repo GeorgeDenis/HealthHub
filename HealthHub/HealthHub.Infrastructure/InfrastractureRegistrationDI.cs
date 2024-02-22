@@ -1,5 +1,8 @@
-﻿using HealthHub.Application.Persistence;
+﻿using HealthHub.Application.Contracts.Interfaces;
+using HealthHub.Application.Persistence;
 using HealthHub.Infrastructure.Repositories;
+using Infrastructure.Repositories;
+using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +29,8 @@ namespace HealthHub.Infrastructure
                 typeof(BaseRepository<>));
             services.AddScoped<
                 IUserRepository, UserRepository>();
+            services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
+            services.AddScoped<IEmailService, EmailService>();
             return services;
         }
     }

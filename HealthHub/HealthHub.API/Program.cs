@@ -5,15 +5,20 @@ using HealthHub.Application;
 using HealthHub.Infrastructure;
 using WebAPI.Services;
 using HealthHub.Application.Contracts.Interfaces;
+using HealthHub.Application.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
+DotNetEnv.Env.TraversePath().Load();
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 });
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+
+builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
 // Add services to the container.
 builder.Services.AddInfrastructureToDI(
     builder.Configuration);

@@ -7,6 +7,8 @@ namespace HealthHub.Infrastructure
     {
         public HealthHubContext(DbContextOptions<HealthHubContext> options) : base(options) { }
         public DbSet<User> Users { get; set; }
+        public DbSet<PasswordResetCode> PasswordResetCodes { get; set; }
+
 
     }
 }

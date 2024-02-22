@@ -18,14 +18,16 @@ namespace HealthHub.Identity.Services
         private readonly IUserRepository userRepository;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<ApplicationUser> signInManager;
+        private readonly IPasswordResetCodeRepository passwordResetCodeRepository;
         private readonly IConfiguration configuration;
-        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository)
+        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository, IPasswordResetCodeRepository passwordResetCodeRepository)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.configuration = configuration;
             this.signInManager = signInManager;
             this.userRepository = userRepository;
+            this.passwordResetCodeRepository = passwordResetCodeRepository;
         }
         public async Task<(int, string)> Registeration(RegistrationModel model, string role)
         {
@@ -84,6 +86,29 @@ namespace HealthHub.Identity.Services
             }
             string token = GenerateToken(authClaims);
             return (1, token);
+        }
+        public async Task<(int, string)> ResetPassword(ResetPasswordModel model)
+        {
+            var user = await userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+                return (0, "User with the provided email does not exist.");
+            var resetCodeValid = await passwordResetCodeRepository.HasValidCodeByEmailAsync(model.Email, model.Code);
+            if (!resetCodeValid)
+                return (0, "Invalid reset code.");
+            var codeHash = userManager.PasswordHasher.HashPassword(user, model.Password);
+            user.PasswordHash = codeHash;
+            var updateResult = await userManager.UpdateAsync(user);
+            await passwordResetCodeRepository.InvalidateExistingCodesAsync(model.Email);
+
+            if (!updateResult.Succeeded)
+            {
+                return (0, "Password reset failed! Please check user details and try again.");
+            }
+
+            await userManager.UpdateSecurityStampAsync(user);
+
+            return (1, "Password reset successfully!");
+
         }
 
         public async Task<(int, string)> Logout()

@@ -144,3 +144,8 @@ I:\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\refint\HealthHub.API.dll
 I:\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\HealthHub.API.pdb
 I:\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\HealthHub.API.genruntimeconfig.cache
 I:\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\ref\HealthHub.API.dll
+I:\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+I:\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\MailKit.dll
+I:\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\MimeKit.dll
+I:\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\DotNetEnv.dll
+I:\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\Sprache.dll
