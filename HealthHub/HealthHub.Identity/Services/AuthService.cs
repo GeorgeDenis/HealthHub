@@ -32,6 +32,7 @@ namespace HealthHub.Identity.Services
             var userExists = await userManager.FindByNameAsync(model.Username);
             if (userExists != null)
                 return (0, "User already exists");
+
             var userExistsByEmail = await userManager.FindByEmailAsync(model.Email);
             if (userExistsByEmail != null)
                 return (0, "User with this email already exists");

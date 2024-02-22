@@ -1,13 +1,9 @@
-﻿using HealthHub.Application.Models;
+﻿using HealthHub.Application.Features.Users;
+using HealthHub.Application.Models;
 using HealthHub.Application.Persistence;
 using HealthHub.Domain.Common;
 using HealthHub.Identity.Models;
 using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HealthHub.Identity.Services
 {
@@ -65,6 +61,10 @@ namespace HealthHub.Identity.Services
 
             foreach (var userDto in userDtos)
             {
+                if (userDto.UserId == null)
+                {
+                    continue; 
+                }
                 var appUser = await userManager.FindByIdAsync(userDto.UserId.ToString());
                 if (appUser != null)
                 {
@@ -91,23 +91,28 @@ namespace HealthHub.Identity.Services
         }
 
 
-        public async Task<Result<UserDto>> UpdateAsync(UserDto userDto)
+        public async Task<Result<UserDto>> UpdateAsync(UserDto user)
         {
-            var userToUpdate = await userManager.FindByIdAsync(userDto.UserId.ToString());
+            if (user == null || user.UserId == null)
+                return Result<UserDto>.Failure("Provided user or user ID is null.");
+            var userToUpdate = await userManager.FindByIdAsync(user.UserId.ToString());
             if (userToUpdate == null)
-                return Result<UserDto>.Failure($"User with id {userDto.UserId} not found");
+                return Result<UserDto>.Failure($"User with id {user.UserId} not found");
 
-            UpdateUserProperties(userToUpdate, userDto);
+            UpdateUserProperties(userToUpdate, user);
 
             var updateResult = await userManager.UpdateAsync(userToUpdate);
-            return updateResult.Succeeded ? Result<UserDto>.Success(MapToUserDto(userToUpdate)) : Result<UserDto>.Failure($"User with id {userDto.UserId} not updated");
+            return updateResult.Succeeded ? Result<UserDto>.Success(MapToUserDto(userToUpdate)) : Result<UserDto>.Failure($"User with id {user.UserId} not updated");
         }
 
-        public async Task<Result<UserDto>> UpdateRoleAsync(UserDto userDto, string role)
+        public async Task<Result<UserDto>> UpdateRoleAsync(UserDto user, string role)
         {
-            var userToUpdate = await userManager.FindByIdAsync(userDto.UserId.ToString());
+            if (user == null || user.UserId == null)
+                return Result<UserDto>.Failure("Provided user or user ID is null.");
+
+            var userToUpdate = await userManager.FindByIdAsync(user.UserId.ToString());
             if (userToUpdate == null)
-                return Result<UserDto>.Failure($"User with id {userDto.UserId} not found");
+                return Result<UserDto>.Failure($"User with id {user.UserId} not found");
 
             if (role != "Admin" && role != "User")
                 return Result<UserDto>.Failure($"Role {role} not found");
@@ -116,16 +121,26 @@ namespace HealthHub.Identity.Services
                 await roleManager.CreateAsync(new IdentityRole(role));
 
             if (await userManager.IsInRoleAsync(userToUpdate, role))
-                return Result<UserDto>.Failure($"User with id {userDto.UserId} already has role {role}");
+                return Result<UserDto>.Failure($"User with id {user.UserId} already has role {role}");
 
             var addToRoleResult = await userManager.AddToRoleAsync(userToUpdate, role);
-            return addToRoleResult.Succeeded ? Result<UserDto>.Success(MapToUserDto(userToUpdate)) : Result<UserDto>.Failure($"User with id {userDto.UserId} not updated");
+            return addToRoleResult.Succeeded ? Result<UserDto>.Success(MapToUserDto(userToUpdate)) : Result<UserDto>.Failure($"User with id {user.UserId} not updated");
         }
         private void UpdateUserProperties(ApplicationUser user, UserDto userDto)
         {
             user.Name = userDto.Name;
             user.UserName = userDto.Username;
             user.Email = userDto.Email;
+            user.Bio = userDto.Bio;
+            user.Mobile = userDto.Mobile;
+            user.Location = userDto.Location;
+            user.StartingWeight = userDto.StartingWeight;
+            user.CurrentWeight = userDto.CurrentWeight;
+            user.GoalWeight = userDto.GoalWeight;
+            user.WeeklyGoal = userDto.WeeklyGoal;
+            user.Activity = (ActivityLevel)userDto.Activity;
+
+
         }
         private UserDto MapToUserDto(ApplicationUser user)
         {
@@ -134,7 +149,15 @@ namespace HealthHub.Identity.Services
                 UserId = user.Id,
                 Name = user.Name,
                 Username = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                Bio = user.Bio,
+                Mobile = user.Mobile,
+                Location = user.Location,
+                StartingWeight = user.StartingWeight,
+                CurrentWeight = user.CurrentWeight,
+                GoalWeight = user.GoalWeight,
+                WeeklyGoal = user.WeeklyGoal,
+                Activity = (Application.Features.ActivityLevel)user.Activity,
             };
         }
 

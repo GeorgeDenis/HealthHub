@@ -30,9 +30,18 @@ namespace HealthHub.Identity.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Activity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Bio")
+                        .HasColumnType("text");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<float?>("CurrentWeight")
+                        .HasColumnType("real");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -41,11 +50,20 @@ namespace HealthHub.Identity.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
+                    b.Property<float?>("GoalWeight")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Location")
+                        .HasColumnType("text");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Mobile")
+                        .HasColumnType("text");
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
@@ -70,12 +88,18 @@ namespace HealthHub.Identity.Migrations
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
+                    b.Property<float?>("StartingWeight")
+                        .HasColumnType("real");
+
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
+
+                    b.Property<float?>("WeeklyGoal")
+                        .HasColumnType("real");
 
                     b.HasKey("Id");
 
