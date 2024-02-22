@@ -31,6 +31,7 @@ namespace HealthHub.Infrastructure
                 IUserRepository, UserRepository>();
             services.AddScoped<IPasswordResetCodeRepository, PasswordResetCodeRepository>();
             services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IMacronutrientsGoalRepository, MacronutrientsGoalRepository>();
             return services;
         }
     }

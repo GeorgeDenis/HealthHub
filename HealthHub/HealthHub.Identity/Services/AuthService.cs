@@ -19,8 +19,9 @@ namespace HealthHub.Identity.Services
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IPasswordResetCodeRepository passwordResetCodeRepository;
+        private readonly IMacronutrientsGoalRepository macronutrientsGoalRepository;
         private readonly IConfiguration configuration;
-        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository, IPasswordResetCodeRepository passwordResetCodeRepository)
+        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository, IPasswordResetCodeRepository passwordResetCodeRepository, IMacronutrientsGoalRepository macronutrientsGoalRepository)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -28,6 +29,7 @@ namespace HealthHub.Identity.Services
             this.signInManager = signInManager;
             this.userRepository = userRepository;
             this.passwordResetCodeRepository = passwordResetCodeRepository;
+            this.macronutrientsGoalRepository = macronutrientsGoalRepository;
         }
         public async Task<(int, string)> Registeration(RegistrationModel model, string role)
         {
@@ -61,6 +63,8 @@ namespace HealthHub.Identity.Services
                 await userManager.AddToRoleAsync(user, role);
             var userDomain = User.Create(Guid.Parse(user.Id));
             await userRepository.AddAsync(userDomain.Value);
+            var macronutrientsGoal = MacronutrientsGoal.Create(Guid.Parse(user.Id), 0, 0, 0);
+            await macronutrientsGoalRepository.AddAsync(macronutrientsGoal.Value);
             return (1, "User created successfully!");
         }
 
