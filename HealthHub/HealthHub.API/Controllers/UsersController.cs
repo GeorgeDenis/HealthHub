@@ -126,5 +126,21 @@ namespace HealthHub.API.Controllers
         //    }
         //    return BadRequest("Error");
         //}
+        //AxIQuDyEorzhUCHnZ0WjVQ==PYdk8KZJD7Du6fD7
+        //[HttpGet("food/{exercise}")]
+        //[ProducesResponseType(StatusCodes.Status200OK)]
+        //public async Task<IActionResult> GetCalories(string exercise)
+        //{
+        //    var client = new HttpClient();
+        //    client.DefaultRequestHeaders.Add("X-Api-Key", "AxIQuDyEorzhUCHnZ0WjVQ==PYdk8KZJD7Du6fD7");
+        //    var response = await client.GetAsync($"https://api.api-ninjas.com/v1/caloriesburned?activity={exercise}");
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        var content = await response.Content.ReadAsStringAsync();
+        //        return Ok(content);
+        //    }
+        //    return BadRequest("Error");
+        //}
     }
 }

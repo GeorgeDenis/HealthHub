@@ -63,7 +63,7 @@ namespace HealthHub.Identity.Services
                 await userManager.AddToRoleAsync(user, role);
             var userDomain = User.Create(Guid.Parse(user.Id));
             await userRepository.AddAsync(userDomain.Value);
-            var macronutrientsGoal = MacronutrientsGoal.Create(Guid.Parse(user.Id), 0, 0, 0);
+            var macronutrientsGoal = MacronutrientsGoal.Create(Guid.Parse(user.Id), 20, 50, 30);
             await macronutrientsGoalRepository.AddAsync(macronutrientsGoal.Value);
             return (1, "User created successfully!");
         }

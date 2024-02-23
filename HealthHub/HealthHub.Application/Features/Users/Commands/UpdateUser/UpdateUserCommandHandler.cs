@@ -57,7 +57,6 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
             var userByEmail = await userRepository.FindByEmailAsync(request.Email);
             if (userByEmail.IsSuccess && userByEmail.Value.UserId != user.Value.UserId)
             {
-                Console.WriteLine("Email" + request.Email);
 
                 return new UpdateUserCommandResponse
                 {
