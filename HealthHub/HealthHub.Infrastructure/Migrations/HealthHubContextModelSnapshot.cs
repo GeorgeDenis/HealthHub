@@ -22,6 +22,37 @@ namespace HealthHub.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.LoggedStrengthExercise", b =>
+                {
+                    b.Property<Guid>("LoggedStrengthExerciseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateLogged")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("MuscleGroup")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("NumberOfSets")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("WeightPerSet")
+                        .HasColumnType("integer");
+
+                    b.HasKey("LoggedStrengthExerciseId");
+
+                    b.ToTable("LoggedStrengthExercises");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.MacronutrientsGoal", b =>
                 {
                     b.Property<Guid>("MacronutrientsGoalId")

@@ -5,7 +5,7 @@ import { Spinner } from "@material-tailwind/react";
 
 const UserContext = createContext({
     token: null,
-    // userId: null,
+    userId: null,
     username: null,
     email: null,
     role: null,
@@ -23,7 +23,7 @@ export default function LoginRequired() {
     const [isAuthenticated, setIsAuthenticated] = useState(null);
     const [user, setUser] = useState({
         token: null,
-        // userId: null,
+        userId: null,
         username: null,
         email: null,
         role: null,
@@ -48,7 +48,7 @@ export default function LoginRequired() {
                     setIsAuthenticated(true);
                     setUser({
                         token: token,
-                        // userId: response.data?.claims?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"],
+                        userId: response.data?.claims?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"],
                         username: response.data?.userName,
                         email: response.data?.claims?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],
                         role: response.data?.claims?.["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],

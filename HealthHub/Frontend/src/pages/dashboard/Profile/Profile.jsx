@@ -7,6 +7,8 @@ import {
   TabsHeader,
   Tab,
   Tooltip,
+  Button,
+  Dialog,
 } from "@material-tailwind/react";
 import {
   HomeIcon,
@@ -14,10 +16,67 @@ import {
   Cog6ToothIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link,useNavigate,useParams } from "react-router-dom";
 import { ProfileInfoCard } from "@/widgets/cards";
+import { useUser } from "@/context/LoginRequired";
+import axios from "axios";
+import {toast} from "react-toastify";
+import {DialogActions, DialogTitle} from "@mui/material";
+
+
+import api from "../../../services/api";
 
 export function Profile() {
+  const currentUser = useUser();
+  const navigate = useNavigate();
+  const {userId} = useParams();
+  const isOwnProfile = userId === currentUser.userId || !userId;
+  const [showLogoutDialog, setShowLogoutDialog] = useState(false);
+
+  const [userData, setUserData] = useState({
+    name: null,
+    username: null,
+    bio: null,
+    email: null,
+    mobile: null,
+    location: null,
+  });
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const response = await api.get(`/api/v1/Users/${userId || currentUser.userId}`, {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        });
+        if (response.status === 200) {
+          console.log(response.data);
+          setUserData({
+            name: response.data?.name,
+            username: response.data?.username,
+            bio: response.data?.bio,
+            email: response.data?.email,
+            mobile: response.data?.mobile,
+            location: response.data?.location,          
+          });
+        }
+      }catch (error) {
+        if (axios.isAxiosError(error) && error.response) {
+          if (error.response.status === 404 || error.response.status === 500) {
+            navigate('/404');
+          } else {
+            toast.error("Failed to fetch user data");
+          }
+        } else {
+          console.log(error);
+          toast.error("An unexpected error occurred");
+        }
+      }
+    }
+    getUserData();
+  }, [userId]);
+
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover	bg-center">
@@ -37,12 +96,6 @@ export function Profile() {
               <div>
                 <Typography variant="h5" color="blue-gray" className="mb-1">
                   Richard Davis
-                </Typography>
-                <Typography
-                  variant="small"
-                  className="font-normal text-blue-gray-600"
-                >
-                  CEO / Co-Founder
                 </Typography>
               </div>
             </div>
@@ -75,13 +128,6 @@ export function Profile() {
                 mobile: "(44) 123 1234 123",
                 email: "georgedenis@mail.com",
                 location: "Romania",
-                social: (
-                  <div className="flex items-center gap-4">
-                    <i className="fa-brands fa-facebook text-blue-700" />
-                    <i className="fa-brands fa-twitter text-blue-400" />
-                    <i className="fa-brands fa-instagram text-purple-500" />
-                  </div>
-                ),
               }}
               action={
                 <Tooltip content="Edit Profile">
@@ -90,6 +136,36 @@ export function Profile() {
               }
             />
           </div>
+          {isOwnProfile && <div className="flex items-center justify-between flex-wrap gap-6">
+              <Button
+                className="shadow-md bg-secondary hover:bg-primary ml-auto"
+                ripple
+                onClick={() => setShowLogoutDialog(true)}
+              >
+                Log out
+              </Button>
+              <Dialog
+                open={showLogoutDialog}
+                handler={() => setShowLogoutDialog(false)}
+                className="bg-surface-dark p-5"
+                size={"sm"}
+              >
+                <DialogTitle className={"text-surface-light"}>Are you sure you want to log out?</DialogTitle>
+                <DialogActions className={"mt-5"}>
+                  <Link to="/auth/sign-in">
+                    <Button
+                      className="shadow-md bg-secondary hover:bg-primary"
+                      ripple
+                    >
+                      Log out
+                    </Button>
+                  </Link>
+                  <Button onClick={() => setShowLogoutDialog(false)}>
+                    Cancel
+                  </Button>
+                </DialogActions>
+              </Dialog>
+            </div>}
         </CardBody>
       </Card>
     </>

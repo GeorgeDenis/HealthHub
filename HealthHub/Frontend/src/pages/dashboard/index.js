@@ -1,2 +1,2 @@
-export * from "@/pages/dashboard/Home";
-export * from "@/pages/dashboard/Profile";
+export * from "@/pages/dashboard/Home/Home";
+export * from "@/pages/dashboard/Profile/Profile";
