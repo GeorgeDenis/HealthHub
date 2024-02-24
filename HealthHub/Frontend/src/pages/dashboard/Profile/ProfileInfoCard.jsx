@@ -7,10 +7,39 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import { EditActionButtonsProps, ProfileInfoCardProps } from "./types";
-import { BioTextField, DataField, SocialField } from "./ProfileInfoCardFields";
-
-export function ProfileInfoCard({ bio }) {
+import { BioTextField, DataField } from "./ProfileInfoCardFields";
+import { useEffect } from "react";
+function EditActionButtons({ onSaveEdit, onCancelEdit }) {
+  return (
+    <div className="flex items-center gap-2 mt-2">
+      <Button
+        onClick={onSaveEdit}
+        className={"bg-green-600 hover:bg-green-900"}
+        size={"sm"}
+      >
+        Save
+      </Button>
+      <Button
+        onClick={onCancelEdit}
+        className={"bg-surface-mid-light hover:bg-surface-mid"}
+        size={"sm"}
+      >
+        Cancel
+      </Button>
+    </div>
+  );
+}
+export function ProfileInfoCard({
+  bio,
+  details = {},
+  isEditable,
+  isInEditMode,
+  onEnterEditMode,
+  editedUserData,
+  setEditedUserData,
+  onSaveEdit,
+  onCancelEdit,
+}) {
   return (
     <Card color="transparent" shadow={false}>
       <CardHeader
@@ -61,28 +90,12 @@ export function ProfileInfoCard({ bio }) {
             }
           />
           <DataField
-            label={"Company"}
-            value={details.company}
-            isInEditMode={isInEditMode}
-            editedValue={editedUserData.company}
-            onChangeEditedValue={(value) =>
-              setEditedUserData({ ...editedUserData, company: value })
-            }
-          />
-          <DataField
             label={"Location"}
             value={details.location}
             isInEditMode={isInEditMode}
             editedValue={editedUserData.location}
             onChangeEditedValue={(value) =>
               setEditedUserData({ ...editedUserData, location: value })
-            }
-          />
-          <SocialField
-            isInEditMode={isInEditMode}
-            social={editedUserData.social}
-            onChangeSocial={(value) =>
-              setEditedUserData({ ...editedUserData, social: value })
             }
           />
 
