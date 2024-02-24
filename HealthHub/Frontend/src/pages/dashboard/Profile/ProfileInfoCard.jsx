@@ -9,6 +9,7 @@ import {
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { BioTextField, DataField } from "./ProfileInfoCardFields";
 import { useEffect } from "react";
+import ProfileGoalsSettings from "./ProfileGoalsSettings";
 function EditActionButtons({ onSaveEdit, onCancelEdit }) {
   return (
     <div className="flex items-center gap-2 mt-2">
@@ -52,12 +53,15 @@ export function ProfileInfoCard({
           Profile Information
         </Typography>
         {isEditable && !isInEditMode && (
+          <div className="flex items-center gap-1">
           <Tooltip content="Edit Profile">
             <PencilIcon
               onClick={onEnterEditMode}
               className="h-4 w-4 cursor-pointer text-surface-light"
             />
           </Tooltip>
+          <ProfileGoalsSettings />
+          </div>
         )}
       </CardHeader>
       <CardBody className="p-0">
