@@ -24,7 +24,7 @@ namespace HealthHub.Application.Features.Users.Queries.GetCaloriesById
                 UserId = userResult.Value.UserId,
                 Gender = userResult.Value.Gender,
                 Height = userResult.Value.Height,
-                Age = userResult.Value.Age,
+                DateOfBirth = userResult.Value.DateOfBirth,
                 Activity = userResult.Value.Activity,
                 CurrentWeight = userResult.Value.CurrentWeight,
                 GoalType = userResult.Value.GoalType,
@@ -53,8 +53,8 @@ namespace HealthHub.Application.Features.Users.Queries.GetCaloriesById
                 return ResponseWithError("The user has not set their height!");
             if (user.Gender == null)
                 return ResponseWithError("The user has not set their gender!");
-            if (user.Age == null)
-                return ResponseWithError("The user has not set their age!");
+            if (user.DateOfBirth == null)
+                return ResponseWithError("The user has not set their date of birth!");
             if (user.Activity == 0)
                 return ResponseWithError("The user has not set their activity level!");
             if (user.GoalType == 0)
@@ -67,11 +67,18 @@ namespace HealthHub.Application.Features.Users.Queries.GetCaloriesById
 
         private int CalculateBMR(UserDto user)
         {
-            if(user.CurrentWeight == null || user.Height == null || user.Age == null)
+            if(user.CurrentWeight == null || user.Height == null || user.DateOfBirth == null)
                 return 0;
+            int age = DateTime.Now.Year - user.DateOfBirth.Value.Year;
+
+            if (DateTime.Now < new DateTime(DateTime.Now.Year, user.DateOfBirth.Value.Month, user.DateOfBirth.Value.Day))
+            {
+                age--; 
+            }
+
             return user.Gender == Gender.Male
-                ? (int)((10 * user.CurrentWeight) + (6.25 * user.Height) - (5 * user.Age) + 5)
-                : (int)((10 * user.CurrentWeight) + (6.25 * user.Height) - (5 * user.Age) - 161);
+                ? (int)((10 * user.CurrentWeight) + (6.25 * user.Height) - (5 * age) + 5)
+                : (int)((10 * user.CurrentWeight) + (6.25 * user.Height) - (5 * age) - 161);
         }
 
         private int AdjustForActivityLevel(int bmr, ActivityLevel activityLevel)

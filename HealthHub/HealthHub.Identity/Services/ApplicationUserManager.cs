@@ -131,7 +131,7 @@ namespace HealthHub.Identity.Services
         {
             user.Name = userDto.Name;
             user.UserName = userDto.Username;
-            user.Age = userDto.Age;
+            user.DateOfBirth = userDto.DateOfBirth;
             user.Height = userDto.Height;
             user.Gender = (Models.Enums.Gender?)userDto.Gender;
             user.Email = userDto.Email;
@@ -155,7 +155,7 @@ namespace HealthHub.Identity.Services
                 Name = user.Name,
                 Username = user.UserName,
                 Email = user.Email,
-                Age = user.Age,
+                DateOfBirth = user.DateOfBirth,
                 Height = user.Height,
                 Gender = (Application.Features.Users.Gender?)user.Gender,
                 Bio = user.Bio,

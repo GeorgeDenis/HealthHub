@@ -24,7 +24,7 @@ namespace HealthHub.Application.Features.Users.Queries.GetAll
                     Username = u.Username,
                     Email = u.Email,
                     Bio = u.Bio,
-                    Age = u.Age,
+                    DateOfBirth = u.DateOfBirth,
                     Height = u.Height,
                     Gender = u.Gender,
                     Mobile = u.Mobile,

@@ -9,7 +9,7 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
         public string? Name { get; set; }
         public string? Email { get; set; }
         public string? Bio { get; set; }
-        public int? Age { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public int? Height { get; set; }
         public Gender? Gender { get; set; }
         public string? Mobile { get; set; }

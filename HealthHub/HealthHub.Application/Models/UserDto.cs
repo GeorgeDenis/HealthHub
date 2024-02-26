@@ -10,7 +10,7 @@ namespace HealthHub.Application.Models
         public string? Name { get; set; }
         public string? Email { get; set; }
         public List<string>? Roles { get; set; }
-        public int? Age { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public int? Height { get; set; }
         public Gender? Gender { get; set; }
         public string? Bio { get; set; }

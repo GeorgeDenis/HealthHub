@@ -6,7 +6,7 @@ namespace HealthHub.Identity.Models
     public class ApplicationUser : IdentityUser
     {
         public string? Name { get; set; }
-        public int? Age { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public int? Height { get; set; }
         public Gender? Gender { get; set; }
         public string? Bio { get; set; }

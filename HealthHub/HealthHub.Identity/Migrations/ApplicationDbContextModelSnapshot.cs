@@ -33,9 +33,6 @@ namespace HealthHub.Identity.Migrations
                     b.Property<int?>("Activity")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("Age")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Bio")
                         .HasColumnType("text");
 
@@ -45,6 +42,9 @@ namespace HealthHub.Identity.Migrations
 
                     b.Property<float?>("CurrentWeight")
                         .HasColumnType("real");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)

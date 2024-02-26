@@ -33,7 +33,7 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
             request.Bio ??= user.Value.Bio;
             request.Mobile ??= user.Value.Mobile;
             request.Location ??= user.Value.Location;
-            request.Age ??= user.Value.Age;
+            request.DateOfBirth ??= user.Value.DateOfBirth;
             request.Height ??= user.Value.Height;
             request.Gender ??= user.Value.Gender;
             request.StartingWeight ??= user.Value.StartingWeight;
@@ -83,7 +83,7 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
                 Username = request.Username,
                 Email = request.Email,
                 Bio = request.Bio,
-                Age = request.Age,
+                DateOfBirth = request.DateOfBirth,
                 Height = request.Height,
                 Gender = request.Gender,
                 Mobile = request.Mobile,
@@ -117,7 +117,7 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
                     Bio = result.Value.Bio,
                     Mobile = result.Value.Mobile,
                     Location = result.Value.Location,
-                    Age = result.Value.Age,
+                    DateOfBirth = result.Value.DateOfBirth,
                     Height = result.Value.Height,
                     Gender = result.Value.Gender,
                     StartingWeight = result.Value.StartingWeight,
