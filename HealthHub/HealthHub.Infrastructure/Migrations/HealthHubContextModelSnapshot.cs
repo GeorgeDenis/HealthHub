@@ -22,6 +22,33 @@ namespace HealthHub.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.LoggedCardioExercise", b =>
+                {
+                    b.Property<Guid>("LoggedCardioExerciseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CaloriesBurned")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DateLogged")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LoggedCardioExerciseId");
+
+                    b.ToTable("LoggedCardioExercises");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.LoggedFood", b =>
                 {
                     b.Property<Guid>("LoggedFoodId")

@@ -8,6 +8,6 @@ namespace HealthHub.Application.Features.LoggedStrengthExercises.Queries.GetLogg
         {
         }
 
-        public List<LoggedStrengthExercisesDto> LoggedStrengthExercises { get; set; }
+        public List<LoggedStrengthExerciseDto> LoggedStrengthExercises { get; set; }
     }
 }

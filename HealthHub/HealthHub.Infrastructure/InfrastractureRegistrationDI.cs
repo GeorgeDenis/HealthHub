@@ -34,6 +34,7 @@ namespace HealthHub.Infrastructure
             services.AddScoped<IMacronutrientsGoalRepository, MacronutrientsGoalRepository>();
             services.AddScoped<ILoggedFoodRepository, LoggedFoodRepository>();
             services.AddScoped<ILoggedStrengthExerciseRepository, LoggedStrengthExerciseRepository>();
+            services.AddScoped<ILoggedCardioExerciseRepository, LoggedCardioExerciseRepository>();
             return services;
         }
     }

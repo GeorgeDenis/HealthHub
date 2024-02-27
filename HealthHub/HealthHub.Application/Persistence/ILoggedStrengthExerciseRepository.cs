@@ -6,6 +6,6 @@ namespace HealthHub.Application.Persistence
 {
     public interface ILoggedStrengthExerciseRepository : IAsyncRepository<LoggedStrengthExercise>
     {
-        Task<Result<List<LoggedStrengthExercisesDto>>> GetByUserIdAndDateAsync(Guid userId, DateTime date);
+        Task<Result<List<LoggedStrengthExerciseDto>>> GetByUserIdAndDateAsync(Guid userId, DateTime date);
     }
 }

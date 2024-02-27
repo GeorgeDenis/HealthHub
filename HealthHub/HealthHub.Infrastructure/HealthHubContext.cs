@@ -12,6 +12,7 @@ namespace HealthHub.Infrastructure
         public DbSet<LoggedFood> LoggedFoods { get; set; }
 
         public DbSet<LoggedStrengthExercise> LoggedStrengthExercises { get; set; }
+        public DbSet<LoggedCardioExercise> LoggedCardioExercises { get; set; }
 
 
     }

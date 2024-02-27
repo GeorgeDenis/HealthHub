@@ -12,7 +12,7 @@ namespace HealthHub.Infrastructure.Repositories
         {
         }
 
-        public async Task<Result<List<LoggedStrengthExercisesDto>>> GetByUserIdAndDateAsync(Guid userId, DateTime date)
+        public async Task<Result<List<LoggedStrengthExerciseDto>>> GetByUserIdAndDateAsync(Guid userId, DateTime date)
         {
 
             var dayStart = date.Date; 
@@ -20,7 +20,7 @@ namespace HealthHub.Infrastructure.Repositories
 
             var loggedStrengthExercises = await context.LoggedStrengthExercises
                 .Where(x => x.UserId == userId && x.DateLogged >= dayStart && x.DateLogged < dayEnd)
-                .Select(x => new LoggedStrengthExercisesDto
+                .Select(x => new LoggedStrengthExerciseDto
                 {
                     LoggedStrengthExerciseId = x.LoggedStrengthExerciseId,
                     UserId = x.UserId,
@@ -32,7 +32,7 @@ namespace HealthHub.Infrastructure.Repositories
                 }).ToListAsync();
 
 
-            return Result<List<LoggedStrengthExercisesDto>>.Success(loggedStrengthExercises);
+            return Result<List<LoggedStrengthExerciseDto>>.Success(loggedStrengthExercises);
             
            
         }
