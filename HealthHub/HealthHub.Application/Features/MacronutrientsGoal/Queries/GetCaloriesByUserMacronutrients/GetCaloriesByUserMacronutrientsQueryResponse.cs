@@ -7,9 +7,9 @@ namespace HealthHub.Application.Features.MacronutrientsGoal.Queries.GetCaloriesB
         public GetCaloriesByUserMacronutrientsQueryResponse() : base()
         {
         }
-        public int ProteinCalories { get; set; }
-        public int CarbohydratesCalories { get; set; }
-        public int FatsCalories { get; set; }
+        public int ProteinQuantity { get; set; }
+        public int CarbohydratesQuantity { get; set; }
+        public int FatsQuantity { get; set; }
 
     }
 }

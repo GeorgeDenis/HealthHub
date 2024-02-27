@@ -36,9 +36,9 @@ namespace HealthHub.Application.Features.MacronutrientsGoal.Queries.GetCaloriesB
             return new GetCaloriesByUserMacronutrientsQueryResponse
             {
                 Success = true,
-                ProteinCalories = result.Value.ProteinPercent * request.Calories / 100 / 4,
-                CarbohydratesCalories = result.Value.CarbohydratesPercent * request.Calories / 100 / 4,
-                FatsCalories = result.Value.FatsPercent * request.Calories / 100 / 9
+                ProteinQuantity = result.Value.ProteinPercent * request.Calories / 100 / 4,
+                CarbohydratesQuantity = result.Value.CarbohydratesPercent * request.Calories / 100 / 4,
+                FatsQuantity = result.Value.FatsPercent * request.Calories / 100 / 9
             };
         }
 

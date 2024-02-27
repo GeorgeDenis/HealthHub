@@ -205,15 +205,19 @@ const ProfileGoalsSettings = () => {
               <Typography variant="h4" className="text-white p-2">
                 Update Your Diet Profile
               </Typography>
-              <DatePicker
-                placeholderText="Select Date of Birth"
-                onChange={(date) =>
-                  handleDataChange(date.toISOString(), "dateOfBirth")
-                }
-                wrapperClassName="bg-surface-darkest rounded border"
-                className="w-full bg-surface-dark border border-surface-light-dark rounded p-2 focus:outline-none focus:border-secondary text-surface-light"
-                selected={userData.dateOfBirth || ""}
-              />
+              <div className="flex justify-between items-center">
+                <p className="text-surface-light">Date of birth:</p>
+                <DatePicker
+                  placeholderText="Select Date of Birth"
+                  onChange={(date) =>
+                    handleDataChange(date.toISOString(), "dateOfBirth")
+                  }
+                  wrapperClassName="bg-surface-darkest rounded border"
+                  className="w-full bg-surface-dark border border-surface-light-dark rounded p-2 focus:outline-none focus:border-secondary text-surface-light"
+                  selected={userData.dateOfBirth || ""}
+                />
+              </div>
+
               <Input
                 type={"text"}
                 variant={"outlined"}
