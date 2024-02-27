@@ -22,6 +22,48 @@ namespace HealthHub.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.LoggedFood", b =>
+                {
+                    b.Property<Guid>("LoggedFoodId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Calories")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Carbohydrates")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DateLogged")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Fat")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MealType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<float?>("NumberOfServings")
+                        .HasColumnType("real");
+
+                    b.Property<int>("Protein")
+                        .HasColumnType("integer");
+
+                    b.Property<float?>("ServingSize")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LoggedFoodId");
+
+                    b.ToTable("LoggedFoods");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.LoggedStrengthExercise", b =>
                 {
                     b.Property<Guid>("LoggedStrengthExerciseId")
