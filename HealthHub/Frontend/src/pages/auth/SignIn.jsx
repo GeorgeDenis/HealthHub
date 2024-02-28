@@ -148,6 +148,10 @@ export function SignIn() {
             Forgot password?
             <Link to="/auth/send-reset-code" className="text-secondary ml-1 hover:text-primary">Reset password</Link>
           </Typography>
+          <Typography variant="small" className="text-center text-surface-light-dark font-medium mt-4">
+            Activity Level?
+            <Link to="/auth/set-activity-level" className="text-secondary ml-1 hover:text-primary">Activity Level</Link>
+          </Typography>
         </form>
 
       </div>

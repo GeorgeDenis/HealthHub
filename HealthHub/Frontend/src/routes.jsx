@@ -11,6 +11,8 @@ import { SignIn, SignUp } from "@/pages/auth";
 import SendResetCode from "./pages/auth/SendResetCode";
 import VerifyResetCode from "./pages/auth/VerifyResetCode";
 import ResetPassword from "./pages/auth/ResetPassword";
+import ActivityLevelModal from "./pages/auth/RegisterModal/ActivityLevelModal";
+import MainInfoCard from "./pages/auth/RegisterModal/MainInfoCard";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -49,6 +51,18 @@ export const routes = [
         name: "sign up",
         path: "/sign-up",
         element: <SignUp />,
+      },
+      {
+        icon: <InformationCircleIcon {...icon} />,
+        name: "set activity level",
+        path: "/set-activity-level",
+        element: <ActivityLevelModal />,
+      },
+      {
+        icon: <InformationCircleIcon {...icon} />,
+        name: "main info card",
+        path: "/main-info-card",
+        element: <MainInfoCard />,
       },
       {
         icon: <InformationCircleIcon {...icon} />,
