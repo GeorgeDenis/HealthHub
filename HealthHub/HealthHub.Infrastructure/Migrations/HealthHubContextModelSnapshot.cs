@@ -122,6 +122,26 @@ namespace HealthHub.Infrastructure.Migrations
                     b.ToTable("LoggedStrengthExercises");
                 });
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.LoggedWeight", b =>
+                {
+                    b.Property<Guid>("LoggedWeightId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateLogged")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("LoggedWeightId");
+
+                    b.ToTable("LoggedWeights");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.MacronutrientsGoal", b =>
                 {
                     b.Property<Guid>("MacronutrientsGoalId")
