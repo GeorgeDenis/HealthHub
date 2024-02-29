@@ -1,36 +1,146 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { Button, Typography, Select, Option } from "@material-tailwind/react";
-import { Link } from "react-router-dom";
+import { Input, Button, Typography, Select, Option } from "@material-tailwind/react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { countries } from 'countries-list';
 
 const MainInfoCard = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { selectedActivity, selectedGoal, selectedWeeklyGoal } = location.state || {};
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const [userData, setUserData] = useState({
+    height: "",
     dateOfBirth: "",
     location: "",
+    gender: "",
+    goalType: "",
+    weeklyGoal: "",
+    activity: "",
+    currentWeight: ""
   });
-  const handleDataChange = (value, type) => {
-    if (type === "dateOfBirth"){
-      //check if the age is bigger than 18
-      const today = new Date();
-      const birthDate = new Date(value);
-      const age = today.getFullYear() - birthDate.getFullYear();
-      const month = today.getMonth() - birthDate.getMonth();
-      if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-      if (age < 18) {
-        toast.error("You must be 18 years or older to use this app");
-        return;
-      }
+
+  useEffect(() => {
+    if (!selectedActivity || !selectedGoal || !selectedWeeklyGoal) {
+      navigate("/auth/sign-in");
     }
+    setUserData((prevUserData) => ({ ...prevUserData, activity: selectedActivity, goalType: selectedGoal, weeklyGoal: selectedWeeklyGoal }));
+  }, []);
+
+  const countryOptions = Object.values(countries)
+    .map(country => ({
+      name: country.name,
+      code: country.iso2
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const genderOptions = [
+    { label: "Male", value: "male" },
+    { label: "Female", value: "female" }
+  ];
+
+  const handleDataChange = (value, type) => {
 
     setUserData((prevUserData) => ({ ...prevUserData, [type]: value }));
   };
+
+  const handleBack = () => {
+    navigate("/auth/set-activity-level");
+  };
+
+  const handleNext = () => {
+    if (!parseInt(userData.height)) {
+      toast.error("Height must be a number");
+      return;
+    }
+    if (!parseInt(userData.currentWeight)) {
+      toast.error("Current weight must be a number");
+      return;
+    }
+    if (!userData.dateOfBirth || !userData.location || !userData.gender || !userData.height || !userData.currentWeight) {
+      toast.error("Please fill in all the fields");
+      return;
+    }
+
+    const today = new Date();
+    const birthDate = new Date(userData.dateOfBirth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const month = today.getMonth() - birthDate.getMonth();
+    if (month < 0 || (month === 0 && today.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    if (age < 18) {
+      toast.error("You must be 18 years or older to use this app");
+      return;
+    }
+
+    const convertedGender = userData.gender === "male" ? 1 : userData.gender === "female" ? 2 : 0;
+    const convertedWeight = parseInt(userData.currentWeight);
+    const convertedHeight = parseInt(userData.height);
+
+    const updatedUserData = { ...userData, gender: convertedGender, currentWeight: convertedWeight, height: convertedHeight };
+
+
+    navigate("/auth/sign-up", { state: { userData: updatedUserData } });
+  };
   return (
-    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[27rem] bg-surface-dark shadow-lg p-4 rounded">
-      <div className="flex justify-between items-center">
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[27rem] bg-surface-dark shadow-lg p-4 rounded flex flex-col">
+      <div>
+        <Typography variant="h5" className="text-surface-light">
+          What's your gender?
+        </Typography>
+        <Select
+          value={userData.gender}
+          onChange={(value) => handleDataChange(value, "gender")}
+          className=" text-surface-light focus:!border-secondary select-none"
+          labelProps={{
+            className: "before:content-none after:content-none",
+          }}
+          placeholder="Select Gender"
+        >
+          {genderOptions.map((option) => (
+            <Option
+              key={option.value}
+              value={option.value}
+              className="text-surface-mid-light"
+            >
+              {option.label}
+            </Option>
+          ))}
+        </Select>
+      </div>
+      <div className="mt-2">
+        <Typography variant="h5" className="text-surface-light">
+          How tall are you?
+        </Typography>
+        <Input
+          type={"text"}
+          label={"Height"}
+          color={"green"}
+          className={"text-surface-light"}
+          value={userData.height || ""}
+          crossOrigin={undefined}
+          onChange={(e) => handleDataChange(e.target.value, "height")}
+        />
+      </div>
+      <div className="mt-2">
+        <Typography variant="h5" className="text-surface-light">
+          What's your current weight?
+        </Typography>
+        <Input
+          type={"text"}
+          label={"Weight"}
+          color={"green"}
+          className={"text-surface-light"}
+          value={userData.currentWeight || ""}
+          crossOrigin={undefined}
+          onChange={(e) => handleDataChange(e.target.value, "currentWeight")}
+        />
+      </div>
+      <div className="flex flex-col justify-between mt-2">
         <Typography variant="h5" className="text-surface-light">
           When were you born?
         </Typography>
@@ -48,13 +158,33 @@ const MainInfoCard = () => {
         <Typography variant="h5" className="text-surface-light">
           Where do you live?
         </Typography>
+        <Select
+          value={selectedCountry}
+          onChange={(value) => handleDataChange(value, "location")}
+          className="!border-surface-mid-dark text-surface-light focus:!border-secondary select-none"
+          labelProps={{
+            className: "before:content-none after:content-none",
+          }}
+          placeholder="Select Country"
+        >
+          {countryOptions.map((country) => (
+            <Option
+              key={country.name}
+              value={country.name}
+              className="text-surface-mid-light"
+            >
+              {country.name}
+            </Option>
+          ))}
+        </Select>
+
       </div>
       <div className="m-2 flex items-center">
-        <Button size="lg" className="bg-secondary hover:bg-primary mr-2">
-          <Link to="/auth/set-activity-level">Back</Link>
+        <Button size="lg" className="bg-secondary hover:bg-primary mr-2" onClick={handleBack}>
+          Back
         </Button>
-        <Button size="lg" className="bg-secondary hover:bg-primary">
-          <Link to="/auth/main-info-card">Next</Link>
+        <Button size="lg" className="bg-secondary hover:bg-primary" onClick={handleNext}>
+          Next
         </Button>
       </div>
     </div>

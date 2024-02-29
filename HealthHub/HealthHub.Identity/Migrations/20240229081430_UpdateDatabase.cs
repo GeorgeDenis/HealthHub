@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HealthHub.Identity.Migrations
 {
     /// <inheritdoc />
-    public partial class UserDb : Migration
+    public partial class UpdateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,6 +32,18 @@ namespace HealthHub.Identity.Migrations
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: true),
+                    DateOfBirth = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    Height = table.Column<int>(type: "integer", nullable: true),
+                    Gender = table.Column<int>(type: "integer", nullable: true),
+                    Bio = table.Column<string>(type: "text", nullable: true),
+                    Mobile = table.Column<string>(type: "text", nullable: true),
+                    Location = table.Column<string>(type: "text", nullable: true),
+                    StartingWeight = table.Column<float>(type: "real", nullable: true),
+                    CurrentWeight = table.Column<float>(type: "real", nullable: true),
+                    GoalWeight = table.Column<float>(type: "real", nullable: true),
+                    WeeklyGoal = table.Column<float>(type: "real", nullable: true),
+                    GoalType = table.Column<int>(type: "integer", nullable: true),
+                    Activity = table.Column<int>(type: "integer", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),

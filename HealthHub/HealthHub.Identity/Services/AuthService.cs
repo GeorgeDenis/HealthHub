@@ -47,7 +47,15 @@ namespace HealthHub.Identity.Services
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username,
-                Name = model.Name
+                Name = model.Name,
+                CurrentWeight = model.CurrentWeight,
+                Height = model.Height,
+                DateOfBirth = model.DateOfBirth,
+                Location = model.Location,
+                Gender = (Models.Enums.Gender?)model.Gender,
+                GoalType = (Models.Enums.GoalType?)model.GoalType,
+                WeeklyGoal = model.WeeklyGoal,
+                Activity = (Models.Enums.ActivityLevel?)model.Activity
             };
             var createUserResult = await userManager.CreateAsync(user, model.Password);
 

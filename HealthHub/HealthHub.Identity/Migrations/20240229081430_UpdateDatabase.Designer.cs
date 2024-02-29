@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HealthHub.Identity.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240225132423_UserDateOfBirth")]
-    partial class UserDateOfBirth
+    [Migration("20240229081430_UpdateDatabase")]
+    partial class UpdateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

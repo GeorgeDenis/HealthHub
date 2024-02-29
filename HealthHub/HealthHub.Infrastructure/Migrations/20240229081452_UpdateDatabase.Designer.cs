@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HealthHub.Infrastructure.Migrations
 {
     [DbContext(typeof(HealthHubContext))]
-    [Migration("20240227163755_LoggedFoodUpdate")]
-    partial class LoggedFoodUpdate
+    [Migration("20240229081452_UpdateDatabase")]
+    partial class UpdateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,33 @@ namespace HealthHub.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("HealthHub.Domain.Entities.LoggedCardioExercise", b =>
+                {
+                    b.Property<Guid>("LoggedCardioExerciseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("CaloriesBurned")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("DateLogged")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LoggedCardioExerciseId");
+
+                    b.ToTable("LoggedCardioExercises");
+                });
 
             modelBuilder.Entity("HealthHub.Domain.Entities.LoggedFood", b =>
                 {
@@ -96,6 +123,26 @@ namespace HealthHub.Infrastructure.Migrations
                     b.HasKey("LoggedStrengthExerciseId");
 
                     b.ToTable("LoggedStrengthExercises");
+                });
+
+            modelBuilder.Entity("HealthHub.Domain.Entities.LoggedWeight", b =>
+                {
+                    b.Property<Guid>("LoggedWeightId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateLogged")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Weight")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("LoggedWeightId");
+
+                    b.ToTable("LoggedWeights");
                 });
 
             modelBuilder.Entity("HealthHub.Domain.Entities.MacronutrientsGoal", b =>

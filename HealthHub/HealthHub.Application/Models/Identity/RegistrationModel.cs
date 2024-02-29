@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using HealthHub.Application.Features;
+using HealthHub.Application.Features.Users;
+using System.ComponentModel.DataAnnotations;
 
 namespace HealthHub.Application.Models.Identity
 {
@@ -16,5 +18,13 @@ namespace HealthHub.Application.Models.Identity
 
         [Required(ErrorMessage = "Password is required")]
         public string? Password { get; set; }
+        public float? CurrentWeight { get; set; }
+        public int? Height { get; set; }
+        public DateTime? DateOfBirth { get; set; }
+        public string? Location { get; set; }
+        public Gender? Gender { get; set; }
+        public GoalType? GoalType { get; set; }
+        public float? WeeklyGoal { get; set; }
+        public ActivityLevel? Activity { get; set; }
     }
 }

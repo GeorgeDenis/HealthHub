@@ -1,7 +1,7 @@
-import {Input, Button, Typography} from "@material-tailwind/react";
+import { Input, Button, Typography } from "@material-tailwind/react";
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import api from "../../services/api";
 import { toast } from 'react-toastify';
@@ -9,6 +9,8 @@ import 'react-toastify/dist/ReactToastify.css';
 
 export function SignUp() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { userData } = location.state || {};
   const [inputs, setInputs] = useState({
     username: '',
     name: '',
@@ -16,6 +18,11 @@ export function SignUp() {
     password: '',
     confirmPassword: ''
   });
+  useEffect(() => {
+    if (!userData) {
+      navigate("/auth/sign-in");
+    }
+  }, []);
 
   const register = async (register_data) => {
     try {
@@ -24,6 +31,14 @@ export function SignUp() {
         name: register_data.name,
         email: register_data.email,
         password: register_data.password,
+        currentWeight: userData.currentWeight,
+        height: userData.height,
+        dateOfBirth: userData.dateOfBirth,
+        location: userData.location,
+        gender: userData.gender,
+        goalType: userData.goalType,
+        weeklyGoal: userData.weeklyGoal,
+        activity: userData.activity,
       });
 
       if (response.status === 201) {
@@ -47,12 +62,12 @@ export function SignUp() {
   };
 
   const validatePassword = (password) => {
-    if(password.length < 7){
+    if (password.length < 7) {
       toast.error("Password must be at least 7 characters long");
       return false;
     }
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{7,}$/;
-    if(!regex.test(password)){
+    if (!regex.test(password)) {
       toast.error("Password must contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character");
       return false;
     }
@@ -60,26 +75,26 @@ export function SignUp() {
   }
 
   const handleChange = (e) => {
-    const {name,value} = e.target;
-    setInputs(prev => ({...prev,[name]:value}));
+    const { name, value } = e.target;
+    setInputs(prev => ({ ...prev, [name]: value }));
   }
 
   const handleSignup = (e) => {
     e.preventDefault();
 
-    if(inputs.username === '' || inputs.name === '' || inputs.email === '' || inputs.password === '' || inputs.confirmPassword === ''){
+    if (inputs.username === '' || inputs.name === '' || inputs.email === '' || inputs.password === '' || inputs.confirmPassword === '') {
       toast.error("Please fill all the fields");
       return;
     }
 
-    if(inputs.password !== inputs.confirmPassword){
+    if (inputs.password !== inputs.confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
-    if(!validatePassword(inputs.password)){
+    if (!validatePassword(inputs.password)) {
       return;
     }
-      register(inputs);
+    register(inputs);
   }
   return (
     <section className="flex text-surface-light">

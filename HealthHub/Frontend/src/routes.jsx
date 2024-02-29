@@ -13,6 +13,8 @@ import VerifyResetCode from "./pages/auth/VerifyResetCode";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ActivityLevelModal from "./pages/auth/RegisterModal/ActivityLevelModal";
 import MainInfoCard from "./pages/auth/RegisterModal/MainInfoCard";
+import GoalTypeModal from "./pages/auth/RegisterModal/GoalTypeModal";
+import WeeklyGoalModal from "./pages/auth/RegisterModal/WeeklyGoalModal";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -51,6 +53,18 @@ export const routes = [
         name: "sign up",
         path: "/sign-up",
         element: <SignUp />,
+      },
+      {
+        icon: <InformationCircleIcon {...icon} />,
+        name: "set goal type",
+        path: "/set-goal-type",
+        element: <GoalTypeModal />,
+      },
+      {
+        icon: <InformationCircleIcon {...icon} />,
+        name: "set weekly goal",
+        path: "/set-weekly-goal",
+        element: <WeeklyGoalModal />,
       },
       {
         icon: <InformationCircleIcon {...icon} />,

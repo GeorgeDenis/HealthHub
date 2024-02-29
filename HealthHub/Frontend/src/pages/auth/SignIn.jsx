@@ -1,7 +1,7 @@
-import {Input, Button, Typography} from "@material-tailwind/react";
-import {Link, useNavigate} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {toast} from "react-toastify";
+import { Input, Button, Typography } from "@material-tailwind/react";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import api from "@/services/api";
 import axios from "axios";
 
@@ -10,14 +10,14 @@ export function SignIn() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleCallbackResponse = async(response) => {
-    if(response.credential) {
-      try{
-        const responseLogin = await api.post("/api/v1/Authentication/google-login", 
+  const handleCallbackResponse = async (response) => {
+    if (response.credential) {
+      try {
+        const responseLogin = await api.post("/api/v1/Authentication/google-login",
           response.credential,
         );
 
-        if(responseLogin.status === 200) {
+        if (responseLogin.status === 200) {
           localStorage.setItem("token", responseLogin.data.token);
           toast.success("Login Successful");
           navigate('/');
@@ -26,7 +26,7 @@ export function SignIn() {
         let errorMessage = "Login failed";
         if (axios.isAxiosError(error) && error.response) {
           if (error.response.data) {
-            if(error.response.data.validationsErrors)
+            if (error.response.data.validationsErrors)
               errorMessage += ": " + error.response.data.validationsErrors[0];
             else
               errorMessage += ": " + error.response.data;
@@ -47,7 +47,7 @@ export function SignIn() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    if(!username || !password) {
+    if (!username || !password) {
       toast.error("Please fill all fields");
       return;
     }
@@ -58,7 +58,7 @@ export function SignIn() {
         password: password,
       });
 
-      if(response.status === 200) {
+      if (response.status === 200) {
         localStorage.setItem("token", response.data);
         toast.success("Login Successful");
         navigate('/');
@@ -67,7 +67,7 @@ export function SignIn() {
       let errorMessage = "Login failed";
       if (axios.isAxiosError(error) && error.response) {
         if (error.response.data) {
-          if(error.response.data.validationsErrors)
+          if (error.response.data.validationsErrors)
             errorMessage += ": " + error.response.data.validationsErrors[0];
           else
             errorMessage += ": " + error.response.data;
@@ -142,15 +142,11 @@ export function SignIn() {
           </div>
           <Typography variant="small" className="text-center text-surface-light-dark font-medium mt-4">
             Not registered?
-            <Link to="/auth/sign-up" className="text-secondary ml-1 hover:text-primary">Create account</Link>
+            <Link to="/auth/set-goal-type" className="text-secondary ml-1 hover:text-primary">Create account</Link>
           </Typography>
           <Typography variant="small" className="text-center text-surface-light-dark font-medium mt-4">
             Forgot password?
             <Link to="/auth/send-reset-code" className="text-secondary ml-1 hover:text-primary">Reset password</Link>
-          </Typography>
-          <Typography variant="small" className="text-center text-surface-light-dark font-medium mt-4">
-            Activity Level?
-            <Link to="/auth/set-activity-level" className="text-secondary ml-1 hover:text-primary">Activity Level</Link>
           </Typography>
         </form>
 
