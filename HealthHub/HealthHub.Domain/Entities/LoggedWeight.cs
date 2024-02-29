@@ -4,7 +4,7 @@ namespace HealthHub.Domain.Entities
 {
     public class LoggedWeight
     {
-        private LoggedWeight( Guid UserId, double Weight)
+        private LoggedWeight( Guid UserId, float Weight)
         {
             this.UserId = UserId;
             this.DateLogged = DateTime.UtcNow;
@@ -16,8 +16,8 @@ namespace HealthHub.Domain.Entities
         public Guid LoggedWeightId { get; private set; }
         public Guid UserId { get; private set; }
         public DateTime DateLogged { get; private set; }
-        public double Weight { get; private set; }
-        public static Result<LoggedWeight> Create(Guid UserId, double Weight)
+        public float Weight { get; private set; }
+        public static Result<LoggedWeight> Create(Guid UserId, float Weight)
         {
             if(UserId == Guid.Empty)
             {

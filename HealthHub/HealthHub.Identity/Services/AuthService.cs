@@ -20,8 +20,9 @@ namespace HealthHub.Identity.Services
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IPasswordResetCodeRepository passwordResetCodeRepository;
         private readonly IMacronutrientsGoalRepository macronutrientsGoalRepository;
+        private readonly ILoggedWeightRepository loggedWeightRepository;
         private readonly IConfiguration configuration;
-        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository, IPasswordResetCodeRepository passwordResetCodeRepository, IMacronutrientsGoalRepository macronutrientsGoalRepository)
+        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository, IPasswordResetCodeRepository passwordResetCodeRepository, IMacronutrientsGoalRepository macronutrientsGoalRepository, ILoggedWeightRepository loggedWeightRepository)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -30,6 +31,7 @@ namespace HealthHub.Identity.Services
             this.userRepository = userRepository;
             this.passwordResetCodeRepository = passwordResetCodeRepository;
             this.macronutrientsGoalRepository = macronutrientsGoalRepository;
+            this.loggedWeightRepository = loggedWeightRepository;
         }
         public async Task<(int, string)> Registeration(RegistrationModel model, string role)
         {
@@ -73,6 +75,11 @@ namespace HealthHub.Identity.Services
             await userRepository.AddAsync(userDomain.Value);
             var macronutrientsGoal = MacronutrientsGoal.Create(Guid.Parse(user.Id), 20, 50, 30);
             await macronutrientsGoalRepository.AddAsync(macronutrientsGoal.Value);
+            if (model.CurrentWeight.HasValue && model.CurrentWeight.Value > 0)
+            {
+                var loggedWeight = LoggedWeight.Create(Guid.Parse(user.Id), model.CurrentWeight.Value);
+                await loggedWeightRepository.AddAsync(loggedWeight.Value);
+            }
             return (1, "User created successfully!");
         }
 

@@ -5,6 +5,6 @@ namespace HealthHub.Application.Features.LoggedWeights.Commands.CreateLoggedWeig
     public class CreateLoggedWeightCommand : IRequest<CreateLoggedWeightCommandResponse>
     {
         public Guid UserId { get; set; }
-        public double Weight { get; set; }
+        public float Weight { get; set; }
     }
 }

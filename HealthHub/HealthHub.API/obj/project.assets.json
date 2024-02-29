@@ -9775,19 +9775,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Denis\\.nuget\\packages\\": {}
+    "C:\\Users\\georg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
+      "projectUniqueName": "I:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
       "projectName": "HealthHub.API",
-      "projectPath": "C:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
-      "packagesPath": "C:\\Users\\Denis\\.nuget\\packages\\",
-      "outputPath": "C:\\Licenta2024\\HealthHub\\HealthHub.API\\obj\\",
+      "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
+      "packagesPath": "C:\\Users\\georg\\.nuget\\packages\\",
+      "outputPath": "I:\\Licenta2024\\HealthHub\\HealthHub.API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Denis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\georg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9801,14 +9801,14 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
-              "projectPath": "C:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
+            "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
+              "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
             },
-            "C:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj": {
-              "projectPath": "C:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj"
+            "I:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj": {
+              "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj"
             },
-            "C:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj": {
-              "projectPath": "C:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj"
+            "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj": {
+              "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj"
             }
           }
         }

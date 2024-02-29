@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {}
+    "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {
+    "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj",
+        "projectUniqueName": "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj",
         "projectName": "HealthHub.Domain",
-        "projectPath": "C:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj",
-        "packagesPath": "C:\\Users\\Denis\\.nuget\\packages\\",
-        "outputPath": "C:\\Licenta2024\\HealthHub\\HealthHub.Domain\\obj\\",
+        "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj",
+        "packagesPath": "C:\\Users\\georg\\.nuget\\packages\\",
+        "outputPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Denis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\georg\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
