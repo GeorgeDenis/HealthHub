@@ -25,5 +25,20 @@ namespace HealthHub.Infrastructure.Repositories
                 }).ToListAsync();
             return Result<List<LoggedWeightDto>>.Success(loggedWeights);
         }
+
+        public async Task<Result<LoggedWeightDto>> GetLastLoggedWeightByUserId(Guid userId)
+        {
+            var loggedWeight = await context.LoggedWeights
+                .Where(lw => lw.UserId == userId)
+                .OrderByDescending(lw => lw.DateLogged)
+                .Select(lw => new LoggedWeightDto
+                {
+                    Id = lw.LoggedWeightId,
+                    UserId = lw.UserId,
+                    Weight = lw.Weight,
+                    DateLogged = lw.DateLogged
+                }).FirstOrDefaultAsync();
+            return Result<LoggedWeightDto>.Success(loggedWeight);
+        }
     }
 }

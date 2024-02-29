@@ -26,8 +26,13 @@ export function Home() {
   const [currentUserMacronutrients, setCurrentUserMacronutrients] = useState(
     {},
   );
+  const [currentWeight, setCurrentWeight] = useState({
+    weight: 0,
+    dateLogged: "",
+  });
   useEffect(() => {
     fetchCalories();
+    fetchCurrentUserWeight();
   }, []);
   const fetchCalories = async () => {
     try {
@@ -74,6 +79,29 @@ export function Home() {
       toast.error("Error fetching user macronutrients:", error);
     }
   };
+  const fetchCurrentUserWeight = async () => {
+    try {
+      const response = await api.get(
+        `/api/v1/LoggedWeight/last-logged-weight/${currentUser?.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+      if (response.status === 200) {
+        setCurrentWeight({
+          weight: response.data.weight,
+          dateLogged: response.data.dateLogged,
+        });
+      } else {
+        toast.error("Failed to fetch user last recorded weight");
+      }
+    } catch (error) {
+      toast.error("Error fetching user last recorded weight:", error);
+    }
+  };
+
   return (
     <div className="mt-10 text-surface-light">
       <div className="mb-16">
@@ -102,6 +130,14 @@ export function Home() {
             </Typography>
             <Typography variant="h4" className="text-white p-2">
               Fats Remaining: {currentUserMacronutrients.fats}
+            </Typography>
+          </div>
+        )}
+        {currentWeight && (
+          <div>
+            <Typography variant="h4" className="text-white p-2">
+              Last recorded weight: {currentWeight.weight} kg on{" "}
+              {new Date(currentWeight.dateLogged).toLocaleDateString()}
             </Typography>
           </div>
         )}

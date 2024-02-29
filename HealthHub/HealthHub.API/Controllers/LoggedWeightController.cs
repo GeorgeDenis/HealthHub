@@ -1,4 +1,5 @@
 ﻿using HealthHub.Application.Features.LoggedWeights.Commands.CreateLoggedWeight;
+using HealthHub.Application.Features.LoggedWeights.Queries.GetLastLoggedWeightByUserId;
 using HealthHub.Application.Features.LoggedWeights.Queries.GetLoggedWeightByUserId;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +15,18 @@ namespace HealthHub.API.Controllers
         public async Task<IActionResult> GetLoggedWeightByUserId(Guid userId)
         {
             var query = new GetLoggedWeightByUserIdQuery() { UserId = userId };
+            var result = await Mediator.Send(query);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [Authorize(Roles = "User")]
+        [HttpGet("last-logged-weight/{userId}")]
+        public async Task<IActionResult> GetLastLoggedWeightByUserId(Guid userId)
+        {
+            var query = new GetLastLoggedWeightByUserIdQuery() { UserId = userId };
             var result = await Mediator.Send(query);
             if (!result.Success)
             {
