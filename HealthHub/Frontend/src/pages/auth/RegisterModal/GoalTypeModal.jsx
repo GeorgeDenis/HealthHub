@@ -62,13 +62,13 @@ const GoalTypeModal = () => {
         </div>
         <div className="m-2 self-end">
           <Button
-            className="bg-[#557C55] hover:bg-primary mr-2 px-2 py-2 text-sm lg:py-3 lg:px-3"
+            className="bg-[#557C55] hover:bg-primary mr-2 px-2 py-2 text-sm lg:py-3 lg:px-3 transition ease-out duration-500"
             onClick={handleBack}
           >
             Back
           </Button>
           <Button
-            className="bg-secondary hover:bg-primary mr-2 px-2 py-2 text-sm lg:py-3 lg:px-3"
+            className="bg-secondary hover:bg-primary mr-2 px-2 py-2 text-sm lg:py-3 lg:px-3 transition ease-out duration-500"
             onClick={handleNext}
           >
             Next

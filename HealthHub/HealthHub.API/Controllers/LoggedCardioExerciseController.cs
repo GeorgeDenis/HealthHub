@@ -1,15 +1,17 @@
-﻿using HealthHub.Application.Features.LoggedCardioExercises.Commands.CreateLoggedCardioExercises;
+﻿using HealthHub.API.Models;
+using HealthHub.Application.Features.LoggedCardioExercises.Commands.CreateLoggedCardioExercises;
 using HealthHub.Application.Features.LoggedCardioExercises.Commands.DeleteLoggedCardioExercise;
 using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetLoggedCardioExerciseByUserIdAndDate;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 
 namespace HealthHub.API.Controllers
 {
     public class LoggedCardioExerciseController : ApiControllerBase
     {
-        [Authorize(Roles ="User")]
+        [Authorize(Roles = "User")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> Create(CreateLoggedCardioExerciseCommand command)
@@ -47,5 +49,39 @@ namespace HealthHub.API.Controllers
             }
             return Ok(result);
         }
+
+        [Authorize(Roles = "User")]
+        [HttpGet("/search-cardio-exercise")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetListOfCardioExercisesByName(string exerciseName)
+        {
+            var client = new HttpClient();
+            client.DefaultRequestHeaders.Add("X-Api-Key", DotNetEnv.Env.GetString("APINinjasKey"));
+            var response = await client.GetAsync($"https://api.api-ninjas.com/v1/caloriesburned?activity={exerciseName}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                if (string.IsNullOrEmpty(content))
+                {
+                    return Ok(new List<CardioExercise>());
+                }
+                var tempExercises = JsonSerializer.Deserialize<List<CardioExercise>>(content);
+                if (tempExercises == null)
+                {
+                    return Ok(new List<CardioExercise>());
+                }
+                var exercises = tempExercises.Select(ex => new CardioExercise
+                {
+                    Name = ex.Name,
+                    CaloriesPerHour = ex.CaloriesPerHour
+                }).ToList();
+
+                return Ok(exercises);
+            }
+
+            return BadRequest("Error");
+        }
+
     }
 }
