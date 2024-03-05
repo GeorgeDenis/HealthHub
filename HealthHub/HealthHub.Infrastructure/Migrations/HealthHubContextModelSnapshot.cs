@@ -134,8 +134,8 @@ namespace HealthHub.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("Weight")
-                        .HasColumnType("double precision");
+                    b.Property<float>("Weight")
+                        .HasColumnType("real");
 
                     b.HasKey("LoggedWeightId");
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "I:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj": {}
+    "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj": {}
   },
   "projects": {
-    "I:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj": {
+    "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "I:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
+        "projectUniqueName": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
         "projectName": "HealthHub.API",
-        "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
+        "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
         "packagesPath": "C:\\Users\\georg\\.nuget\\packages\\",
-        "outputPath": "I:\\Licenta2024\\HealthHub\\HealthHub.API\\obj\\",
+        "outputPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\georg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,14 +28,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
-                "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
+              "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
+                "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
               },
-              "I:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj": {
-                "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj"
+              "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj": {
+                "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj"
               },
-              "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj": {
-                "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj"
+              "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj": {
+                "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj"
               }
             }
           }
@@ -112,14 +112,14 @@
         }
       }
     },
-    "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
+    "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
+        "projectUniqueName": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
         "projectName": "HealthHub.Application",
-        "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
+        "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
         "packagesPath": "C:\\Users\\georg\\.nuget\\packages\\",
-        "outputPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\obj\\",
+        "outputPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\georg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -136,8 +136,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {
-                "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj"
+              "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {
+                "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj"
               }
             }
           }
@@ -191,14 +191,14 @@
         }
       }
     },
-    "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {
+    "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj",
+        "projectUniqueName": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj",
         "projectName": "HealthHub.Domain",
-        "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj",
+        "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj",
         "packagesPath": "C:\\Users\\georg\\.nuget\\packages\\",
-        "outputPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Domain\\obj\\",
+        "outputPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\georg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -246,14 +246,14 @@
         }
       }
     },
-    "I:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj": {
+    "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "I:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj",
+        "projectUniqueName": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj",
         "projectName": "HealthHub.Identity",
-        "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj",
+        "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj",
         "packagesPath": "C:\\Users\\georg\\.nuget\\packages\\",
-        "outputPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Identity\\obj\\",
+        "outputPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Identity\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\georg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -270,8 +270,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
-                "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
+              "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
+                "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
               }
             }
           }
@@ -335,14 +335,14 @@
         }
       }
     },
-    "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj": {
+    "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj",
+        "projectUniqueName": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj",
         "projectName": "HealthHub.Infrastructure",
-        "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj",
+        "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\georg\\.nuget\\packages\\",
-        "outputPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\obj\\",
+        "outputPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\georg\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -359,8 +359,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
-                "projectPath": "I:\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
+              "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj": {
+                "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj"
               }
             }
           }

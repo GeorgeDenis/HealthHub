@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "iKDgD/GxON2DRmAIOuDkp9t1PTJTOEFqZnfTFNtjo4KGWISwpEA0Td+Sz1xDCs6i1f8Sv2QlzODnrPtbIdN5cw==",
+  "dgSpecHash": "+pm+Vo0jvNtkanYDIz6roJiurm9+ygLvVAPlPtunvwfCjjbiLvPi4QcscljJQeoDPcadkQBk3Fh8bn3v9CqKAA==",
   "success": true,
-  "projectFilePath": "I:\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
+  "projectFilePath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\georg\\.nuget\\packages\\azure.core\\1.36.0\\azure.core.1.36.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\azure.identity\\1.10.4\\azure.identity.1.10.4.nupkg.sha512",

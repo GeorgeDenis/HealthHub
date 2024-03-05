@@ -22,3 +22,15 @@ C:\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.dll
 C:\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\refint\HealthHub.Domain.dll
 C:\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.pdb
 C:\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\ref\HealthHub.Domain.dll
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\bin\Debug\net8.0\HealthHub.Domain.deps.json
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\bin\Debug\net8.0\HealthHub.Domain.dll
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\bin\Debug\net8.0\HealthHub.Domain.pdb
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.GeneratedMSBuildEditorConfig.editorconfig
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.AssemblyInfoInputs.cache
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.AssemblyInfo.cs
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.csproj.CoreCompileInputs.cache
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.sourcelink.json
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.dll
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\refint\HealthHub.Domain.dll
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\HealthHub.Domain.pdb
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Domain\obj\Debug\net8.0\ref\HealthHub.Domain.dll

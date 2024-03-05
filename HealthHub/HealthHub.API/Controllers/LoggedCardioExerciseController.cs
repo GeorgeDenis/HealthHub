@@ -3,7 +3,6 @@ using HealthHub.Application.Features.LoggedCardioExercises.Commands.CreateLogged
 using HealthHub.Application.Features.LoggedCardioExercises.Commands.DeleteLoggedCardioExercise;
 using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetLoggedCardioExerciseByUserIdAndDate;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
@@ -82,6 +81,7 @@ namespace HealthHub.API.Controllers
 
             return BadRequest("Error");
         }
+        
 
     }
 }

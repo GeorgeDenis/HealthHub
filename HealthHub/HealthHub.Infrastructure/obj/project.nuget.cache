@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eYmmuxeefe7ZclcrO9hj5KKHWLfbKcrcj0P4Wh05G2FECsRqX2LmZ0bgdqjUl7zwVE2KDWYLfCU4KW/hFWwqyQ==",
+  "dgSpecHash": "YS/W68D6Bmba3AES5y9U1MGFE6+z0SSMqzRdx/zuch2jmliCiOWPo+lh+Vx1D7mxO2wEE9rccpfWq7ONmotQDg==",
   "success": true,
-  "projectFilePath": "I:\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj",
+  "projectFilePath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Infrastructure\\HealthHub.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\georg\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\fluentvalidation\\11.8.1\\fluentvalidation.11.8.1.nupkg.sha512",
