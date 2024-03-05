@@ -63,10 +63,10 @@ namespace HealthHub.Domain.Entities
             {
                 return Result<LoggedFood>.Failure("Fat cannot be less than 0");
             }
-            if (protein * 4 + carbohydrates * 4 + fat * 9 != calories - 50)
-            {
-                return Result<LoggedFood>.Failure("Calories must be equal to 4 * protein + 4 * carbohydrates + 9 * fat");
-            }
+            //if (protein * 4 + carbohydrates * 4 + fat * 9 != calories - 50)
+            //{
+            //    return Result<LoggedFood>.Failure("Calories must be equal to 4 * protein + 4 * carbohydrates + 9 * fat");
+            //}
             return Result<LoggedFood>.Success(new LoggedFood(userId, servingSize, numberOfServings, mealType, name, calories, protein, carbohydrates, fat));
         }
         public Result<LoggedFood> Update(float? servingSize, float? numberOfServings, MealType mealType, string name, int calories, int protein, int carbohydrates, int fat)
