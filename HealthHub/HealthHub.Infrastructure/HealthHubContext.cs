@@ -11,6 +11,7 @@ namespace HealthHub.Infrastructure
         public DbSet<MacronutrientsGoal> MacronutrientsGoals { get; set; }
         public DbSet<LoggedWeight> LoggedWeights { get; set; }
         public DbSet<LoggedFood> LoggedFoods { get; set; }
+        public DbSet<LoggedWater> LoggedWater { get; set; }
         public DbSet<LoggedStrengthExercise> LoggedStrengthExercises { get; set; }
         public DbSet<LoggedCardioExercise> LoggedCardioExercises { get; set; }
 

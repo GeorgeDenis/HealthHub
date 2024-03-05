@@ -32,7 +32,7 @@ namespace HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood
                 return new CreateLoggedFoodCommandResponse
                 {
                     Success = false,
-                    ValidationsErrors = new List<string> { "Something went wrong while creating the logged food." }
+                    ValidationsErrors = new List<string> { "Something went wrong while logging the food." }
                 };
             }
             return new CreateLoggedFoodCommandResponse

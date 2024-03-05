@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HealthHub.Infrastructure.Migrations
 {
     [DbContext(typeof(HealthHubContext))]
-    [Migration("20240305181905_DecimalFix")]
-    partial class DecimalFix
+    [Migration("20240305195255_WaterLoggedMigration")]
+    partial class WaterLoggedMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,6 +123,26 @@ namespace HealthHub.Infrastructure.Migrations
                     b.HasKey("LoggedStrengthExerciseId");
 
                     b.ToTable("LoggedStrengthExercises");
+                });
+
+            modelBuilder.Entity("HealthHub.Domain.Entities.LoggedWater", b =>
+                {
+                    b.Property<Guid>("LoggedWaterId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<float>("Amount")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime>("DateLogged")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("LoggedWaterId");
+
+                    b.ToTable("LoggedWater");
                 });
 
             modelBuilder.Entity("HealthHub.Domain.Entities.LoggedWeight", b =>

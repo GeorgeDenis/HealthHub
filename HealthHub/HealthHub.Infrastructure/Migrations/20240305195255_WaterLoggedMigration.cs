@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HealthHub.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateDatabase : Migration
+    public partial class WaterLoggedMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,13 +66,27 @@ namespace HealthHub.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LoggedWater",
+                columns: table => new
+                {
+                    LoggedWaterId = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Amount = table.Column<float>(type: "real", nullable: false),
+                    DateLogged = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LoggedWater", x => x.LoggedWaterId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "LoggedWeights",
                 columns: table => new
                 {
                     LoggedWeightId = table.Column<Guid>(type: "uuid", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: false),
                     DateLogged = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Weight = table.Column<double>(type: "double precision", nullable: false)
+                    Weight = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -132,6 +146,9 @@ namespace HealthHub.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "LoggedStrengthExercises");
+
+            migrationBuilder.DropTable(
+                name: "LoggedWater");
 
             migrationBuilder.DropTable(
                 name: "LoggedWeights");
