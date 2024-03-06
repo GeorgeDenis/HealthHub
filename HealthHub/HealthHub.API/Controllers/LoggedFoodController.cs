@@ -26,6 +26,7 @@ namespace HealthHub.API.Controllers
         }
         [Authorize(Roles = "User")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLoggedFoodByUserIdAndDate([FromQuery] GetLoggedFoodByUserIdAndDateQuery getLoggedFoodByUserIdAndDateQuery)
         {
             var result = await Mediator.Send(getLoggedFoodByUserIdAndDateQuery);

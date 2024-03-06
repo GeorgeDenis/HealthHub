@@ -7,6 +7,7 @@ import {
   RectangleStackIcon,
 } from "@heroicons/react/24/solid";
 import { Home, Profile } from "@/pages/dashboard";
+import LogFood from "./pages/dashboard/LogFood/LogFood";
 import { SignIn, SignUp } from "@/pages/auth";
 import SendResetCode from "./pages/auth/SendResetCode";
 import VerifyResetCode from "./pages/auth/VerifyResetCode";
@@ -36,6 +37,12 @@ export const routes = [
         path: "/profile",
         element: <Profile />,
       },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "log food",
+        path: "/log-food",
+        element: <LogFood />,
+      }
     ],
   },
   {
