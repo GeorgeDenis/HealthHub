@@ -8,13 +8,26 @@ import api from "../../../services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
 
+const calculateTotalNutrient = (nutrient, ...foodArrays) => {
+  return foodArrays.reduce((totalNutrient, currentArray) => {
+    const totalForCurrentArray = currentArray.reduce((acc, food) => acc + food[nutrient], 0);
+    return totalNutrient + totalForCurrentArray;
+  }, 0);
+};
+
 const LogFood = () => {
   const currentUser = useUser();
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [breakfastFood, setBreakfastFood] = useState([]);
+  const [breakfastFoods, setBreakfastFoods] = useState([]);
+  const [lunchFoods, setLunchFoods] = useState([]);
+  const [dinnerFoods, setDinnerFoods] = useState([]);
+  const [snackFoods, setSnackFoods] = useState([]);
   const [cardioExercises, setCardioExercises] = useState([]);
-  const [totalBreakfastCalories, setTotalBreakfastCalories] = useState(0);
   const [totalCardioCalories, setTotalCardioCalories] = useState(0);
+  const [totalFoodsCalories, setTotalFoodCalories] = useState(0);
+  const [totalProtein, setTotalProtein] = useState(0);
+  const [totalCarbohydrates, setTotalCarbohydrates] = useState(0);
+  const [totalFat, setTotalFat] = useState(0);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -23,21 +36,32 @@ const LogFood = () => {
     fetchLoggedFoods();
     fetchLoggedExercises();
   }, [selectedDate]);
+
   useEffect(() => {
-    const totalCalories = breakfastFood.reduce(
-      (acc, food) => acc + food.calories,
-      0,
-    );
-    setTotalBreakfastCalories(totalCalories);
+    const totalCalories = calculateTotalNutrient('calories', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
+    setTotalFoodCalories(totalCalories);
+
+    const totalProtein = calculateTotalNutrient('protein', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
+    setTotalProtein(totalProtein);
+
+    const totalFat = calculateTotalNutrient('fat', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
+    setTotalFat(totalFat);
+
+    const totalCarbohydrates = calculateTotalNutrient('carbohydrates', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
+    setTotalCarbohydrates(totalCarbohydrates);
+
+
+  }, [breakfastFoods, lunchFoods, dinnerFoods, snackFoods]);
+
+  useEffect(() => {
     const totalCardioCalories = cardioExercises.reduce(
       (acc, exercise) => acc + exercise.caloriesBurned,
       0,
     );
     setTotalCardioCalories(totalCardioCalories);
-  }, [breakfastFood, cardioExercises]);
+  }, [cardioExercises]);
 
   const fetchLoggedFoods = async () => {
-    setBreakfastFood([]);
     try {
       const response = await api.get(`/api/v1/LoggedFood`, {
         params: { userId: currentUser?.userId, date: selectedDate },
@@ -47,23 +71,45 @@ const LogFood = () => {
       });
 
       if (response.status === 200) {
-        const foodFetch = response.data.loggedFoods;
-        foodFetch.forEach((food) => {
-          if (food.mealType === 1) {
-            const foodItem = {
-              foodName: food.foodName,
-              calories: food.calories,
-            };
-            setBreakfastFood((prev) => [...prev, foodItem]);
+        setBreakfastFoods([]);
+        setLunchFoods([]);
+        setDinnerFoods([]);
+        setSnackFoods([]);
+
+        response.data.loggedFoods.forEach(food => {
+          const foodItem = {
+            foodName: food.foodName,
+            calories: food.calories,
+            protein: food.protein,
+            carbohydrates: food.carbohydrates,
+            fat: food.fat,
+            mealType: food.mealType,
+          };
+
+          switch (food.mealType) {
+            case 1:
+              setBreakfastFoods(prev => [...prev, foodItem]);
+              break;
+            case 2:
+              setLunchFoods(prev => [...prev, foodItem]);
+              break;
+            case 3:
+              setDinnerFoods(prev => [...prev, foodItem]);
+              break;
+            case 4:
+              setSnackFoods(prev => [...prev, foodItem]);
+              break;
+            default:
+              break;
           }
         });
       }
     } catch (error) {
-      console.error("Error fetching calories:", error);
+      console.error("Error fetching foods:", error);
     }
   };
+
   const fetchLoggedExercises = async () => {
-    setCardioExercises([]);
     try {
       const response = await api.get(`/api/v1/LoggedCardioExercise`, {
         params: { userId: currentUser?.userId, date: selectedDate },
@@ -73,19 +119,18 @@ const LogFood = () => {
       });
 
       if (response.status === 200) {
-        const cardioExercisesFetch = response.data.loggedCardioExercises;
-        cardioExercisesFetch.forEach((exercise) => {
-          const exerciseItem = {
-            exerciseName: exercise.exerciseName,
-            caloriesBurned: exercise.caloriesBurned,
-          };
-          setCardioExercises((prev) => [...prev, exerciseItem]);
-        });
+        const newCardioExercises = response.data.loggedCardioExercises.map((exercise) => ({
+          exerciseName: exercise.exerciseName,
+          caloriesBurned: exercise.caloriesBurned,
+        }));
+
+        setCardioExercises(newCardioExercises);
       }
     } catch (error) {
       console.error("Error fetching calories:", error);
     }
   };
+
 
   return (
     <>
@@ -96,10 +141,9 @@ const LogFood = () => {
         <CaloriesRemaining
           dateChange={handleDateChange}
           selectedDate={selectedDate}
-          totalBreakfastCalories={totalBreakfastCalories}
+          totalFoodsCalories={totalFoodsCalories}
           totalCardioCalories={totalCardioCalories}
         />
-
         <div className="flex gap-2">
           <div>
             <LogBreakfast />

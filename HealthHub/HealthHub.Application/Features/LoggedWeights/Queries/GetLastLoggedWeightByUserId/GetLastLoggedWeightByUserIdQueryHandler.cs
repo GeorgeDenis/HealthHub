@@ -36,6 +36,14 @@ namespace HealthHub.Application.Features.LoggedWeights.Queries.GetLastLoggedWeig
                     Message = "Error retrieving last logged weight"
                 };
             }
+            if(loggedWeight.Value == null)
+            {
+                return new GetLastLoggedWeightByUserIdQueryResponse()
+                {
+                    Success = false,
+                    Message = "No logged weight found"
+                };
+            }
             return new GetLastLoggedWeightByUserIdQueryResponse()
             {
                 Success = true,

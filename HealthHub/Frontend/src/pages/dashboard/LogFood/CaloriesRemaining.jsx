@@ -4,7 +4,7 @@ import api from "@/services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
 import LogFoodDatePicker from "./LogFoodDatePicker";
-const CaloriesRemaining = ({dateChange,selectedDate,totalBreakfastCalories,totalCardioCalories}) => {
+const CaloriesRemaining = ({ dateChange, selectedDate, totalFoodsCalories, totalCardioCalories }) => {
   const [calories, setCalories] = useState(0);
   const currentUser = useUser();
 
@@ -36,7 +36,7 @@ const CaloriesRemaining = ({dateChange,selectedDate,totalBreakfastCalories,total
       <LogFoodDatePicker
         selectedDate={selectedDate}
         onChange={dateChange}
-        
+
       />
       <Typography
         variant="h6"
@@ -53,7 +53,7 @@ const CaloriesRemaining = ({dateChange,selectedDate,totalBreakfastCalories,total
         </div>
         <Typography className="mb-1 text-surface-light">-</Typography>
         <div className="flex flex-col items-center">
-          <Typography className="mb-1 text-surface-light">{totalBreakfastCalories}</Typography>
+          <Typography className="mb-1 text-surface-light">{totalFoodsCalories}</Typography>
           <Typography className="mb-1 text-surface-light">{"Food"}</Typography>
         </div>
         <Typography className="mb-1 text-surface-light">+</Typography>
@@ -65,7 +65,7 @@ const CaloriesRemaining = ({dateChange,selectedDate,totalBreakfastCalories,total
         </div>
         <Typography className="mb-1 text-surface-light">=</Typography>
         <div className="flex flex-col items-center">
-          <Typography className="mb-1 text-surface-light">{calories - totalBreakfastCalories - totalCardioCalories}</Typography>
+          <Typography className="mb-1 text-surface-light">{calories - totalFoodsCalories - totalCardioCalories}</Typography>
           <Typography className="mb-1 text-surface-light">
             {"Remaining"}
           </Typography>

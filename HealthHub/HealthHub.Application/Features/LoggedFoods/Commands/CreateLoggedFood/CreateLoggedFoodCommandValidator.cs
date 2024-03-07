@@ -34,10 +34,13 @@ namespace HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .GreaterThan(0).WithMessage("{PropertyName} must be greater than 0.");
-
             RuleFor(p => p.MealType)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
-                .NotNull();
+                .NotNull()
+                .IsInEnum().WithMessage("{PropertyName} is not valid.");
+
+
+            
         }
     }
 }
