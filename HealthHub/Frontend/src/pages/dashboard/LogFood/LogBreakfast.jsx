@@ -6,9 +6,9 @@ import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
 import ModeCommentIcon from "@mui/icons-material/ModeComment";
 
-const LogBreakfast = () => {
+const LogBreakfast = ({ breakfastFoods }) => {
   return (
-    <div className="flex flex-col mt-4 px-1 mb-2">
+    <div className="flex flex-col mt-4 px-1 mb-2 min-w-[20rem]">
       <div className="flex items-center mb-2">
         <ModeCommentIcon
           className="text-secondary"
@@ -23,32 +23,20 @@ const LogBreakfast = () => {
         style={{ scrollbarWidth: "thin" }}
       >
         <div className="flex flex-col gap-2">
-          <CardContent className="p-2 bg-surface-mid-light">
-            <div className="flex items-center gap-2">
-              <div className="flex flex-col">
-                <p className="text-surface-light text-sm font-semibold">
-                  John Doe
-                </p>
-                <p className="text-surface-light text-xs">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+          {breakfastFoods.map((food, index) => (
+            <CardContent key={index} className="p-2 bg-surface-mid-light">
+              <div className="flex items-center gap-2">
+                <div className="flex flex-col">
+                  <p className="text-surface-light text-sm font-semibold">
+                    {food.foodName}
+                  </p>
+                  <p className="text-surface-light text-xs">
+                    {food.calories} calories
+                  </p>
+                </div>
               </div>
-            </div>
-          </CardContent>
-          <CardContent className="p-2 bg-surface-mid-light">
-            <div className="flex items-center gap-2">
-              <div className="flex flex-col">
-                <p className="text-surface-light text-sm font-semibold">
-                  John Doe
-                </p>
-                <p className="text-surface-light text-xs">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-              </div>
-            </div>
-          </CardContent>
+            </CardContent>
+          ))}
         </div>
       </div>
       <Button

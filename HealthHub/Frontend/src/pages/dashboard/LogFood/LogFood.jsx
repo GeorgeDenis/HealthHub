@@ -28,6 +28,7 @@ const LogFood = () => {
   const [totalProtein, setTotalProtein] = useState(0);
   const [totalCarbohydrates, setTotalCarbohydrates] = useState(0);
   const [totalFat, setTotalFat] = useState(0);
+  const [totalNutrients, setTotalNutrients] = useState({});
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
@@ -35,23 +36,24 @@ const LogFood = () => {
   useEffect(() => {
     fetchLoggedFoods();
     fetchLoggedExercises();
+    fetchLoggedFoodsNutrients();
   }, [selectedDate]);
 
-  useEffect(() => {
-    const totalCalories = calculateTotalNutrient('calories', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
-    setTotalFoodCalories(totalCalories);
+  // useEffect(() => {
+  //   const totalCalories = calculateTotalNutrient('calories', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
+  //   setTotalFoodCalories(totalCalories);
 
-    const totalProtein = calculateTotalNutrient('protein', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
-    setTotalProtein(totalProtein);
+  //   const totalProtein = calculateTotalNutrient('protein', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
+  //   setTotalProtein(totalProtein);
 
-    const totalFat = calculateTotalNutrient('fat', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
-    setTotalFat(totalFat);
+  //   const totalFat = calculateTotalNutrient('fat', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
+  //   setTotalFat(totalFat);
 
-    const totalCarbohydrates = calculateTotalNutrient('carbohydrates', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
-    setTotalCarbohydrates(totalCarbohydrates);
+  //   const totalCarbohydrates = calculateTotalNutrient('carbohydrates', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
+  //   setTotalCarbohydrates(totalCarbohydrates);
 
 
-  }, [breakfastFoods, lunchFoods, dinnerFoods, snackFoods]);
+  // }, [breakfastFoods, lunchFoods, dinnerFoods, snackFoods]);
 
   useEffect(() => {
     const totalCardioCalories = cardioExercises.reduce(
@@ -130,6 +132,22 @@ const LogFood = () => {
       console.error("Error fetching calories:", error);
     }
   };
+  const fetchLoggedFoodsNutrients = async () => {
+    try {
+      const response = await api.get(`/api/v1/LoggedFood/get-nutrients`, {
+        params: { userId: currentUser?.userId, dateLogged: selectedDate },
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setTotalNutrients(response.data.loggedFoodNutrients);
+      }
+    } catch (error) {
+      console.error("Error fetching calories:", error);
+    }
+  };
 
 
   return (
@@ -141,12 +159,15 @@ const LogFood = () => {
         <CaloriesRemaining
           dateChange={handleDateChange}
           selectedDate={selectedDate}
-          totalFoodsCalories={totalFoodsCalories}
+          totalFoodsCalories={totalNutrients.calories || 0}
           totalCardioCalories={totalCardioCalories}
         />
+        <p>{totalNutrients.protein}</p>
+        <p>{totalNutrients.carbohydrates}</p>
+        <p>{totalNutrients.fat}</p>
         <div className="flex gap-2">
           <div>
-            <LogBreakfast />
+            <LogBreakfast breakfastFoods={breakfastFoods} />
             <LogSection sectionName={"Lunch"} buttonName={"Add Food"} />
             <LogSection sectionName={"Dinner"} buttonName={"Add Food"} />
           </div>

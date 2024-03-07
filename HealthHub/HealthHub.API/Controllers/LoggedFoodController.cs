@@ -2,6 +2,7 @@
 using HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood;
 using HealthHub.Application.Features.LoggedFoods.Commands.DeleteLoggedFood;
 using HealthHub.Application.Features.LoggedFoods.Queries.GetLoggedFoodByUserIdAndDate;
+using HealthHub.Application.Features.LoggedFoods.Queries.GetLoggedFoodNutritentsByUserIdAndDate;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -48,9 +49,21 @@ namespace HealthHub.API.Controllers
             }
             return Ok(result);
         }
+        [Authorize(Roles = "User")]
+        [HttpGet("get-nutrients")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetLoggedFoodNutritentsByUserIdAndDate([FromQuery] GetLoggedFoodNutritentsByUserIdAndDateQuery getLoggedFoodNutritentsByUserIdAndDateQuery)
+        {
+            var result = await Mediator.Send(getLoggedFoodNutritentsByUserIdAndDateQuery);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
         [Authorize(Roles = "User")]
-        [HttpGet("/search-food/byName/{foodName}")]
+        [HttpGet("search-food/byName/{foodName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetListOfFoodByName(string foodName)
         {
@@ -81,8 +94,11 @@ namespace HealthHub.API.Controllers
 
             return BadRequest("Error");
         }
+
+
+
         [Authorize(Roles = "User")]
-        [HttpGet("/search-food/byCode/{foodCode}")]
+        [HttpGet("search-food/byCode/{foodCode}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
        public async Task<IActionResult> GetFood(string foodCode)
         { 
@@ -114,7 +130,7 @@ namespace HealthHub.API.Controllers
             }
             return BadRequest("Error");
         }
-        [HttpPost("/search-food/byImage")]
+        [HttpPost("search-food/byImage")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFoodByImage(IFormFile foodImage)
         {
