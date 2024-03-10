@@ -3,10 +3,16 @@ import { Card, CardBody, Button } from "@material-tailwind/react";
 import { Input, Avatar, Typography } from "@material-tailwind/react";
 import CaloriesRemaining from "./CaloriesRemaining";
 import LogSection from "./LogSection";
-import LogBreakfast from "./LogBreakfast";
+import LogBreakfast from "./LogFoods/LogBreakfast";
 import api from "../../../services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
+import LogLunch from "./LogFoods/LogLunch";
+import LogDinner from "./LogFoods/LogDinner";
+import LogSnack from "./LogFoods/LogSnack";
+import LogFoodSection from "./LogFoodSection";
+import LogExercise from "./LogExercise";
+import LogWater from "./LogWater";
 
 const calculateTotalNutrient = (nutrient, ...foodArrays) => {
   return foodArrays.reduce((totalNutrient, currentArray) => {
@@ -81,6 +87,8 @@ const LogFood = () => {
         response.data.loggedFoods.forEach(food => {
           const foodItem = {
             foodName: food.foodName,
+            servingSize: food.servingSize,
+            numberOfServings: food.numberOfServings,
             calories: food.calories,
             protein: food.protein,
             carbohydrates: food.carbohydrates,
@@ -165,16 +173,16 @@ const LogFood = () => {
         <p>{totalNutrients.protein}</p>
         <p>{totalNutrients.carbohydrates}</p>
         <p>{totalNutrients.fat}</p>
-        <div className="flex gap-2">
+        <div className="md:w-[80rem] grid grid-cols-2 grid-rows-3  p-4">
           <div>
-            <LogBreakfast breakfastFoods={breakfastFoods} />
-            <LogSection sectionName={"Lunch"} buttonName={"Add Food"} />
-            <LogSection sectionName={"Dinner"} buttonName={"Add Food"} />
+            <LogFoodSection foodsItems={breakfastFoods} sectionName={"Breakfast"} />
+            <LogFoodSection foodsItems={lunchFoods} sectionName={"Lunch"}/>
+            <LogFoodSection foodsItems={dinnerFoods} sectionName={"Dinner"}/>
           </div>
           <div>
-            <LogSection sectionName={"Snacks"} buttonName={"Add Food"} />
-            <LogSection sectionName={"Exercises"} buttonName={"Add Exercise"} />
-            <LogSection sectionName={"Water"} buttonName={"Add Water"} />
+            <LogFoodSection foodsItems={snackFoods} sectionName={"Snack"} buttonName={"Add Food"} />
+            <LogExercise foodsItems={snackFoods}/>
+            <LogWater selectedDate={selectedDate}/>
           </div>
         </div>
       </Card>

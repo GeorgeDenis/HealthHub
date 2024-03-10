@@ -11,6 +11,7 @@ const LogFoodDatePicker = ({ selectedDate, onChange }) => {
   };
   const handleNextDate = () => { 
     const nextDate = new Date(selectedDate);
+    if(nextDate.toLocaleDateString() === currentDate) return;
     nextDate.setDate(nextDate.getDate() + 1);
     onChange(nextDate);
   }

@@ -4,18 +4,18 @@ import { Card, CardContent } from "@mui/material";
 import api from "@/services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
-import ModeCommentIcon from "@mui/icons-material/ModeComment";
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
-const LogBreakfast = ({ breakfastFoods }) => {
+const LogExercise = ({ foodsItems }) => {
   return (
-    <div className="flex flex-col mt-4 px-1 mb-2 min-w-[20rem]">
+    <div className="flex flex-col mt-4 px-1 mb-2 w-[26rem] h-[15rem]">
       <div className="flex items-center mb-2">
-        <ModeCommentIcon
+        <FitnessCenterIcon
           className="text-secondary"
           fontSize="extraSmall"
-        ></ModeCommentIcon>
+        ></FitnessCenterIcon>
         <p className="text-gray-300 ml-1 text-md font-semibold">
-          BreakFast
+          Exercises
         </p>
       </div>
       <div
@@ -23,8 +23,8 @@ const LogBreakfast = ({ breakfastFoods }) => {
         style={{ scrollbarWidth: "thin" }}
       >
         <div className="flex flex-col gap-2">
-          {breakfastFoods.map((food, index) => (
-            <CardContent key={index} className="p-2 bg-surface-mid-light">
+          {foodsItems.map((food, index) => (
+            <CardContent key={index} className="p-2 bg-green-900 rounded-lg">
               <div className="flex items-center gap-2">
                 <div className="flex flex-col">
                   <p className="text-surface-light text-sm font-semibold">
@@ -40,13 +40,13 @@ const LogBreakfast = ({ breakfastFoods }) => {
         </div>
       </div>
       <Button
-        className="mt-6 w-[8rem] bg-secondary hover:bg-primary duration-200 "
+        className="mt-6 w-[9rem] bg-secondary hover:bg-primary duration-200 "
         type="submit"
       >
-        Add Food
+        Add Exercise
       </Button>
     </div>
   );
 };
 
-export default LogBreakfast;
+export default LogExercise;

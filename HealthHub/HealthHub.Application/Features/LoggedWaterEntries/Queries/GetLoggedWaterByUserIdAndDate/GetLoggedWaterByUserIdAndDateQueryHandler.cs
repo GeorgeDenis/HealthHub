@@ -1,4 +1,5 @@
 ﻿using HealthHub.Application.Persistence;
+using HealthHub.Domain.Entities;
 using MediatR;
 
 namespace HealthHub.Application.Features.LoggedWaterEntries.Queries.GetLoggedWaterByUserIdAndDate
@@ -26,10 +27,26 @@ namespace HealthHub.Application.Features.LoggedWaterEntries.Queries.GetLoggedWat
             var loggedWater = await loggedWaterRepository.GetByUserIdAndDate(request.UserId, request.Date);
             if (loggedWater == null)
             {
+                var logNewWaterIntake = LoggedWater.Create(request.UserId, 0, request.Date);
+                if (!logNewWaterIntake.IsSuccess)
+                {
+                    return new GetLoggedWaterByUserIdAndDateQueryResponse
+                    {
+                        Success = false,
+                        ValidationsErrors = new List<string> { logNewWaterIntake.Error }
+                    };
+                }
+                await loggedWaterRepository.AddAsync(logNewWaterIntake.Value);
                 return new GetLoggedWaterByUserIdAndDateQueryResponse
                 {
-                    Success = false,
-                    ValidationsErrors = new List<string> { "No water logged for the given date." }
+                    Success = true,
+                    LoggedWater = new LoggedWaterDto
+                    {
+                        Id = logNewWaterIntake.Value.LoggedWaterId,
+                        UserId = request.UserId,
+                        Amount = 0,
+                        DateLogged = request.Date
+                    }
                 };
             }
             return new GetLoggedWaterByUserIdAndDateQueryResponse
@@ -37,7 +54,7 @@ namespace HealthHub.Application.Features.LoggedWaterEntries.Queries.GetLoggedWat
                 Success = true,
                 LoggedWater = new LoggedWaterDto
                 {
-                    Id = request.UserId,
+                    Id = loggedWater.LoggedWaterId,
                     UserId = request.UserId,
                     Amount = loggedWater.Amount,
                     DateLogged = loggedWater.DateLogged

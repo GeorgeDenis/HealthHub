@@ -23,7 +23,7 @@ namespace HealthHub.Application.Features.LoggedWaterEntries.Commands.CreateLogge
                     ValidationsErrors = validationResult.Errors.Select(e => e.ErrorMessage).ToList()
                 };
             }
-            var loggedWater = LoggedWater.Create(request.UserId, request.Amount);
+            var loggedWater = LoggedWater.Create(request.UserId, request.Amount, request.Date);
             if (!loggedWater.IsSuccess)
             {
                 return new CreateLoggedWaterCommandResponse

@@ -6,5 +6,6 @@ namespace HealthHub.Application.Features.LoggedWaterEntries.Commands.CreateLogge
     {
         public Guid UserId { get; set; }
         public float Amount { get; set; }
+        public DateTime Date { get; set; }
     }
 }

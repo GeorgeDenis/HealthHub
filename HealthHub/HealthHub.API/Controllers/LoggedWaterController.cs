@@ -12,7 +12,7 @@ namespace HealthHub.API.Controllers
     {
         [Authorize(Roles = "User")]
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateLoggedWater([FromBody] CreateLoggedWaterCommand createLoggedWaterCommand)
         {
             var result = await Mediator.Send(createLoggedWaterCommand);
