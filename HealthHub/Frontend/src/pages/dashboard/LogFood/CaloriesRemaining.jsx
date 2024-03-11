@@ -67,17 +67,17 @@ const CaloriesRemaining = ({
     }
   };
   return (
-    <div className="mt-2 flex flex-col items-center rounded-lg bg-surface-dark max-w-[40rem] p-4">
+    <div className="mt-2 flex flex-col items-center rounded-lg bg-surface-dark w-[20rem] lg:w-[30rem] max-w-[40rem] p-4">
       <LogFoodDatePicker selectedDate={selectedDate} onChange={dateChange} />
       {isCaloriesShown && (
-        <>
+        <div>
           <Typography
             variant="h6"
-            className="mb-1 text-surface-light self-start text-md"
+            className="mb-1 mt-2 text-surface-light self-start text-md"
           >
             {"Calories Remaining:"}
           </Typography>
-          <div className="flex gap-6 items-center">
+          <div className="flex gap-3 lg:gap-6 w-2/3 items-center">
             <div className="flex flex-col items-center">
               <Typography className="mb-1 text-surface-light">
                 {calories}
@@ -114,15 +114,16 @@ const CaloriesRemaining = ({
               </Typography>
             </div>
           </div>
-        </>
+        </div>
       )}
       {!isCaloriesShown && (
         <div className="flex gap-10">
           <p className="text-surface-light">{macronutrientsNeeded.protein}</p>
-          <p className="text-surface-light">{macronutrientsNeeded.carbohydrates}</p>
+          <p className="text-surface-light">
+            {macronutrientsNeeded.carbohydrates}
+          </p>
           <p className="text-surface-light">{macronutrientsNeeded.fat}</p>
         </div>
-        
       )}
     </div>
   );

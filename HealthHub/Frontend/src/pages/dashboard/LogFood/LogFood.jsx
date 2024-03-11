@@ -16,7 +16,10 @@ import LogWater from "./LogWater";
 
 const calculateTotalNutrient = (nutrient, ...foodArrays) => {
   return foodArrays.reduce((totalNutrient, currentArray) => {
-    const totalForCurrentArray = currentArray.reduce((acc, food) => acc + food[nutrient], 0);
+    const totalForCurrentArray = currentArray.reduce(
+      (acc, food) => acc + food[nutrient],
+      0,
+    );
     return totalNutrient + totalForCurrentArray;
   }, 0);
 };
@@ -28,12 +31,11 @@ const LogFood = () => {
   const [lunchFoods, setLunchFoods] = useState([]);
   const [dinnerFoods, setDinnerFoods] = useState([]);
   const [snackFoods, setSnackFoods] = useState([]);
+
   const [cardioExercises, setCardioExercises] = useState([]);
+  const [strengthExercises, setStrengthExercises] = useState([]);
+
   const [totalCardioCalories, setTotalCardioCalories] = useState(0);
-  const [totalFoodsCalories, setTotalFoodCalories] = useState(0);
-  const [totalProtein, setTotalProtein] = useState(0);
-  const [totalCarbohydrates, setTotalCarbohydrates] = useState(0);
-  const [totalFat, setTotalFat] = useState(0);
   const [totalNutrients, setTotalNutrients] = useState({});
 
   const handleDateChange = (date) => {
@@ -41,25 +43,10 @@ const LogFood = () => {
   };
   useEffect(() => {
     fetchLoggedFoods();
-    fetchLoggedExercises();
+    fetchLoggedCardioExercises();
+    fetchLoggedStrengthExercises();
     fetchLoggedFoodsNutrients();
   }, [selectedDate]);
-
-  // useEffect(() => {
-  //   const totalCalories = calculateTotalNutrient('calories', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
-  //   setTotalFoodCalories(totalCalories);
-
-  //   const totalProtein = calculateTotalNutrient('protein', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
-  //   setTotalProtein(totalProtein);
-
-  //   const totalFat = calculateTotalNutrient('fat', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
-  //   setTotalFat(totalFat);
-
-  //   const totalCarbohydrates = calculateTotalNutrient('carbohydrates', breakfastFoods, lunchFoods, dinnerFoods, snackFoods);
-  //   setTotalCarbohydrates(totalCarbohydrates);
-
-
-  // }, [breakfastFoods, lunchFoods, dinnerFoods, snackFoods]);
 
   useEffect(() => {
     const totalCardioCalories = cardioExercises.reduce(
@@ -84,7 +71,7 @@ const LogFood = () => {
         setDinnerFoods([]);
         setSnackFoods([]);
 
-        response.data.loggedFoods.forEach(food => {
+        response.data.loggedFoods.forEach((food) => {
           const foodItem = {
             foodName: food.foodName,
             servingSize: food.servingSize,
@@ -98,16 +85,16 @@ const LogFood = () => {
 
           switch (food.mealType) {
             case 1:
-              setBreakfastFoods(prev => [...prev, foodItem]);
+              setBreakfastFoods((prev) => [...prev, foodItem]);
               break;
             case 2:
-              setLunchFoods(prev => [...prev, foodItem]);
+              setLunchFoods((prev) => [...prev, foodItem]);
               break;
             case 3:
-              setDinnerFoods(prev => [...prev, foodItem]);
+              setDinnerFoods((prev) => [...prev, foodItem]);
               break;
             case 4:
-              setSnackFoods(prev => [...prev, foodItem]);
+              setSnackFoods((prev) => [...prev, foodItem]);
               break;
             default:
               break;
@@ -119,7 +106,7 @@ const LogFood = () => {
     }
   };
 
-  const fetchLoggedExercises = async () => {
+  const fetchLoggedCardioExercises = async () => {
     try {
       const response = await api.get(`/api/v1/LoggedCardioExercise`, {
         params: { userId: currentUser?.userId, date: selectedDate },
@@ -129,12 +116,40 @@ const LogFood = () => {
       });
 
       if (response.status === 200) {
-        const newCardioExercises = response.data.loggedCardioExercises.map((exercise) => ({
-          exerciseName: exercise.exerciseName,
-          caloriesBurned: exercise.caloriesBurned,
-        }));
+        const newCardioExercises = response.data.loggedCardioExercises.map(
+          (exercise) => ({
+            exerciseName: exercise.name,
+            duration: exercise.duration,
+            caloriesBurned: exercise.caloriesBurned,
+          }),
+        );
 
         setCardioExercises(newCardioExercises);
+      }
+    } catch (error) {
+      console.error("Error fetching calories:", error);
+    }
+  };
+  const fetchLoggedStrengthExercises = async () => {
+    try {
+      const response = await api.get(`/api/v1/LoggedStrengthExercise`, {
+        params: { userId: currentUser?.userId, date: selectedDate },
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        const newStrengthExercises = response.data.loggedStrengthExercises.map(
+          (exercise) => ({
+            exerciseName: exercise.name,
+            muscleGroup: exercise.muscleGroup,
+            sets: exercise.numberOfSets,
+            weightPerSet: exercise.weightPerSet,
+          }),
+        );
+
+        setStrengthExercises(newStrengthExercises);
       }
     } catch (error) {
       console.error("Error fetching calories:", error);
@@ -157,13 +172,12 @@ const LogFood = () => {
     }
   };
 
-
   return (
     <>
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-surface-dark">
         <div className="absolute inset-0 h-full w-full" />
       </div>
-      <Card className="mx-3 -mt-48 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center">
+      <Card className="mx-3 -mt-48 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center">
         <CaloriesRemaining
           dateChange={handleDateChange}
           selectedDate={selectedDate}
@@ -173,16 +187,23 @@ const LogFood = () => {
         <p>{totalNutrients.protein}</p>
         <p>{totalNutrients.carbohydrates}</p>
         <p>{totalNutrients.fat}</p>
-        <div className="md:w-[80rem] grid grid-cols-2 grid-rows-3  p-4">
+        <div className="md:w-[40rem] lg:w-[55rem] xl:w-3/4 md:grid grid-cols-2 grid-rows-3 p-4 ">
           <div>
-            <LogFoodSection foodsItems={breakfastFoods} sectionName={"Breakfast"} />
-            <LogFoodSection foodsItems={lunchFoods} sectionName={"Lunch"}/>
-            <LogFoodSection foodsItems={dinnerFoods} sectionName={"Dinner"}/>
+            <LogFoodSection
+              foodsItems={breakfastFoods}
+              sectionName={"Breakfast"}
+            />
+            <LogFoodSection foodsItems={lunchFoods} sectionName={"Lunch"} />
+            <LogFoodSection foodsItems={dinnerFoods} sectionName={"Dinner"} />
           </div>
           <div>
-            <LogFoodSection foodsItems={snackFoods} sectionName={"Snack"} buttonName={"Add Food"} />
-            <LogExercise foodsItems={snackFoods}/>
-            <LogWater selectedDate={selectedDate}/>
+            <LogFoodSection
+              foodsItems={snackFoods}
+              sectionName={"Snack"}
+              buttonName={"Add Food"}
+            />
+            <LogExercise cardioExercises={cardioExercises} strengthExercises={strengthExercises} />
+            <LogWater selectedDate={selectedDate} />
           </div>
         </div>
       </Card>

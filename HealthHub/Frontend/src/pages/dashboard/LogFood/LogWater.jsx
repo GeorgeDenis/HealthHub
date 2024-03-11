@@ -5,6 +5,8 @@ import api from "@/services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
 import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
+import AddTaskIcon from "@mui/icons-material/AddTask";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const LogWater = ({ selectedDate }) => {
   const currentUser = useUser();
@@ -50,7 +52,6 @@ const LogWater = ({ selectedDate }) => {
     }
   };
   const logWaterIntake = async (waterAmount) => {
-    console.log(waterId);
     try {
       const response = await api.put(
         "/api/v1/LoggedWater",
@@ -65,8 +66,9 @@ const LogWater = ({ selectedDate }) => {
           },
         },
       );
-      if (response.status === 201) {
+      if (response.status === 200) {
         toast.success("Water intake logged successfully");
+        setCustomWaterValue(0);
       }
     } catch (error) {
       console.error("Error logging water intake:", error);
@@ -76,7 +78,7 @@ const LogWater = ({ selectedDate }) => {
 
   const fillHeight = (Math.min(loggedWater, glassHeight) / glassHeight) * 100;
   return (
-    <div className="flex flex-col mt-4 px-1 mb-2 w-[26rem] h-[21rem]">
+    <div className="flex flex-col mt-4 px-1 mb-2 lg:w-[26rem] lg:h-[21rem] xl:w-[90%] min-h-[24rem]">
       <div className="flex items-center mb-2">
         <LocalDrinkIcon
           className="text-secondary"
@@ -120,7 +122,7 @@ const LogWater = ({ selectedDate }) => {
                           +250 ml
                         </p>
                         <p
-                          className="text-green-500 text-sm font-semibold underline cursor-pointer"
+                          className="text-green-500 text-xs lg:text-sm font-semibold underline cursor-pointer"
                           onClick={() => addWater(500)}
                         >
                           +500 ml
@@ -149,18 +151,17 @@ const LogWater = ({ selectedDate }) => {
                   <p className="text-surface-light text-sm font-semibold">
                     Custom Amount
                   </p>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 items-center">
                     <input
-                      className="w-[5rem] p-2 bg-surface-mid-light rounded-lg text-surface-light"
+                      className="w-[4rem] h-8 p-2 bg-surface-mid-light rounded-lg text-surface-light"
                       value={customWaterValue}
                       onChange={handleCustomWaterValue}
                     />
                     <Button
-                      className="bg-secondary hover:bg-primary duration-200"
-                      type="submit"
+                      className="bg-secondary hover:bg-primary duration-200 w-7 h-8 flex justify-center items-center"
                       onClick={() => addWater(customWaterValue)}
                     >
-                      Add
+                      <AddCircleIcon className="text-surface-light" />
                     </Button>
                   </div>
                 </div>
@@ -169,12 +170,6 @@ const LogWater = ({ selectedDate }) => {
           </CardContent>
         </div>
       </div>
-      <Button
-        className="mt-6 w-[9rem] bg-secondary hover:bg-primary duration-200 "
-        type="submit"
-      >
-        Add Water
-      </Button>
     </div>
   );
 };
