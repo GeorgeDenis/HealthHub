@@ -182,12 +182,13 @@ const LogFood = () => {
           dateChange={handleDateChange}
           selectedDate={selectedDate}
           totalFoodsCalories={totalNutrients.calories || 0}
+          totalNutrients={totalNutrients}
           totalCardioCalories={totalCardioCalories}
         />
-        <p>{totalNutrients.protein}</p>
+        {/* <p>{totalNutrients.protein}</p>
         <p>{totalNutrients.carbohydrates}</p>
-        <p>{totalNutrients.fat}</p>
-        <div className="md:w-[40rem] lg:w-[55rem] xl:w-3/4 md:grid grid-cols-2 grid-rows-3 p-4 ">
+        <p>{totalNutrients.fat}</p> */}
+        <div className="md:w-[40rem] lg:w-[55rem] xl:w-3/4 md:max-h-[60rem] md:grid grid-cols-2 grid-rows-3 p-4">
           <div>
             <LogFoodSection
               foodsItems={breakfastFoods}

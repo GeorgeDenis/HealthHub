@@ -4,6 +4,9 @@ import api from "@/services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
 import LogFoodDatePicker from "./LogFoodDatePicker";
+import NutrientsRemaining from "./NutrientsRemaining";
+import SwitchLeftIcon from "@mui/icons-material/SwitchLeft";
+
 const CaloriesRemaining = ({
   dateChange,
   selectedDate,
@@ -67,16 +70,23 @@ const CaloriesRemaining = ({
     }
   };
   return (
-    <div className="mt-2 flex flex-col items-center rounded-lg bg-surface-dark w-[20rem] lg:w-[30rem] max-w-[40rem] p-4">
+    <div className="mt-2 flex flex-col items-center rounded-lg bg-surface-dark w-[19rem] md:w-[23rem] lg:w-[30rem] max-w-[40rem] p-5">
       <LogFoodDatePicker selectedDate={selectedDate} onChange={dateChange} />
+
       {isCaloriesShown && (
         <div>
-          <Typography
-            variant="h6"
-            className="mb-1 mt-2 text-surface-light self-start text-md"
-          >
-            {"Calories Remaining:"}
-          </Typography>
+          <div className="flex items-center justify-between cursor-pointer">
+            <Typography
+              variant="h6"
+              className="mb-1 mt-2 text-surface-light self-start text-md"
+            >
+              {"Calories Remaining"}
+            </Typography>
+            <SwitchLeftIcon
+              className="text-surface-light"
+              onClick={() => setIsCaloriesShown(false)}
+            />
+          </div>
           <div className="flex gap-3 lg:gap-6 w-2/3 items-center">
             <div className="flex flex-col items-center">
               <Typography className="mb-1 text-surface-light">
@@ -106,7 +116,7 @@ const CaloriesRemaining = ({
             </div>
             <Typography className="mb-1 text-surface-light">=</Typography>
             <div className="flex flex-col items-center">
-              <Typography className="mb-1 text-surface-light">
+              <Typography className="mb-1 text-green-400 font-semibold">
                 {calories - totalFoodsCalories - totalCardioCalories}
               </Typography>
               <Typography className="mb-1 text-surface-light">
@@ -117,13 +127,12 @@ const CaloriesRemaining = ({
         </div>
       )}
       {!isCaloriesShown && (
-        <div className="flex gap-10">
-          <p className="text-surface-light">{macronutrientsNeeded.protein}</p>
-          <p className="text-surface-light">
-            {macronutrientsNeeded.carbohydrates}
-          </p>
-          <p className="text-surface-light">{macronutrientsNeeded.fat}</p>
-        </div>
+        <NutrientsRemaining
+          totalNutrients={totalNutrients}
+          macronutrientsNeeded={macronutrientsNeeded}
+          calories={calories - totalFoodsCalories - totalCardioCalories}
+          setIsCaloriesShown={setIsCaloriesShown}
+        />
       )}
     </div>
   );
