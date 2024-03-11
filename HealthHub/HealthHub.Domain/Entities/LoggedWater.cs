@@ -30,7 +30,7 @@ namespace HealthHub.Domain.Entities
         }
         public Result<LoggedWater> Update(float amount)
         {
-            if (amount <= 0)
+            if (amount < 0)
             {
                 return Result<LoggedWater>.Failure("Amount must be greater than 0");
             }

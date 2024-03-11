@@ -6,7 +6,36 @@ import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
 import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
 import AddTaskIcon from "@mui/icons-material/AddTask";
-import AddCircleIcon from '@mui/icons-material/AddCircle';
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Input, Typography } from "@material-tailwind/react";
+
+function WaterField({ value, isInEditMode, editedValue, onChangeEditedValue }) {
+  return (
+    <div className="w-8">
+      <Input
+        value={editedValue || ""}
+        onChange={(e) => onChangeEditedValue(e.target.value)}
+        type={"text"}
+        variant={"outlined"}
+        label={"Water"}
+        size={"md"}
+        color={"green"}
+        className={"text-white"}
+        crossOrigin={undefined}
+      />
+    </div>
+  );
+}
+const QuickWaterAdd = ({ addWater, waterValue }) => {
+  return (
+    <p
+      className="text-green-500 text-sm font-semibold underline cursor-pointer"
+      onClick={() => addWater(waterValue)}
+    >
+      +{waterValue} ml
+    </p>
+  );
+};
 
 const LogWater = ({ selectedDate }) => {
   const currentUser = useUser();
@@ -14,6 +43,10 @@ const LogWater = ({ selectedDate }) => {
   const [waterLevel, setWaterLevel] = useState(0);
   const [loggedWater, setLoggedWater] = useState(0);
   const [customWaterValue, setCustomWaterValue] = useState(0);
+
+  const [editedWaterValue, setEditedWaterValue] = useState(0);
+  const [isEditWaterLevel, setIsEditWaterLevel] = useState(false);
+
   const glassHeight = 1920;
 
   const addWater = (amount) => {
@@ -32,6 +65,12 @@ const LogWater = ({ selectedDate }) => {
     setCustomWaterValue(0);
     fetchLoggedWater();
   }, [selectedDate]);
+
+  const handleEditWaterLevel = () => {
+    setIsEditWaterLevel(false);
+    if (isNaN(editedWaterValue) || editedWaterValue < 0) return;
+    logWaterIntake(editedWaterValue).then(() => fetchLoggedWater());
+  };
 
   const fetchLoggedWater = async () => {
     try {
@@ -100,9 +139,29 @@ const LogWater = ({ selectedDate }) => {
                   <p className="text-surface-light text-sm font-bold">
                     Today's Water Total:
                   </p>
-                  <p className="text-surface-light text-sm font-semibold">
-                    {loggedWater} ml
-                  </p>
+                  {!isEditWaterLevel ? (
+                    <p
+                      className="text-surface-light hover:underline text-sm hofont-semibold cursor-pointer"
+                      onClick={() => setIsEditWaterLevel(true)}
+                    >
+                      {loggedWater} ml
+                    </p>
+                  ) : (
+                    <div className="flex items-center gap-2 mb-2">
+                      <input
+                        className="w-[3rem] h-8 p-2 bg-surface-mid-light rounded-lg text-surface-light text-sm"
+                        value={editedWaterValue}
+                        onChange={(e) => setEditedWaterValue(e.target.value)}
+                      />
+                      <Button
+                        className="w-[3rem] h-8 bg-secondary hover:bg-primary duration-200 flex justify-center items-center"
+                        size="sm"
+                        onClick={() => handleEditWaterLevel()}
+                      >
+                        Save
+                      </Button>
+                    </div>
+                  )}
                 </div>
                 <div className="flex justify-between items-center">
                   <div className="w-3/4 text-justify">
@@ -115,24 +174,9 @@ const LogWater = ({ selectedDate }) => {
                         Quick Add
                       </p>
                       <div className="w-2/3 text-justify flex gap-2">
-                        <p
-                          className="text-green-500 text-sm font-semibold underline cursor-pointer"
-                          onClick={() => addWater(250)}
-                        >
-                          +250 ml
-                        </p>
-                        <p
-                          className="text-green-500 text-xs lg:text-sm font-semibold underline cursor-pointer"
-                          onClick={() => addWater(500)}
-                        >
-                          +500 ml
-                        </p>
-                        <p
-                          className="text-green-500 text-sm font-semibold underline cursor-pointer"
-                          onClick={() => addWater(1000)}
-                        >
-                          +1000 ml
-                        </p>
+                        <QuickWaterAdd addWater={addWater} waterValue={250} />
+                        <QuickWaterAdd addWater={addWater} waterValue={500} />
+                        <QuickWaterAdd addWater={addWater} waterValue={1000} />
                       </div>
                     </div>
                   </div>

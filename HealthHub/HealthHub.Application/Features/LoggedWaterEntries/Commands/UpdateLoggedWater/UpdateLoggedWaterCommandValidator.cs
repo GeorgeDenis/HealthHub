@@ -15,7 +15,6 @@ namespace HealthHub.Application.Features.LoggedWaterEntries.Commands.UpdateLogge
                 .NotNull();
 
             RuleFor(p => p.Amount)
-                .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull();
         }
     }
