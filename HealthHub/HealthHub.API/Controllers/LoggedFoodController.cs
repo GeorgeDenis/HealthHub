@@ -3,6 +3,7 @@ using HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood;
 using HealthHub.Application.Features.LoggedFoods.Commands.DeleteLoggedFood;
 using HealthHub.Application.Features.LoggedFoods.Queries.GetLoggedFoodByUserIdAndDate;
 using HealthHub.Application.Features.LoggedFoods.Queries.GetLoggedFoodNutritentsByUserIdAndDate;
+using HealthHub.Application.Features.LoggedFoods.Queries.GetRecentLoggedFoodByUserId;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,11 +12,12 @@ using System.Text.Json;
 
 namespace HealthHub.API.Controllers
 {
-    
+
     public class LoggedFoodController : ApiControllerBase
     {
         [Authorize(Roles = "User")]
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateLoggedFood([FromBody] CreateLoggedFoodCommand createLoggedFoodCommand)
         {
             var result = await Mediator.Send(createLoggedFoodCommand);
@@ -61,6 +63,18 @@ namespace HealthHub.API.Controllers
             }
             return Ok(result);
         }
+        [Authorize(Roles = "User")]
+        [HttpGet("get-recent")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetRecentLoggedFoodByUserId(Guid userId)
+        {
+            var result = await Mediator.Send(new GetRecentLoggedFoodByUserIdQuery { UserId = userId });
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
 
         [Authorize(Roles = "User")]
         [HttpGet("search-food/byName/{foodName}")]
@@ -100,14 +114,14 @@ namespace HealthHub.API.Controllers
         [Authorize(Roles = "User")]
         [HttpGet("search-food/byCode/{foodCode}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-       public async Task<IActionResult> GetFood(string foodCode)
-        { 
+        public async Task<IActionResult> GetFood(string foodCode)
+        {
             var client = new HttpClient();
             var response = await client.GetAsync($"https://world.openfoodfacts.net/api/v2/product/{foodCode}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                if(content.Contains("status\":0"))
+                if (content.Contains("status\":0"))
                 {
                     return BadRequest("No food found with this bar code");
                 }
@@ -125,7 +139,7 @@ namespace HealthHub.API.Controllers
                     Carbohydrates = tempFood.Product.NutrimentsData.Carbohydrates,
                     Fat = tempFood.Product.NutrimentsData.Fat
                 };
-                
+
                 return Ok(foodByBarCode);
             }
             return BadRequest("Error");

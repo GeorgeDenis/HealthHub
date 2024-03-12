@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@material-tailwind/react";
-import { Card, CardContent } from "@mui/material";
-import api from "@/services/api";
+import { Card, CardContent, Modal } from "@mui/material";
+import api from "../../../services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
 import IcecreamIcon from "@mui/icons-material/Icecream";
 import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import DinnerDiningIcon from "@mui/icons-material/DinnerDining";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import FoodModal from "./FoodModal";
 
 const breakfastText =
   "No breakfast items found. Tap the '+' to add your first meal of the day!";
@@ -18,6 +18,15 @@ const dinnerText = "No dinner items found. Tap the '+' to add your last meal!";
 const snackText = "No snack items found. Tap the '+' to add your snack!";
 
 const LogFoodSection = ({ foodsItems, sectionName }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+  const currentUser = useUser();
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+  const handleClose = () => {
+    setModalOpen(false);
+  };
   const Icon =
     sectionName === "Breakfast"
       ? BreakfastDiningIcon
@@ -91,9 +100,11 @@ const LogFoodSection = ({ foodsItems, sectionName }) => {
       <Button
         className="mt-5 w-14 h-8 bg-secondary hover:bg-primary duration-200 flex justify-center items-center"
         size="sm"
+        onClick={handleOpen}
       >
         <AddCircleIcon className="text-surface-light w-6 h-6" />
       </Button>
+      <FoodModal modalOpen={modalOpen} handleClose={handleClose} sectionName={sectionName}/>
     </div>
   );
 };

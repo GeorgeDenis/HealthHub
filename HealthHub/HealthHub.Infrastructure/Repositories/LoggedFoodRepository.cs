@@ -30,8 +30,31 @@ namespace HealthHub.Infrastructure.Repositories
                     Carbohydrates = x.Carbohydrates,
                     Fat = x.Fat,
                     MealType = x.MealType,
-                    DateLogged = x.DateLogged   
-                }).ToListAsync();   
+                    DateLogged = x.DateLogged
+                }).ToListAsync();
+            return Result<List<LoggedFoodDto>>.Success(loggedFoods);
+        }
+
+        public async Task<Result<List<LoggedFoodDto>>> GetRecentLoggedFoodByUserId(Guid userId)
+        {
+            var loggedFoods = await context.LoggedFoods
+                .Where(x => x.UserId == userId)
+                .OrderByDescending(x => x.DateLogged)
+                .Take(15)
+                .Select(x => new LoggedFoodDto
+                {
+                    Id = x.LoggedFoodId,
+                    UserId = x.UserId,
+                    FoodName = x.Name,
+                    ServingSize = x.ServingSize,
+                    NumberOfServings = x.NumberOfServings,
+                    Calories = x.Calories,
+                    Protein = x.Protein,
+                    Carbohydrates = x.Carbohydrates,
+                    Fat = x.Fat,
+                    MealType = x.MealType,
+                    DateLogged = x.DateLogged
+                }).ToListAsync();
             return Result<List<LoggedFoodDto>>.Success(loggedFoods);
         }
     }
