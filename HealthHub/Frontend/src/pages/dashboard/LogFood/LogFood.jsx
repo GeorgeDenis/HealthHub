@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardBody, Button } from "@material-tailwind/react";
 import { Input, Avatar, Typography } from "@material-tailwind/react";
-import CaloriesRemaining from "./CaloriesRemaining";
-import LogSection from "./LogSection";
-import LogBreakfast from "./LogFoods/LogBreakfast";
+import CaloriePanel from "./CaloriesPanel/CaloriesPanel";
 import api from "../../../services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
-import LogLunch from "./LogFoods/LogLunch";
-import LogDinner from "./LogFoods/LogDinner";
-import LogSnack from "./LogFoods/LogSnack";
 import LogFoodSection from "./LogFoodSection";
 import LogExercise from "./LogExercise";
 import LogWater from "./LogWater";
@@ -178,7 +173,7 @@ const LogFood = () => {
         <div className="absolute inset-0 h-full w-full" />
       </div>
       <Card className="mx-3 -mt-48 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center">
-        <CaloriesRemaining
+        <CaloriePanel
           dateChange={handleDateChange}
           selectedDate={selectedDate}
           totalFoodsCalories={totalNutrients.calories || 0}
@@ -203,7 +198,10 @@ const LogFood = () => {
               sectionName={"Snack"}
               buttonName={"Add Food"}
             />
-            <LogExercise cardioExercises={cardioExercises} strengthExercises={strengthExercises} />
+            <LogExercise
+              cardioExercises={cardioExercises}
+              strengthExercises={strengthExercises}
+            />
             <LogWater selectedDate={selectedDate} />
           </div>
         </div>
