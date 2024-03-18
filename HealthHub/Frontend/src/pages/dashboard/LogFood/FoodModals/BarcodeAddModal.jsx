@@ -163,7 +163,7 @@ const BarcodeAddModal = ({
             </div>
           )}
           {foodItem && (
-            <div className="flex flex-col justify-between gap-3">
+            <div className="flex flex-col justify-between gap-6">
               <div className="flex justify-between items-center">
                 <Typography color="white">Name</Typography>
                 <input

@@ -117,12 +117,13 @@ const LogWater = ({ selectedDate }) => {
 
   const fillHeight = (Math.min(loggedWater, glassHeight) / glassHeight) * 100;
   return (
-    <div className="flex flex-col mt-4 px-1 mb-2 lg:w-[26rem] lg:h-[21rem] xl:w-[90%] min-h-[24rem]">
+    <div className="flex flex-col mt-2 px-1 mb-2 lg:w-[26rem] lg:h-[21rem] xl:w-[90%] min-h-[24rem]">
       <div className="flex items-center mb-2">
-        <LocalDrinkIcon
+        {/* <LocalDrinkIcon
           className="text-secondary"
           fontSize="extraSmall"
-        ></LocalDrinkIcon>
+        ></LocalDrinkIcon> */}
+        <p className="text-xl">{"🧴"}</p>
         <p className="text-gray-300 ml-1 text-md font-semibold">
           Water Consumption
         </p>

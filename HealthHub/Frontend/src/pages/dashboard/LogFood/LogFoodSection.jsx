@@ -36,6 +36,14 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
       : sectionName === "Snack"
       ? IcecreamIcon
       : DinnerDiningIcon;
+  const Emoji =
+    sectionName === "Breakfast"
+      ? "🥑"
+      : sectionName === "Lunch"
+      ? "🍨"
+      : sectionName === "Snack"
+      ? "🌮"
+      : "🥩";
   const promptText =
     sectionName === "Breakfast"
       ? breakfastText
@@ -44,7 +52,9 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
       : sectionName === "Dinner"
       ? dinnerText
       : snackText;
-
+  const calculateCalories = () => {
+    return foodsItems.reduce((acc, food) => acc + food.calories, 0);
+  };
   const handleDeleteFood = async (foodId) => {
     try {
       const response = await api.delete(`/api/v1/LoggedFood/${foodId}`, {
@@ -64,12 +74,18 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
 
   return (
     <div>
-      <div className="flex flex-col mt-2 px-1 mb-2 lg:w-[26rem] lg:h-[25rem] xl:w-[90%]">
-        <div className="flex items-center mb-2">
-          <Icon className="text-secondary" fontSize="small" />
-          <p className="text-gray-300 ml-1 text-md font-semibold">
-            {sectionName}
-          </p>
+      <div className="flex flex-col mt-2  px-1 mb-10 md:mb-2 lg:w-[26rem] lg:h-[23rem] xl:w-[90%] ">
+        <div className="flex justify-between mb-2">
+          {/* <Icon className="text-secondary" fontSize="small" /> */}
+          <div className="flex">
+            <p className="text-xl">{Emoji}</p>
+            <p className="text-gray-300 ml-1 text-md font-semibold">
+              {sectionName}
+            </p>
+          </div>
+          {calculateCalories() > 0 && <p className="text-surface-light rounded-md bg-green-900 p-1 text-sm cursor-pointer">
+            {`${calculateCalories()} kcal`}{" "}
+          </p>}
         </div>
         <div
           className="text-surface-light overflow-auto max-h-[12rem]"
@@ -88,7 +104,10 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
                         <p className="text-surface-light text-sm font-semibold">
                           {food.foodName}
                         </p>
-                        <EditIcon className="cursor-pointer hover:text-green-400" fontSize="small" />
+                        <EditIcon
+                          className="cursor-pointer hover:text-green-400"
+                          fontSize="small"
+                        />
                       </div>
 
                       {food.servingSize > 0 && (

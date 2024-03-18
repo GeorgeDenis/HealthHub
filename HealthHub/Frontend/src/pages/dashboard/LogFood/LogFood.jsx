@@ -44,7 +44,14 @@ const LogFood = () => {
   }, [selectedDate]);
   useEffect(() => {
     fetchLoggedFoodsNutrients();
-  },[breakfastFoods, lunchFoods, dinnerFoods, snackFoods, cardioExercises, strengthExercises]);
+  }, [
+    breakfastFoods,
+    lunchFoods,
+    dinnerFoods,
+    snackFoods,
+    cardioExercises,
+    strengthExercises,
+  ]);
 
   useEffect(() => {
     const totalCardioCalories = cardioExercises.reduce(
@@ -184,9 +191,6 @@ const LogFood = () => {
           totalNutrients={totalNutrients}
           totalCardioCalories={totalCardioCalories}
         />
-        {/* <p>{totalNutrients.protein}</p>
-        <p>{totalNutrients.carbohydrates}</p>
-        <p>{totalNutrients.fat}</p> */}
         <div className="md:w-[40rem] lg:w-[55rem] xl:w-3/4 md:max-h-[80rem] md:grid grid-cols-2 grid-rows-3 p-4">
           <div>
             <LogFoodSection

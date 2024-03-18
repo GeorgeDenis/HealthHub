@@ -9,12 +9,13 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 const LogExercise = ({ cardioExercises, strengthExercises }) => {
   return (
-    <div className="flex flex-col mt-4 px-1 mb-2 lg:w-[26rem] lg:h-[15rem] xl:w-[90%]">
+    <div className="flex flex-col mt-2 px-1 mb-10 md:mb-2 lg:w-[26rem] lg:h-[23rem] xl:w-[90%]">
       <div className="flex items-center mb-2">
-        <FitnessCenterIcon
+        {/* <FitnessCenterIcon
           className="text-secondary"
           fontSize="extraSmall"
-        ></FitnessCenterIcon>
+        ></FitnessCenterIcon> */}
+        <p className="text-xl">{"🏋️‍♂️"}</p>
         <p className="text-gray-300 ml-1 text-md font-semibold">Exercises</p>
       </div>
       <div

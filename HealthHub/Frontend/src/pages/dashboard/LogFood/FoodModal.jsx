@@ -31,6 +31,7 @@ const FoodModal = ({
   const [foods, setFoods] = useState([]);
   const [sortType, setSortType] = useState();
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
+  const [searchText, setSearchText] = useState("");
 
   const [isQuickAddModalOpen, setIsQuickAddModalOpen] = useState(false);
   const [isScanFoodModalOpen, setIsScanFoodModalOpen] = useState(false);
@@ -42,7 +43,7 @@ const FoodModal = ({
 
   useEffect(() => {
     fetchLoggedFoods();
-  }, [isScanFoodModalOpen, isQuickAddModalOpen,isBarcodeFoodModalOpen]);
+  }, [isScanFoodModalOpen, isQuickAddModalOpen, isBarcodeFoodModalOpen]);
 
   const fetchLoggedFoods = async () => {
     try {
@@ -136,7 +137,6 @@ const FoodModal = ({
     let sortedFoods;
     switch (sortType) {
       case 1:
-        console.log("sortType", foods[0].dateLogged);
         sortedFoods = [...foods].sort(
           (a, b) => new Date(b.dateLogged) - new Date(a.dateLogged),
         );
@@ -180,32 +180,55 @@ const FoodModal = ({
     setIsBarcodeFoodModalOpen(true);
   };
 
+  const handleSearchFood = async () => {
+    try {
+      const response = await api.get(
+        `api/v1/LoggedFood/search-food/byName/${searchText}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+      if (response.status === 200) {
+        console.log(response.data);
+        setSearchText("");
+      }
+    } catch (error) {
+      console.error("Error fetching foods:", error);
+    }
+  };
+
   return (
     <>
       <Modal open={modalOpen} onClose={handleClose}>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:w-[25rem] w-[90vw] bg-surface-darkest shadow-lg p-5 rounded-lg">
           <div className="relative">
             <Input
-              // value={searchValue}
-              // onChange={(e) => setSearchValue(e.target.value)}
-              // onFocus={() => searchValue && setIsMenuOpen(true)}
               label="Search"
               color="green"
               crossOrigin={undefined}
               className="text-white w-full"
-              icon={<i className="fa-solid fa-search" />}
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+              icon={
+                <i
+                  className="fa-solid fa-search cursor-pointer"
+                  onClick={() => handleSearchFood()}
+                />
+              }
               // inputRef={inputRef}
             />
           </div>
-          <div className="flex justify-between mt-2">
+          <div className="flex justify-between mt-2 text-xs md:text-base">
             <div
-              className="flex flex-col items-center gap-3 border rounded-md p-2 w-[30%] bg-green-700 cursor-pointer text-surface-light"
+              className="flex flex-col  items-center gap-3 border rounded-md p-2 w-[30%] bg-green-700 cursor-pointer text-surface-light"
               onClick={() => {
                 handleOpenScanFoodModal();
               }}
             >
               <RestaurantIcon className="text-surface-light" />
-              <p className="text-sm">Scan a Meal</p>
+              <p>Scan a Meal</p>
             </div>
             <div
               className="flex flex-col items-center gap-3 border rounded-md p-2 w-[30%] bg-green-700 cursor-pointer text-surface-light"
@@ -214,7 +237,7 @@ const FoodModal = ({
               }}
             >
               <CropFreeIcon className="text-surface-light" />
-              <p className="text-sm">Barcode</p>
+              <p>Barcode</p>
             </div>
             <div
               className="flex flex-col items-center gap-3 border rounded-md p-2 w-[30%] bg-green-700 cursor-pointer text-surface-light"
@@ -223,7 +246,7 @@ const FoodModal = ({
               }}
             >
               <AddTaskIcon className="text-surface-light" />
-              <p className="text-sm">Quick Add</p>
+              <p>Quick Add</p>
             </div>
           </div>
           <div className="flex flex-col gap-2">

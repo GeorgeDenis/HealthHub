@@ -30,6 +30,12 @@ const ScanFoodModal = ({
     setFoodPhoto(e.target.files[0]);
   };
 
+  const handleCancelScanFood = () => {
+    setFoodPhoto(null);
+    setDetectedFoodArray([]);
+  };
+
+
   const handleScanFood = async () => {
     if (!foodPhoto) {
       toast.error("No photo selected");
@@ -121,14 +127,14 @@ const ScanFoodModal = ({
             {!foodPhoto && (
               <div className="flex flex-col items-center gap-4">
                 <p className="text-surface-light">
-                  Upload a picture to identify your dish!
+                Upload a picture to identify your dish!
                 </p>
                 <div className="w-full flex justify-center">
                   <input
                     type="file"
                     accept="image/*"
                     onChange={handleInputPhoto}
-                    className="text-center file:border-0 file:text-surface-light file:bg-green-700"
+                    className="text-center file:border-0 file:text-surface-light file:bg-green-700 rounded-md"
                   />
                 </div>
               </div>
@@ -151,6 +157,7 @@ const ScanFoodModal = ({
                       size="sm"
                       onClick={() => {
                         setFoodPhoto(null);
+                        setDetectedFoodArray([]);
                       }}
                     >
                       Cancel
@@ -202,7 +209,7 @@ const ScanFoodModal = ({
                     className="shadow-md bg-gray-700 hover:bg-gray-500 ml-auto"
                     size="sm"
                     onClick={() => {
-                      setFoodPhoto(null);
+                      handleCancelScanFood();
                     }}
                   >
                     Cancel

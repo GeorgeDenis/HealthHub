@@ -35,7 +35,6 @@ const CaloriePanel = ({
       if (response.status === 200) {
         setCalories(response.data.calories);
         if (response.data.calories > 0) {
-          console.log(response.data.calories);
           fetchMacronutrientsNeeded(response.data.calories);
         }
       }
