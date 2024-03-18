@@ -42,6 +42,9 @@ const LogFood = () => {
     fetchLoggedStrengthExercises();
     fetchLoggedFoodsNutrients();
   }, [selectedDate]);
+  useEffect(() => {
+    fetchLoggedFoodsNutrients();
+  },[breakfastFoods, lunchFoods, dinnerFoods, snackFoods, cardioExercises, strengthExercises]);
 
   useEffect(() => {
     const totalCardioCalories = cardioExercises.reduce(
@@ -68,6 +71,7 @@ const LogFood = () => {
 
         response.data.loggedFoods.forEach((food) => {
           const foodItem = {
+            id: food.id,
             foodName: food.foodName,
             servingSize: food.servingSize,
             numberOfServings: food.numberOfServings,
@@ -183,20 +187,29 @@ const LogFood = () => {
         {/* <p>{totalNutrients.protein}</p>
         <p>{totalNutrients.carbohydrates}</p>
         <p>{totalNutrients.fat}</p> */}
-        <div className="md:w-[40rem] lg:w-[55rem] xl:w-3/4 md:max-h-[60rem] md:grid grid-cols-2 grid-rows-3 p-4">
+        <div className="md:w-[40rem] lg:w-[55rem] xl:w-3/4 md:max-h-[80rem] md:grid grid-cols-2 grid-rows-3 p-4">
           <div>
             <LogFoodSection
+              fetchLoggedFoods={fetchLoggedFoods}
               foodsItems={breakfastFoods}
               sectionName={"Breakfast"}
             />
-            <LogFoodSection foodsItems={lunchFoods} sectionName={"Lunch"} />
-            <LogFoodSection foodsItems={dinnerFoods} sectionName={"Dinner"} />
+            <LogFoodSection
+              fetchLoggedFoods={fetchLoggedFoods}
+              foodsItems={lunchFoods}
+              sectionName={"Lunch"}
+            />
+            <LogFoodSection
+              fetchLoggedFoods={fetchLoggedFoods}
+              foodsItems={dinnerFoods}
+              sectionName={"Dinner"}
+            />
           </div>
           <div>
             <LogFoodSection
+              fetchLoggedFoods={fetchLoggedFoods}
               foodsItems={snackFoods}
               sectionName={"Snack"}
-              buttonName={"Add Food"}
             />
             <LogExercise
               cardioExercises={cardioExercises}

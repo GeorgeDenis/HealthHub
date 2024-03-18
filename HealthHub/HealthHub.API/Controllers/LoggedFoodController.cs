@@ -148,69 +148,82 @@ namespace HealthHub.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFoodByImage(IFormFile foodImage)
         {
-            var apiUserToken = DotNetEnv.Env.GetString("LogMealKey");
+            //    var apiUserToken = DotNetEnv.Env.GetString("LogMealKey");
 
-            using var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiUserToken);
+            //    using var httpClient = new HttpClient();
+            //    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiUserToken);
 
-            var segmentationUrl = "https://api.logmeal.es/v2/image/segmentation/complete";
+            //    var segmentationUrl = "https://api.logmeal.es/v2/image/segmentation/complete";
 
-            using var imageContent = new StreamContent(foodImage.OpenReadStream());
-            imageContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+            //    using var imageContent = new StreamContent(foodImage.OpenReadStream());
+            //    imageContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
 
-            var formData = new MultipartFormDataContent
-        {
-            { imageContent, "image", foodImage.FileName }
-        };
+            //    var formData = new MultipartFormDataContent
+            //{
+            //    { imageContent, "image", foodImage.FileName }
+            //};
 
-            var segmentationResponse = await httpClient.PostAsync(segmentationUrl, formData);
+            //    var segmentationResponse = await httpClient.PostAsync(segmentationUrl, formData);
 
-            if (!segmentationResponse.IsSuccessStatusCode)
-            {
-                return BadRequest(await segmentationResponse.Content.ReadAsStringAsync());
-            }
+            //    if (!segmentationResponse.IsSuccessStatusCode)
+            //    {
+            //        return BadRequest(await segmentationResponse.Content.ReadAsStringAsync());
+            //    }
 
-            var segmentationResultJson = await JsonDocument.ParseAsync(await segmentationResponse.Content.ReadAsStreamAsync());
-            if (!segmentationResultJson.RootElement.TryGetProperty("imageId", out JsonElement imageIdElement))
-            {
-                return BadRequest("Failed to retrieve imageId from segmentation response.");
-            }
-            var imageId = imageIdElement.GetInt32();
+            //    var segmentationResultJson = await JsonDocument.ParseAsync(await segmentationResponse.Content.ReadAsStreamAsync());
+            //    if (!segmentationResultJson.RootElement.TryGetProperty("imageId", out JsonElement imageIdElement))
+            //    {
+            //        return BadRequest("Failed to retrieve imageId from segmentation response.");
+            //    }
+            //    var imageId = imageIdElement.GetInt32();
 
 
-            if (imageId == null)
-            {
-                return BadRequest("Failed to get image ID from segmentation response.");
-            }
+            //    if (imageId == null)
+            //    {
+            //        return BadRequest("Failed to get image ID from segmentation response.");
+            //    }
 
-            var nutritionalInfoUrl = "https://api.logmeal.es/v2/recipe/nutritionalInfo";
-            var nutritionalInfoPayload = new { imageId };
+            //    var nutritionalInfoUrl = "https://api.logmeal.es/v2/recipe/nutritionalInfo";
+            //    var nutritionalInfoPayload = new { imageId };
 
-            var nutritionalInfoResponse = await httpClient.PostAsJsonAsync(nutritionalInfoUrl, nutritionalInfoPayload);
+            //    var nutritionalInfoResponse = await httpClient.PostAsJsonAsync(nutritionalInfoUrl, nutritionalInfoPayload);
 
-            if (!nutritionalInfoResponse.IsSuccessStatusCode)
-            {
-                return BadRequest("Failed to retrieve nutritional information.");
-            }
+            //    if (!nutritionalInfoResponse.IsSuccessStatusCode)
+            //    {
+            //        return BadRequest("Failed to retrieve nutritional information.");
+            //    }
 
-            var nutritionalInfoString = await nutritionalInfoResponse.Content.ReadAsStringAsync();
+            //    var nutritionalInfoString = await nutritionalInfoResponse.Content.ReadAsStringAsync();
 
-            var nutritionalInfo = JsonSerializer.Deserialize<FoodProductResponseByImage>(nutritionalInfoString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+            //    var nutritionalInfo = JsonSerializer.Deserialize<FoodProductResponseByImage>(nutritionalInfoString, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
 
-            if (nutritionalInfo == null)
-            {
-                return BadRequest("Failed to deserialize nutritional information.");
-            }
+            //    if (nutritionalInfo == null)
+            //    {
+            //        return BadRequest("Failed to deserialize nutritional information.");
+            //    }
+
+            //    var foodResponse = new FoodProductGeneralResponse
+            //    {
+            //        Name = nutritionalInfo.FoodNames.FirstOrDefault(),
+            //        FoodNames = nutritionalInfo.FoodNames,
+            //        ServingSizeInGrams = nutritionalInfo.ServingSize,
+            //        Calories = nutritionalInfo.NutritionalInfo.Calories,
+            //        Protein = nutritionalInfo.NutritionalInfo.TotalNutrients.Protein.Quantity,
+            //        Carbohydrates = nutritionalInfo.NutritionalInfo.TotalNutrients.Carbohydrates.Quantity,
+            //        Fat = nutritionalInfo.NutritionalInfo.TotalNutrients.Fat.Quantity
+            //    };
 
             var foodResponse = new FoodProductGeneralResponse
             {
-                Name = nutritionalInfo.FoodNames.FirstOrDefault(),
-                ServingSizeInGrams = nutritionalInfo.ServingSize,
-                Calories = nutritionalInfo.NutritionalInfo.Calories,
-                Protein = nutritionalInfo.NutritionalInfo.TotalNutrients.Protein.Quantity,
-                Carbohydrates = nutritionalInfo.NutritionalInfo.TotalNutrients.Carbohydrates.Quantity,
-                Fat = nutritionalInfo.NutritionalInfo.TotalNutrients.Fat.Quantity
+                Name = "Test",
+                FoodNames = new List<string> { "garlic", "tangerine", "pizza", "tea", "pizza", "orange" },
+                Calories = 100,
+                ServingSizeInGrams = 100,
+                Protein = 10,
+                Carbohydrates = 20,
+                Fat = 5
             };
+
 
 
             return Ok(foodResponse);

@@ -19,17 +19,30 @@ import AddTaskIcon from "@mui/icons-material/AddTask";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import QuickAddModal from "./FoodModals/QuickAddModal";
-const FoodModal = ({ modalOpen, handleClose, sectionName }) => {
+import ScanFoodModal from "./FoodModals/ScanFoodModal";
+import BarcodeAddModal from "./FoodModals/BarcodeAddModal";
+const FoodModal = ({
+  modalOpen,
+  handleClose,
+  sectionName,
+  refetchLoggedFoods,
+}) => {
   const currentUser = useUser();
   const [foods, setFoods] = useState([]);
-  const [sortType, setSortType] = useState(1);
+  const [sortType, setSortType] = useState();
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
 
   const [isQuickAddModalOpen, setIsQuickAddModalOpen] = useState(false);
+  const [isScanFoodModalOpen, setIsScanFoodModalOpen] = useState(false);
+  const [isBarcodeFoodModalOpen, setIsBarcodeFoodModalOpen] = useState(false);
 
   useEffect(() => {
     fetchLoggedFoods();
   }, []);
+
+  useEffect(() => {
+    fetchLoggedFoods();
+  }, [isScanFoodModalOpen, isQuickAddModalOpen,isBarcodeFoodModalOpen]);
 
   const fetchLoggedFoods = async () => {
     try {
@@ -77,6 +90,18 @@ const FoodModal = ({ modalOpen, handleClose, sectionName }) => {
         : sectionName === "Dinner"
         ? 3
         : 4;
+    if (
+      food.foodName === "" ||
+      food.servingSize === "" ||
+      food.numberOfServings === "" ||
+      food.calories === "" ||
+      food.protein === "" ||
+      food.carbohydrates === "" ||
+      food.fat === ""
+    ) {
+      toast.error("Please fill all fields");
+      return;
+    }
     try {
       const response = await api.post(
         `/api/v1/LoggedFood`,
@@ -98,18 +123,20 @@ const FoodModal = ({ modalOpen, handleClose, sectionName }) => {
         },
       );
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         toast.success("Food added successfully");
+        refetchLoggedFoods();
+        handleClose();
       }
     } catch (error) {
       toast.error("Error adding food");
     }
   };
   const handleSortMenu = (sortType) => {
-    console.log(sortType);
     let sortedFoods;
     switch (sortType) {
       case 1:
+        console.log("sortType", foods[0].dateLogged);
         sortedFoods = [...foods].sort(
           (a, b) => new Date(b.dateLogged) - new Date(a.dateLogged),
         );
@@ -140,6 +167,19 @@ const FoodModal = ({ modalOpen, handleClose, sectionName }) => {
     setIsQuickAddModalOpen(false);
   };
 
+  const handleOpenScanFoodModal = () => {
+    setIsScanFoodModalOpen(true);
+  };
+  const handleCloseScanFoodModal = () => {
+    setIsScanFoodModalOpen(false);
+  };
+  const handleCloseBarcodeFoodModal = () => {
+    setIsBarcodeFoodModalOpen(false);
+  };
+  const handleOpenBarcodeFoodModal = () => {
+    setIsBarcodeFoodModalOpen(true);
+  };
+
   return (
     <>
       <Modal open={modalOpen} onClose={handleClose}>
@@ -158,11 +198,21 @@ const FoodModal = ({ modalOpen, handleClose, sectionName }) => {
             />
           </div>
           <div className="flex justify-between mt-2">
-            <div className="flex flex-col items-center gap-3 border rounded-md p-2 w-[30%] bg-green-700 cursor-pointer text-surface-light">
+            <div
+              className="flex flex-col items-center gap-3 border rounded-md p-2 w-[30%] bg-green-700 cursor-pointer text-surface-light"
+              onClick={() => {
+                handleOpenScanFoodModal();
+              }}
+            >
               <RestaurantIcon className="text-surface-light" />
               <p className="text-sm">Scan a Meal</p>
             </div>
-            <div className="flex flex-col items-center gap-3 border rounded-md p-2 w-[30%] bg-green-700 cursor-pointer text-surface-light">
+            <div
+              className="flex flex-col items-center gap-3 border rounded-md p-2 w-[30%] bg-green-700 cursor-pointer text-surface-light"
+              onClick={() => {
+                handleOpenBarcodeFoodModal();
+              }}
+            >
               <CropFreeIcon className="text-surface-light" />
               <p className="text-sm">Barcode</p>
             </div>
@@ -214,9 +264,22 @@ const FoodModal = ({ modalOpen, handleClose, sectionName }) => {
                   >
                     <div>
                       <p className="text-md">{food.foodName}</p>
-                      <p className="text-gray-300 text-sm">
-                        {food.calories} calories, {food.servingSize} g
+                      <p className="text-gray-300 md:text-sm text-xs">
+                        {food.calories} calories
+                        {food.servingSize > 0 && `, ${food.servingSize} g`}
                       </p>
+                    </div>
+                    <div>
+                      {food.servingSize && (
+                        <p className="text-gray-300 md:text-sm text-xs">
+                          Serving size: {food.servingSize}
+                        </p>
+                      )}
+                      {food.numberOfServings && (
+                        <p className="text-gray-300 md:text-sm text-xs">
+                          Number of servings: {food.numberOfServings}
+                        </p>
+                      )}
                     </div>
 
                     <AddCircleIcon
@@ -239,6 +302,19 @@ const FoodModal = ({ modalOpen, handleClose, sectionName }) => {
         quickAddModalOpen={isQuickAddModalOpen}
         handleCloseQuickAddModal={handleCloseQuickAddModal}
         sectionName={sectionName}
+        refetchLoggedFoods={refetchLoggedFoods}
+      />
+      <ScanFoodModal
+        scanFoodModalOpen={isScanFoodModalOpen}
+        handleCloseScanFoodModal={handleCloseScanFoodModal}
+        sectionName={sectionName}
+        refetchLoggedFoods={refetchLoggedFoods}
+      />
+      <BarcodeAddModal
+        barcodeAddModalOpen={isBarcodeFoodModalOpen}
+        handleCloseBarcodeAddModal={handleCloseBarcodeFoodModal}
+        sectionName={sectionName}
+        refetchLoggedFoods={refetchLoggedFoods}
       />
     </>
   );

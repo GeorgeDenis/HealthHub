@@ -3,6 +3,7 @@
     public class FoodProductGeneralResponse
     {
         public string Name { get; set; } = string.Empty;
+        public List<string> FoodNames { get; set; } = new List<string>();
         public float Calories { get; set; }
         public float ServingSizeInGrams { get; set; }
         public float Protein { get; set; }

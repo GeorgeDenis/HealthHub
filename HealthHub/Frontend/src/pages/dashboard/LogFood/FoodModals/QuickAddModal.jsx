@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
 import { Modal } from "@mui/material";
@@ -14,6 +14,7 @@ const QuickAddModal = ({
   quickAddModalOpen,
   handleCloseQuickAddModal,
   sectionName,
+  refetchLoggedFoods
 }) => {
   const currentUser = useUser();
   const [mealType, setMealType] = useState("1");
@@ -32,6 +33,10 @@ const QuickAddModal = ({
     });
   };
   useEffect(() => {
+    const mealTypeConverted = sectionName === "Breakfast" ? "1" : sectionName === "Lunch" ? "2" : sectionName === "Dinner" ? "3" : "4";
+    setMealType(mealTypeConverted);
+  }, []);
+  useEffect(() => {
     setFoodItem({
       foodName: "",
       calories: 0,
@@ -40,9 +45,23 @@ const QuickAddModal = ({
       protein: 0,
     });
   }, [quickAddModalOpen]);
-      
+
   const logFood = async () => {
+    const isValidNumber = (value) =>
+      !isNaN(parseFloat(value)) && isFinite(value) && value > 0;
+
     const mealTypeConverted = parseInt(mealType);
+    if (
+      !foodItem.foodName ||
+      !isValidNumber(foodItem.calories) ||
+      !isValidNumber(foodItem.fat) ||
+      !isValidNumber(foodItem.carbohydrates) ||
+      !isValidNumber(foodItem.protein)
+    ) {
+      toast.error("Please fill all fields");
+
+      return;
+    }
     try {
       const response = await api.post(
         `/api/v1/LoggedFood`,
@@ -65,6 +84,7 @@ const QuickAddModal = ({
       if (response.status === 200) {
         toast.success("Food logged successfully");
         handleCloseQuickAddModal();
+        refetchLoggedFoods();
       }
     } catch (error) {
       console.error("Error logging food:", error);
