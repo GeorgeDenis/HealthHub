@@ -21,6 +21,7 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import QuickAddModal from "./FoodModals/QuickAddModal";
 import ScanFoodModal from "./FoodModals/ScanFoodModal";
 import BarcodeAddModal from "./FoodModals/BarcodeAddModal";
+import ExerciseModal from "./LogExercise/ExerciseModal";
 const FoodModal = ({
   modalOpen,
   handleClose,
@@ -36,6 +37,7 @@ const FoodModal = ({
   const [isQuickAddModalOpen, setIsQuickAddModalOpen] = useState(false);
   const [isScanFoodModalOpen, setIsScanFoodModalOpen] = useState(false);
   const [isBarcodeFoodModalOpen, setIsBarcodeFoodModalOpen] = useState(false);
+
 
   useEffect(() => {
     fetchLoggedFoods();
@@ -179,6 +181,7 @@ const FoodModal = ({
   const handleOpenBarcodeFoodModal = () => {
     setIsBarcodeFoodModalOpen(true);
   };
+
 
   const handleSearchFood = async () => {
     try {
@@ -339,6 +342,7 @@ const FoodModal = ({
         sectionName={sectionName}
         refetchLoggedFoods={refetchLoggedFoods}
       />
+      
     </>
   );
 };
