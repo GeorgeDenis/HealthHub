@@ -2,6 +2,7 @@
 using HealthHub.Application.Features.LoggedCardioExercises.Commands.CreateLoggedCardioExercises;
 using HealthHub.Application.Features.LoggedCardioExercises.Commands.DeleteLoggedCardioExercise;
 using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetLoggedCardioExerciseByUserIdAndDate;
+using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetRecentLoggedCardioExercises;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -50,7 +51,20 @@ namespace HealthHub.API.Controllers
         }
 
         [Authorize(Roles = "User")]
-        [HttpGet("/search-cardio-exercise")]
+        [HttpGet("get-recent")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetRecentLoggedCardioExercises(Guid userId)
+        {
+            var result = await Mediator.Send(new GetRecentLoggedCardioExercisesQuery { UserId = userId });
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [Authorize(Roles = "User")]
+        [HttpGet("search-cardio-exercise")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetListOfCardioExercisesByName(string exerciseName)
         {

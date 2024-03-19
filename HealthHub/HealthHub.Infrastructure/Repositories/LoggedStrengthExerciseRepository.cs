@@ -40,7 +40,7 @@ namespace HealthHub.Infrastructure.Repositories
             var loggedStrengthExercises = await context.LoggedStrengthExercises
                 .Where(x => x.UserId == userId)
                 .OrderByDescending(x => x.DateLogged)
-                .Take(10)
+                .Take(15)
                 .Select(x => new LoggedStrengthExerciseDto
                 {
                     LoggedStrengthExerciseId = x.LoggedStrengthExerciseId,

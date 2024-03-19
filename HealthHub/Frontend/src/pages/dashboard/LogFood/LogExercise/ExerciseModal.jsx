@@ -5,8 +5,8 @@ import { toast } from "react-toastify";
 
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import LensIcon from "@mui/icons-material/Lens";
-import AddStrengthExerciseModal from "./AddStrengthExerciseModal";
-import AddCardioExerciseModal from "./AddCardioExerciseModal";
+import AddStrengthExerciseModal from "./StrengthExercise/AddStrengthExerciseModal";
+import AddCardioExerciseModal from "./CardioExercise/AddCardioExerciseModal";
 const ExerciseModal = ({ isExerciseModalOpen, handleCloseExerciseModal }) => {
   const [exerciseType, setExerciseType] = useState("");
 
@@ -57,7 +57,7 @@ const ExerciseModal = ({ isExerciseModalOpen, handleCloseExerciseModal }) => {
           <div className="flex flex-col gap-3">
             <Typography color="green">Add Exercise</Typography>
             <div
-              className="p-2 bg-green-700 rounded-lg flex items-center gap-1 h-8 cursor-pointer"
+              className="p-4 bg-green-700 rounded-lg flex items-center gap-1 h-12 cursor-pointer"
               onClick={() => handleExerciseTypeChange("cardio")}
             >
               {exerciseType === "cardio" ? (
@@ -68,7 +68,7 @@ const ExerciseModal = ({ isExerciseModalOpen, handleCloseExerciseModal }) => {
               <p className="text-surface-light">Cardio exercises</p>
             </div>
             <div
-              className="p-2 bg-green-700 rounded-lg flex items-center gap-1 h-8 cursor-pointer"
+              className="p-4 bg-green-700 rounded-lg flex items-center gap-1 h-12 cursor-pointer"
               onClick={() => handleExerciseTypeChange("strength")}
             >
               {exerciseType === "strength" ? (

@@ -15,7 +15,7 @@ namespace HealthHub.Application.Features.LoggedFoods.Queries.GetRecentLoggedFood
         public async Task<GetRecentLoggedFoodByUserIdQueryResponse> Handle(GetRecentLoggedFoodByUserIdQuery request, CancellationToken cancellationToken)
          {
             var validator = new GetRecentLoggedFoodByUserIdQueryValidator();
-            var validatorResult = await validator.ValidateAsync(request);
+            var validatorResult = await validator.ValidateAsync(request,cancellationToken);
             if (!validatorResult.IsValid)
             {
                 return new GetRecentLoggedFoodByUserIdQueryResponse
