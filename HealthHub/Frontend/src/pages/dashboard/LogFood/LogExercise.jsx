@@ -30,7 +30,7 @@ const LogExercise = ({ cardioExercises, strengthExercises }) => {
       </div>
       <div
         className="text-surface-light overflow-auto max-h-[12rem]"
-        style={{ scrollbarWidth: "thin" }}
+        style={{ scrollbarWidth: "none" }}
       >
         <div className="flex flex-col gap-2">
           {cardioExercises.map((exercise, index) => (
