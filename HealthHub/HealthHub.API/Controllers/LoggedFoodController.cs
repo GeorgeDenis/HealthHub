@@ -1,11 +1,11 @@
 ﻿using HealthHub.API.Models;
 using HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood;
 using HealthHub.Application.Features.LoggedFoods.Commands.DeleteLoggedFood;
+using HealthHub.Application.Features.LoggedFoods.Commands.UpdateLoggedFood;
 using HealthHub.Application.Features.LoggedFoods.Queries.GetLoggedFoodByUserIdAndDate;
 using HealthHub.Application.Features.LoggedFoods.Queries.GetLoggedFoodNutritentsByUserIdAndDate;
 using HealthHub.Application.Features.LoggedFoods.Queries.GetRecentLoggedFoodByUserId;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Headers;
 using System.Text.Json;
@@ -45,6 +45,18 @@ namespace HealthHub.API.Controllers
         public async Task<IActionResult> Delete(Guid loggedFoodId, Guid userId)
         {
             var result = await Mediator.Send(new DeleteLoggedFoodCommand { LoggedFoodId = loggedFoodId, UserId = userId });
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [Authorize(Roles = "User")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateLoggedFood([FromBody] UpdateLoggedFoodCommand updateLoggedFoodCommand)
+        {
+            var result = await Mediator.Send(updateLoggedFoodCommand);
             if (!result.Success)
             {
                 return BadRequest(result);
