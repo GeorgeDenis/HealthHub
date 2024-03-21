@@ -58,3 +58,23 @@ I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0
 I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.pdb
 I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.genruntimeconfig.cache
 I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\ref\HealthHub.Identity.dll
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\bin\Debug\net8.0\HealthHub.Identity.deps.json
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\bin\Debug\net8.0\HealthHub.Identity.runtimeconfig.json
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\bin\Debug\net8.0\HealthHub.Identity.dll
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\bin\Debug\net8.0\HealthHub.Identity.pdb
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\bin\Debug\net8.0\HealthHub.Application.dll
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\bin\Debug\net8.0\HealthHub.Domain.dll
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\bin\Debug\net8.0\HealthHub.Application.pdb
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\bin\Debug\net8.0\HealthHub.Domain.pdb
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.csproj.AssemblyReference.cache
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.GeneratedMSBuildEditorConfig.editorconfig
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.AssemblyInfoInputs.cache
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.AssemblyInfo.cs
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.csproj.CoreCompileInputs.cache
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.sourcelink.json
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.csproj.CopyComplete
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.dll
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\refint\HealthHub.Identity.dll
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.pdb
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\HealthHub.Identity.genruntimeconfig.cache
+C:\Licenta2024\Licenta2024\HealthHub\HealthHub.Identity\obj\Debug\net8.0\ref\HealthHub.Identity.dll

@@ -2,7 +2,7 @@ import React from "react";
 import { Input, Avatar, Typography } from "@material-tailwind/react";
 import SwitchRightIcon from "@mui/icons-material/SwitchRight";
 
-const LevelOfCompletion = ({ level,type }) => {
+const LevelOfCompletion = ({ level, type }) => {
   const validLevel = Math.min(100, Math.max(0, level));
   return (
     <div className="bg-white rounded-xl shadow-sm overflow-hidden p-1 w-12">
@@ -24,7 +24,12 @@ const NutrientsRemaining = ({
 }) => {
   const calculateLevel = (total, current) => {
     console.log(total, current);
-    return  Math.min(100, Math.abs(((total - current) * 100) / total));
+    let levelValue = ((total - current) * 100) / total;
+    if(levelValue > 0){
+      levelValue = Math.min(100, Math.abs(levelValue));
+    }
+    return levelValue > 0 ? 100 - levelValue : 100;
+
   };
   return (
     <div>
@@ -50,7 +55,7 @@ const NutrientsRemaining = ({
               {"Protein(g)"}
             </Typography>
           </div>
-          <LevelOfCompletion level={calculateLevel(macronutrientsNeeded.protein,totalNutrients.protein)} type={"protein"}/>
+          <LevelOfCompletion level={calculateLevel(macronutrientsNeeded.protein, totalNutrients.protein)} type={"protein"} />
         </div>
         <div>
           <div className="flex flex-col items-center">
@@ -62,7 +67,7 @@ const NutrientsRemaining = ({
               {"Carbs(g)"}
             </Typography>
           </div>
-          <LevelOfCompletion level={calculateLevel(macronutrientsNeeded.carbohydrates,totalNutrients.carbohydrates)} type={"carbohydrates"}/>
+          <LevelOfCompletion level={calculateLevel(macronutrientsNeeded.carbohydrates, totalNutrients.carbohydrates)} type={"carbohydrates"} />
         </div>
         <div>
           <div className="flex flex-col items-center">
