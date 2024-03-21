@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
 import { Modal } from "@mui/material";
-import { Typography, Button } from "@material-tailwind/react";
+import { Typography, Button, Spinner } from "@material-tailwind/react";
 import { useUser } from "@/context/LoginRequired";
 
 const BarcodeAddModal = ({
@@ -15,6 +15,7 @@ const BarcodeAddModal = ({
   const [barcode, setBarcode] = useState("");
   const [foodItem, setFoodItem] = useState({});
   const [originalFoodItem, setOriginalFoodItem] = useState({});
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     setBarcode("");
@@ -25,8 +26,9 @@ const BarcodeAddModal = ({
   const handleNutrientChange = (e, type) => {
     if (type === "servingSize") {
       const servingSize = originalFoodItem.servingSize;
-      const calories =
-        parseInt((e.target.value * originalFoodItem.calories) / servingSize);
+      const calories = parseInt(
+        (e.target.value * originalFoodItem.calories) / servingSize,
+      );
       const protein = parseInt(
         (originalFoodItem.protein * e.target.value) / servingSize,
       );
@@ -53,10 +55,12 @@ const BarcodeAddModal = ({
   };
 
   const handleSearchFoodByBarcode = async () => {
-    if(!barcode){
+    if (!barcode) {
       toast.error("Please enter a barcode");
       return;
     }
+    setIsSearching(true);
+
     try {
       const response = await api.get(
         `/api/v1/LoggedFood/search-food/byCode/${barcode}`,
@@ -67,7 +71,7 @@ const BarcodeAddModal = ({
         },
       );
       if (response.status === 200) {
-        if(response.data.name === ""){
+        if (response.data.name === "") {
           toast.error("Food not found");
           return;
         }
@@ -90,10 +94,11 @@ const BarcodeAddModal = ({
       }
     } catch (error) {
       toast.error("Error fetching foods");
+    }finally {
+      setIsSearching(false);
     }
   };
   const handleAddBarcodeFood = async () => {
-    console.log("foodItem", foodItem);
     if (foodItem.servingSize < 20) {
       toast.error("Serving size must be at least 20g");
       return;
@@ -106,7 +111,6 @@ const BarcodeAddModal = ({
         : sectionName === "Dinner"
         ? 3
         : 4;
-    console.log("mealTypeConverted", foodItem);
     try {
       const response = await api.post(
         `/api/v1/LoggedFood`,
@@ -231,6 +235,11 @@ const BarcodeAddModal = ({
               >
                 Save
               </Button>
+            </div>
+          )}
+          {isSearching && (
+            <div className={"flex justify-center my-48"}>
+              <Spinner className={"h-8 w-8"} />
             </div>
           )}
         </div>

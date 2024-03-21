@@ -30,6 +30,7 @@ const FoodModal = ({
 }) => {
   const currentUser = useUser();
   const [foods, setFoods] = useState([]);
+  const [searchedFoods, setSearchedFoods] = useState([]);
   const [sortType, setSortType] = useState();
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
@@ -194,7 +195,7 @@ const FoodModal = ({
         },
       );
       if (response.status === 200) {
-        console.log(response.data);
+        setSearchedFoods(response.data);
         setSearchText("");
       }
     } catch (error) {
@@ -208,7 +209,7 @@ const FoodModal = ({
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:w-[25rem] w-[90vw] bg-surface-darkest shadow-lg p-5 rounded-lg">
           <div className="relative">
             <Input
-              label="Search"
+              label="Search for a food"
               color="green"
               crossOrigin={undefined}
               className="text-white w-full"

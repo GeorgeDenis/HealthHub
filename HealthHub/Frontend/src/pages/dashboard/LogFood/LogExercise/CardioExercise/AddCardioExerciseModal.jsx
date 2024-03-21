@@ -11,6 +11,7 @@ import NewCardioExerciseModal from "./NewCardioExerciseModal";
 const AddCardioExerciseModal = ({
   isCardioExerciseModalOpen,
   handleCloseCardioExerciseModal,
+  fetchLoggedCardioExercises,
 }) => {
   const currentUser = useUser();
   const [searchText, setSearchText] = useState("");
@@ -39,6 +40,10 @@ const AddCardioExerciseModal = ({
       handleOpenNewCardioExerciseModalOpen();
     }
   }, [currentExercise]);
+
+  useEffect(() => {
+    fetchLoggedCardioExercises();
+  }, [isNewCardioExerciseModalOpen]);
 
   const fetchRecentCardioExercises = async () => {
     try {

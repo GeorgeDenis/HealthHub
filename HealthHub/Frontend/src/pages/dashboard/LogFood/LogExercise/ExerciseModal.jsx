@@ -7,7 +7,7 @@ import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import LensIcon from "@mui/icons-material/Lens";
 import AddStrengthExerciseModal from "./StrengthExercise/AddStrengthExerciseModal";
 import AddCardioExerciseModal from "./CardioExercise/AddCardioExerciseModal";
-const ExerciseModal = ({ isExerciseModalOpen, handleCloseExerciseModal }) => {
+const ExerciseModal = ({ isExerciseModalOpen, handleCloseExerciseModal,fetchLoggedCardioExercises,fetchLoggedStrengthExercises }) => {
   const [exerciseType, setExerciseType] = useState("");
 
   const [isStrengthExerciseModalOpen, setIsStrengthExerciseModalOpen] =
@@ -18,6 +18,7 @@ const ExerciseModal = ({ isExerciseModalOpen, handleCloseExerciseModal }) => {
   useEffect(() => {
     setExerciseType("");
   }, [isExerciseModalOpen]);
+
 
   const handleExerciseTypeChange = (type) => {
     setExerciseType(type);
@@ -93,10 +94,12 @@ const ExerciseModal = ({ isExerciseModalOpen, handleCloseExerciseModal }) => {
       <AddStrengthExerciseModal
         isStrengthExerciseModalOpen={isStrengthExerciseModalOpen}
         handleCloseStrengthExerciseModal={handleCloseStrengthExerciseModal}
+        fetchLoggedStrengthExercises={fetchLoggedStrengthExercises}
       />
       <AddCardioExerciseModal
         isCardioExerciseModalOpen={isCardioExerciseModalOpen}
         handleCloseCardioExerciseModal={handleCloseCardioExerciseModal}
+        fetchLoggedCardioExercises={fetchLoggedCardioExercises}
       />
     </>
   );

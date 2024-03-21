@@ -98,10 +98,10 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
                   key={index}
                   className="p-2 bg-green-900 rounded-lg"
                 >
-                  <div className="flex gap-2 justify-between">
+                  <div className="flex gap-2 justify-between text-xs md:text-sm">
                     <div>
                       <div className="flex items-center gap-1">
-                        <p className="text-surface-light text-sm font-semibold">
+                        <p className="text-surface-light text-xs md:text-sm font-semibold">
                           {food.foodName}
                         </p>
                         <EditIcon
@@ -111,28 +111,28 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
                       </div>
 
                       {food.servingSize > 0 && (
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-gray-500">
                           Serving size: {food.servingSize}g
                         </p>
                       )}
                       {food.numberOfServings > 0 && (
-                        <p className="text-gray-500 text-sm">
+                        <p className="text-gray-500">
                           Number of servings: {food.numberOfServings}
                         </p>
                       )}
                     </div>
-                    <div className="flex text-sm cursor-pointer">
+                    <div className="flex cursor-pointer text-xs md:text-sm">
                       <div>
-                        <p className="text-surface-light text-xs">
+                        <p className="text-surface-light">
                           {food.calories} calories
                         </p>
-                        <p className="text-surface-light text-xs">
+                        <p className="text-surface-light">
                           {food.protein} proteins
                         </p>
-                        <p className="text-surface-light text-xs">
+                        <p className="text-surface-light">
                           {food.carbohydrates} carbohydrates
                         </p>
-                        <p className="text-surface-light text-xs">
+                        <p className="text-surface-light">
                           {food.fat} fats
                         </p>
                       </div>

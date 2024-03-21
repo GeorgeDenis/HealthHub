@@ -2,9 +2,6 @@ import { useLocation, Link } from "react-router-dom";
 import { Navbar, Typography, Button, IconButton, Breadcrumbs } from "@material-tailwind/react";
 import { UserCircleIcon, BellIcon, ClockIcon, Bars3Icon, CheckIcon} from "@heroicons/react/24/solid";
 import { useMaterialTailwindController, setOpenSidenav } from "../../context/MaterialTailwind";
-import { useEffect, useState } from "react";
-import api from "../../services/api";
-import { toast } from "react-toastify";
 import { useUser } from "../../context/LoginRequired";
 
 

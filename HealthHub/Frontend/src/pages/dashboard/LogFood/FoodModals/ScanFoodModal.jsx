@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
 import { Modal } from "@mui/material";
-import { Button } from "@material-tailwind/react";
+import { Button, Spinner } from "@material-tailwind/react";
 import { useUser } from "@/context/LoginRequired";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -20,6 +20,7 @@ const ScanFoodModal = ({
   const [detectedFoodArray, setDetectedFoodArray] = useState([]);
   const [selectedFoodName, setSelectedFoodName] = useState("");
   const [foodItem, setFoodItem] = useState({});
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     setFoodPhoto(null);
@@ -35,13 +36,12 @@ const ScanFoodModal = ({
     setDetectedFoodArray([]);
   };
 
-
   const handleScanFood = async () => {
     if (!foodPhoto) {
       toast.error("No photo selected");
       return;
     }
-
+    setIsSearching(true);
     try {
       const formData = new FormData();
       formData.append("foodImage", foodPhoto);
@@ -72,6 +72,8 @@ const ScanFoodModal = ({
       }
     } catch (error) {
       toast.error("Error detecting food: " + error.toString());
+    } finally {
+      setIsSearching(false);
     }
   };
   const handleAddScannedFood = async () => {
@@ -88,7 +90,12 @@ const ScanFoodModal = ({
         : sectionName === "Dinner"
         ? 3
         : 4;
-    console.log("mealTypeConverted", foodItem);
+    foodItem.calories = parseInt(foodItem.calories);
+    foodItem.protein = parseInt(foodItem.protein);
+    foodItem.fat = parseInt(foodItem.fat);
+    foodItem.carbohydrates = parseInt(foodItem.carbohydrates);
+    foodItem.servingSize = parseInt(foodItem.servingSize);
+
     try {
       const response = await api.post(
         `/api/v1/LoggedFood`,
@@ -127,7 +134,7 @@ const ScanFoodModal = ({
             {!foodPhoto && (
               <div className="flex flex-col items-center gap-4">
                 <p className="text-surface-light">
-                Upload a picture to identify your dish!
+                  Upload a picture to identify your dish!
                 </p>
                 <div className="w-full flex justify-center">
                   <input
@@ -227,6 +234,11 @@ const ScanFoodModal = ({
               </div>
             )}
           </div>
+          {isSearching && (
+            <div className={"flex justify-center my-48"}>
+              <Spinner className={"h-8 w-8"} />
+            </div>
+          )}
         </div>
       </Modal>
     </div>

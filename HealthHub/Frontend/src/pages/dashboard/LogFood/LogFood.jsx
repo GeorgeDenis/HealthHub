@@ -124,6 +124,7 @@ const LogFood = () => {
       if (response.status === 200) {
         const newCardioExercises = response.data.loggedCardioExercises.map(
           (exercise) => ({
+            id: exercise.loggedCardioExerciseId,
             exerciseName: exercise.name,
             duration: exercise.duration,
             caloriesBurned: exercise.caloriesBurned,
@@ -148,6 +149,7 @@ const LogFood = () => {
       if (response.status === 200) {
         const newStrengthExercises = response.data.loggedStrengthExercises.map(
           (exercise) => ({
+            id: exercise.loggedStrengthExerciseId,
             exerciseName: exercise.name,
             muscleGroup: exercise.muscleGroup,
             sets: exercise.numberOfSets,
@@ -218,6 +220,8 @@ const LogFood = () => {
             <LogExercise
               cardioExercises={cardioExercises}
               strengthExercises={strengthExercises}
+              fetchLoggedCardioExercises={fetchLoggedCardioExercises}
+              fetchLoggedStrengthExercises={fetchLoggedStrengthExercises}
             />
             <LogWater selectedDate={selectedDate} />
           </div>

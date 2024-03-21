@@ -8,7 +8,16 @@ import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import AddTaskIcon from "@mui/icons-material/AddTask";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ExerciseModal from "./LogExercise/ExerciseModal";
-const LogExercise = ({ cardioExercises, strengthExercises }) => {
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
+const LogExercise = ({
+  cardioExercises,
+  strengthExercises,
+  fetchLoggedCardioExercises,
+  fetchLoggedStrengthExercises,
+}) => {
+  const currentUser = useUser();
   const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false);
 
   const handleOpenExerciseModal = () => {
@@ -18,6 +27,46 @@ const LogExercise = ({ cardioExercises, strengthExercises }) => {
     setIsExerciseModalOpen(false);
   };
 
+  const handleDeleteStrengthExercise = async (exerciseId) => {
+    try {
+      const response = await api.delete(
+        `/api/v1/LoggedStrengthExercise/${exerciseId}`,
+        {
+          params: { id: exerciseId, userId: currentUser?.userId },
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+      if (response.status === 200) {
+        toast.success("Exercise deleted successfully");
+        fetchLoggedStrengthExercises();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred while deleting the exercise");
+    }
+  };
+  const handleDeleteCardioExercise = async (exerciseId) => {
+    try {
+      const response = await api.delete(
+        `/api/v1/LoggedCardioExercise/${exerciseId}`,
+        {
+          params: { id: exerciseId, userId: currentUser?.userId },
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+      if (response.status === 200) {
+        toast.success("Exercise deleted successfully");
+        fetchLoggedCardioExercises();
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("An error occurred while deleting the exercise");
+    }
+  };
   return (
     <div className="flex flex-col mt-2 px-1 mb-10 md:mb-2 lg:w-[26rem] lg:h-[23rem] xl:w-[90%]">
       <div className="flex items-center mb-2">
@@ -36,16 +85,30 @@ const LogExercise = ({ cardioExercises, strengthExercises }) => {
           {cardioExercises.map((exercise, index) => (
             <CardContent key={index} className="p-1 bg-green-900 rounded-lg">
               <div className="flex items-center justify-between">
-                <p className="text-surface-light text-sm font-semibold">
-                  {exercise.exerciseName}
-                </p>
-                <div>
-                  <p className="text-surface-light text-xs">
-                    Duration in minutes: {exercise.duration}
+                <div className="flex items-center gap-2">
+                  <p className="text-surface-light text-xs md:text-sm font-semibold">
+                    {exercise.exerciseName}
                   </p>
-                  <p className="text-surface-light text-xs">
-                    Calories burned: {exercise.caloriesBurned}
-                  </p>
+                  <EditIcon
+                      className="cursor-pointer hover:text-green-400"
+                      fontSize="small"
+                    />
+                </div>
+
+                <div className="flex gap-1 md:gap-2">
+                  <div>
+                    <p className="text-surface-light text-xs">
+                      Duration in minutes: {exercise.duration}
+                    </p>
+                    <p className="text-surface-light text-xs">
+                      Calories burned: {exercise.caloriesBurned}
+                    </p>
+                  </div>
+                  <DeleteIcon
+                    className="cursor-pointer hover:text-red-500"
+                    fontSize="small"
+                    onClick={() => handleDeleteCardioExercise(exercise.id)}
+                  />
                 </div>
               </div>
             </CardContent>
@@ -54,20 +117,34 @@ const LogExercise = ({ cardioExercises, strengthExercises }) => {
             <CardContent key={index} className="p-1 bg-green-900 rounded-lg">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-surface-light text-sm font-semibold">
-                    {exercise.exerciseName}
-                  </p>
-                  <p className="text-surface-light text-xs">
+                  <div className="flex items-center gap-2">
+                    <p className="text-surface-light text-xs md:text-sm font-semibold">
+                      {exercise.exerciseName}
+                    </p>
+                    <EditIcon
+                      className="cursor-pointer hover:text-green-400"
+                      fontSize="small"
+                    />
+                  </div>
+
+                  <p className="text-surface-light text-xs  mt-1">
                     Muscle group: {exercise.muscleGroup}
                   </p>
                 </div>
-                <div>
-                  <p className="text-surface-light text-xs">
-                    Number of sets: {exercise.sets}
-                  </p>
-                  <p className="text-surface-light text-xs">
-                    Weight per set: {exercise.weightPerSet}
-                  </p>
+                <div className="flex gap-1 md:gap-2">
+                  <div>
+                    <p className="text-surface-light text-xs">
+                      Number of sets: {exercise.sets}
+                    </p>
+                    <p className="text-surface-light text-xs">
+                      Weight per set: {exercise.weightPerSet}
+                    </p>
+                  </div>
+                  <DeleteIcon
+                    className="cursor-pointer hover:text-red-500"
+                    fontSize="small"
+                    onClick={() => handleDeleteStrengthExercise(exercise.id)}
+                  />
                 </div>
               </div>
             </CardContent>
@@ -91,6 +168,8 @@ const LogExercise = ({ cardioExercises, strengthExercises }) => {
       <ExerciseModal
         isExerciseModalOpen={isExerciseModalOpen}
         handleCloseExerciseModal={handleCloseExerciseModal}
+        fetchLoggedCardioExercises={fetchLoggedCardioExercises}
+        fetchLoggedStrengthExercises={fetchLoggedStrengthExercises}
       />
     </div>
   );

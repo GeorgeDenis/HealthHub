@@ -11,6 +11,7 @@ import NewStrengthExerciseModal from "./NewStrengthExerciseModal";
 const AddStrengthExerciseModal = ({
   isStrengthExerciseModalOpen,
   handleCloseStrengthExerciseModal,
+  fetchLoggedStrengthExercises,
 }) => {
   const currentUser = useUser();
   const [searchText, setSearchText] = useState("");
@@ -31,6 +32,9 @@ const AddStrengthExerciseModal = ({
     fetchRecentStrengthExercises();
   }, [isStrengthExerciseModalOpen]);
 
+  useEffect(() => {
+    fetchLoggedStrengthExercises();
+  }, [isNewStrengthExerciseModalOpen]);
   useEffect(() => {
     if (currentExercise.exerciseName && currentExercise.muscle) {
       handleOpenNewStrengthExerciseModalOpen();
