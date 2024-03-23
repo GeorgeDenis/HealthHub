@@ -1,6 +1,7 @@
 ﻿using HealthHub.API.Models;
 using HealthHub.Application.Features.LoggedStrengthExercises.Commands.CreateLoggedStrengthExercise;
 using HealthHub.Application.Features.LoggedStrengthExercises.Commands.DeleteLoggedStrengthExercise;
+using HealthHub.Application.Features.LoggedStrengthExercises.Commands.UpdateLoggedStrengthExercise;
 using HealthHub.Application.Features.LoggedStrengthExercises.Queries.GetLoggedStrengthExerciseByUserIdAndDate;
 using HealthHub.Application.Features.LoggedStrengthExercises.Queries.GetRecentLoggedStrengthExercises;
 using Microsoft.AspNetCore.Authorization;
@@ -51,6 +52,20 @@ namespace HealthHub.API.Controllers
             }
             return Ok(result);
         }
+
+        [Authorize(Roles = "User")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update(UpdateLoggedStrengthExerciseCommand command)
+        {
+            var result = await Mediator.Send(command);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
         [Authorize(Roles = "User")]
         [HttpGet("get-recent")]
         [ProducesResponseType(StatusCodes.Status200OK)]

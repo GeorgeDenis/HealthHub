@@ -71,10 +71,11 @@ const LogFood = () => {
       });
 
       if (response.status === 200) {
-        setBreakfastFoods([]);
-        setLunchFoods([]);
-        setDinnerFoods([]);
-        setSnackFoods([]);
+        // Initialize temporary arrays to hold the food items for each meal type
+        let breakfastFoodsTemp = [];
+        let lunchFoodsTemp = [];
+        let dinnerFoodsTemp = [];
+        let snackFoodsTemp = [];
 
         response.data.loggedFoods.forEach((food) => {
           const foodItem = {
@@ -89,23 +90,34 @@ const LogFood = () => {
             mealType: food.mealType,
           };
 
+          // Add the food item to the corresponding temporary array
           switch (food.mealType) {
             case 1:
-              setBreakfastFoods((prev) => [...prev, foodItem]);
+              breakfastFoodsTemp.push(foodItem);
               break;
             case 2:
-              setLunchFoods((prev) => [...prev, foodItem]);
+              lunchFoodsTemp.push(foodItem);
               break;
             case 3:
-              setDinnerFoods((prev) => [...prev, foodItem]);
+              dinnerFoodsTemp.push(foodItem);
               break;
             case 4:
-              setSnackFoods((prev) => [...prev, foodItem]);
+              snackFoodsTemp.push(foodItem);
               break;
             default:
               break;
           }
         });
+
+        breakfastFoodsTemp.sort((a, b) => a.foodName.localeCompare(b.foodName));
+        lunchFoodsTemp.sort((a, b) => a.foodName.localeCompare(b.foodName));
+        dinnerFoodsTemp.sort((a, b) => a.foodName.localeCompare(b.foodName));
+        snackFoodsTemp.sort((a, b) => a.foodName.localeCompare(b.foodName));
+
+        setBreakfastFoods(breakfastFoodsTemp);
+        setLunchFoods(lunchFoodsTemp);
+        setDinnerFoods(dinnerFoodsTemp);
+        setSnackFoods(snackFoodsTemp);
       }
     } catch (error) {
       console.error("Error fetching foods:", error);

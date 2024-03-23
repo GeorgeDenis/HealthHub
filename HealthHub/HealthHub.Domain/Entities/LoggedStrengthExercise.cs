@@ -44,5 +44,29 @@ namespace HealthHub.Domain.Entities
             }
             return Result<LoggedStrengthExercise>.Success(new LoggedStrengthExercise(userId, name, muscleGroup, numberOfSets, weightPerSet));
         }
+        public  Result<LoggedStrengthExercise> Update(string name,string muscleGroup,int numberOfSets, int weightPerSet)
+        {
+            if(string.IsNullOrEmpty(name))
+            {
+                return Result<LoggedStrengthExercise>.Failure("Name cannot be empty");
+            }
+            if(string.IsNullOrEmpty(muscleGroup))
+            {
+                return Result<LoggedStrengthExercise>.Failure("Muscle group cannot be empty");
+            }
+            if(numberOfSets < 0)
+            {
+                return Result<LoggedStrengthExercise>.Failure("Number of sets cannot be less than 0");
+            }
+            if(weightPerSet < 0)
+            {
+                return Result<LoggedStrengthExercise>.Failure("Weight per set cannot be less than 0");
+            }
+            Name = name;
+            MuscleGroup = muscleGroup;
+            NumberOfSets = numberOfSets;
+            WeightPerSet = weightPerSet;
+            return Result<LoggedStrengthExercise>.Success(this);
+        }
     }
 }

@@ -12,6 +12,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import FoodModal from "./FoodModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import UpdateLogFoodModal from "./FoodModals/UpdateLogFoodModal";
 const breakfastText =
   "No breakfast items found. Tap the '+' to add your first meal of the day!";
 const lunchText = "No lunch items found. Tap the '+' to add your midday meal!";
@@ -20,6 +21,8 @@ const snackText = "No snack items found. Tap the '+' to add your snack!";
 
 const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [updateLogFoodOpen, setUpdateLogFoodOpen] = useState(false);
+  const [foodItemToEdit, setFoodItemToEdit] = useState({});
   const currentUser = useUser();
 
   const handleOpen = () => {
@@ -27,6 +30,13 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
   };
   const handleClose = () => {
     setModalOpen(false);
+  };
+  const handleUpdateLogFoodOpen = (foodItem) => {
+    setFoodItemToEdit(foodItem);
+    setUpdateLogFoodOpen(true);
+  };
+  const handleUpdateLogFoodClose = () => {
+    setUpdateLogFoodOpen(false);
   };
   const Icon =
     sectionName === "Breakfast"
@@ -107,6 +117,7 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
                         <EditIcon
                           className="cursor-pointer hover:text-green-400"
                           fontSize="small"
+                          onClick={() => handleUpdateLogFoodOpen(food)}
                         />
                       </div>
 
@@ -163,6 +174,12 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
         modalOpen={modalOpen}
         handleClose={handleClose}
         sectionName={sectionName}
+        refetchLoggedFoods={fetchLoggedFoods}
+      />
+      <UpdateLogFoodModal
+        updateLogFoodOpen={updateLogFoodOpen}
+        handleCloseUpdateFood={handleUpdateLogFoodClose}
+        foodItemToEdit={foodItemToEdit}
         refetchLoggedFoods={fetchLoggedFoods}
       />
     </div>

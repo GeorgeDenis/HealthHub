@@ -1,6 +1,7 @@
 ﻿using HealthHub.API.Models;
 using HealthHub.Application.Features.LoggedCardioExercises.Commands.CreateLoggedCardioExercises;
 using HealthHub.Application.Features.LoggedCardioExercises.Commands.DeleteLoggedCardioExercise;
+using HealthHub.Application.Features.LoggedCardioExercises.Commands.UpdateLoggedCardioExercise;
 using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetLoggedCardioExerciseByUserIdAndDate;
 using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetRecentLoggedCardioExercises;
 using Microsoft.AspNetCore.Authorization;
@@ -36,6 +37,20 @@ namespace HealthHub.API.Controllers
             }
             return Ok(result);
         }
+
+        [Authorize(Roles = "User")]
+        [HttpPut]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> Update(UpdateLoggedCardioExerciseCommand command)
+        {
+            var result = await Mediator.Send(command);
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
         [Authorize(Roles = "User")]
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]

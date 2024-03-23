@@ -38,5 +38,25 @@ namespace HealthHub.Domain.Entities
             }
             return Result<LoggedCardioExercise>.Success(new LoggedCardioExercise(userId, name, duration, caloriesBurned));
         }
+        public Result<LoggedCardioExercise> Update(string name, int duration,int caloriesBurned)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return Result<LoggedCardioExercise>.Failure("Name cannot be empty");
+            }
+            if (duration <= 0)
+            {
+                return Result<LoggedCardioExercise>.Failure("Duration must be greater than 0");
+            }
+            if (caloriesBurned < 0)
+            {
+                return Result<LoggedCardioExercise>.Failure("Calories burned cannot be less than 0");
+            }
+            Name = name;
+            Duration = duration;
+            CaloriesBurned = caloriesBurned;
+            return Result<LoggedCardioExercise>.Success(this);
+
+        }
     }
 }

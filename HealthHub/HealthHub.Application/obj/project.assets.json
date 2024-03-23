@@ -2335,19 +2335,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Denis\\.nuget\\packages\\": {}
+    "C:\\Users\\georg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Licenta2024\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
+      "projectUniqueName": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
       "projectName": "HealthHub.Application",
-      "projectPath": "C:\\Licenta2024\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
-      "packagesPath": "C:\\Users\\Denis\\.nuget\\packages\\",
-      "outputPath": "C:\\Licenta2024\\Licenta2024\\HealthHub\\HealthHub.Application\\obj\\",
+      "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
+      "packagesPath": "C:\\Users\\georg\\.nuget\\packages\\",
+      "outputPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Denis\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\georg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -2361,8 +2361,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Licenta2024\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {
-              "projectPath": "C:\\Licenta2024\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj"
+            "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj": {
+              "projectPath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Domain\\HealthHub.Domain.csproj"
             }
           }
         }
