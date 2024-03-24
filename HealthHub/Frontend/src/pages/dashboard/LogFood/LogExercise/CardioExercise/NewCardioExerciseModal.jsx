@@ -19,7 +19,7 @@ const NewCardioExerciseModal = ({
     caloriesBurned: "",
     duration: "",
   });
-  const handleNutrientChange = (e, type) => {
+  const handleCardioChange = (e, type) => {
     const value = e.target.value;
     if (areCaloriesPredefined && type === "duration") {
       let caloriesByDuration = 0;
@@ -97,14 +97,14 @@ const NewCardioExerciseModal = ({
               className=" bg-surface-light rounded-lg w-[14rem]  border border-gray-300 p-2"
               placeholder="Exercise Name"
               value={exercise.exerciseName}
-              onChange={(e) => handleNutrientChange(e, "exerciseName")}
+              onChange={(e) => handleCardioChange(e, "exerciseName")}
             />
             <input
               type="number"
               className=" bg-surface-light rounded-lg w-[14rem]  border border-gray-300 p-2"
               placeholder="Calories per hour"
               value={exercise.caloriesBurned}
-              onChange={(e) => handleNutrientChange(e, "caloriesBurned")}
+              onChange={(e) => handleCardioChange(e, "caloriesBurned")}
               readOnly={areCaloriesPredefined}
             />
             <input
@@ -112,7 +112,7 @@ const NewCardioExerciseModal = ({
               className=" bg-surface-light rounded-lg w-[14rem]  border border-gray-300 p-2"
               placeholder="Duration (in minutes)"
               value={exercise.duration}
-              onChange={(e) => handleNutrientChange(e, "duration")}
+              onChange={(e) => handleCardioChange(e, "duration")}
             />
             <button
               className=" flex justify-center items-center gap-2 mt-5 mx-auto w-20 h-8 bg-secondary hover:bg-primary duration-200 rounded-lg p-2 text-surface-light"

@@ -13,6 +13,7 @@ import FoodModal from "./FoodModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import UpdateLogFoodModal from "./FoodModals/UpdateLogFoodModal";
+
 const breakfastText =
   "No breakfast items found. Tap the '+' to add your first meal of the day!";
 const lunchText = "No lunch items found. Tap the '+' to add your midday meal!";
@@ -22,7 +23,9 @@ const snackText = "No snack items found. Tap the '+' to add your snack!";
 const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [updateLogFoodOpen, setUpdateLogFoodOpen] = useState(false);
+  
   const [foodItemToEdit, setFoodItemToEdit] = useState({});
+  
   const currentUser = useUser();
 
   const handleOpen = () => {
@@ -38,6 +41,7 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
   const handleUpdateLogFoodClose = () => {
     setUpdateLogFoodOpen(false);
   };
+  
   const Icon =
     sectionName === "Breakfast"
       ? BreakfastDiningIcon
@@ -93,9 +97,11 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
               {sectionName}
             </p>
           </div>
-          {calculateCalories() > 0 && <p className="text-surface-light rounded-md bg-green-900 p-1 text-sm cursor-pointer">
-            {`${calculateCalories()} kcal`}{" "}
-          </p>}
+          {calculateCalories() > 0 && (
+            <p className="text-surface-light rounded-md bg-green-900 p-1 text-sm cursor-pointer">
+              {`${calculateCalories()} kcal`}{" "}
+            </p>
+          )}
         </div>
         <div
           className="text-surface-light overflow-auto max-h-[12rem]"
@@ -143,9 +149,7 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
                         <p className="text-surface-light">
                           {food.carbohydrates} carbohydrates
                         </p>
-                        <p className="text-surface-light">
-                          {food.fat} fats
-                        </p>
+                        <p className="text-surface-light">{food.fat} fats</p>
                       </div>
                       <DeleteIcon
                         className="cursor-pointer hover:text-red-500"
@@ -182,6 +186,7 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
         foodItemToEdit={foodItemToEdit}
         refetchLoggedFoods={fetchLoggedFoods}
       />
+      
     </div>
   );
 };

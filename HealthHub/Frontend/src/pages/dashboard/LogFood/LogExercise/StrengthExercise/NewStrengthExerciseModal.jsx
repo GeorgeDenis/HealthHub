@@ -45,6 +45,10 @@ const NewStrengthExerciseModal = ({
       toast.error("Please fill all the fields");
       return;
     }
+    if(exercise.numberOfSets <= 0){
+      toast.error("Number of sets must be greater than 0");
+      return;
+    }
     try {
       const response = await api.post(
         `/api/v1/LoggedStrengthExercise`,

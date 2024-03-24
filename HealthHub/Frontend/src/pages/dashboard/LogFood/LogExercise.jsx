@@ -10,6 +10,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ExerciseModal from "./LogExercise/ExerciseModal";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import UpdateCardioExerciseModal from "./LogExercise/CardioExercise/UpdateCardioExerciseModal";
+import UpdateStrengthExerciseModal from "./LogExercise/StrengthExercise/UpdateStrengthExerciseModal";
 
 const LogExercise = ({
   cardioExercises,
@@ -18,13 +20,33 @@ const LogExercise = ({
   fetchLoggedStrengthExercises,
 }) => {
   const currentUser = useUser();
+  const [cardioExerciseToEdit, setCardioExerciseToEdit] = useState({});
+  const [strengthExerciseToEdit, setStrengthExerciseToEdit] = useState({});
   const [isExerciseModalOpen, setIsExerciseModalOpen] = useState(false);
+  const [updateCardioExerciseOpen, setUpdateCardioExerciseOpen] =
+    useState(false);
+  const [updateStrengthExerciseOpen, setUpdateStrengthExerciseOpen] =
+    useState(false);
 
   const handleOpenExerciseModal = () => {
     setIsExerciseModalOpen(true);
   };
   const handleCloseExerciseModal = () => {
     setIsExerciseModalOpen(false);
+  };
+  const handleUpdateCardioExerciseOpen = (exercise) => {
+    setCardioExerciseToEdit(exercise);
+    setUpdateCardioExerciseOpen(true);
+  };
+  const handleUpdateCardioExerciseClose = () => {
+    setUpdateCardioExerciseOpen(false);
+  };
+  const handleUpdateStrengthExerciseOpen = (exercise) => {
+    setStrengthExerciseToEdit(exercise);
+    setUpdateStrengthExerciseOpen(true);
+  };
+  const handleUpdateStrengthExerciseClose = () => {
+    setUpdateStrengthExerciseOpen(false);
   };
 
   const handleDeleteStrengthExercise = async (exerciseId) => {
@@ -90,9 +112,10 @@ const LogExercise = ({
                     {exercise.exerciseName}
                   </p>
                   <EditIcon
-                      className="cursor-pointer hover:text-green-400"
-                      fontSize="small"
-                    />
+                    className="cursor-pointer hover:text-green-400"
+                    fontSize="small"
+                    onClick={() => handleUpdateCardioExerciseOpen(exercise)}
+                  />
                 </div>
 
                 <div className="flex gap-1 md:gap-2">
@@ -124,6 +147,7 @@ const LogExercise = ({
                     <EditIcon
                       className="cursor-pointer hover:text-green-400"
                       fontSize="small"
+                      onClick={() => handleUpdateStrengthExerciseOpen(exercise)}
                     />
                   </div>
 
@@ -170,6 +194,18 @@ const LogExercise = ({
         handleCloseExerciseModal={handleCloseExerciseModal}
         fetchLoggedCardioExercises={fetchLoggedCardioExercises}
         fetchLoggedStrengthExercises={fetchLoggedStrengthExercises}
+      />
+      <UpdateCardioExerciseModal
+        updateCardioExerciseOpen={updateCardioExerciseOpen}
+        handleCloseUpdateCardioExercise={handleUpdateCardioExerciseClose}
+        cardioExerciseToEdit={cardioExerciseToEdit}
+        refetchLoggedCardioExercises={fetchLoggedCardioExercises}
+      />
+      <UpdateStrengthExerciseModal
+        updateStrengthExerciseOpen={updateStrengthExerciseOpen}
+        handleCloseUpdateStrengthExercise={handleUpdateStrengthExerciseClose}
+        strengthExerciseToEdit={strengthExerciseToEdit}
+        refetchLoggedStrengthExercises={fetchLoggedStrengthExercises}
       />
     </div>
   );

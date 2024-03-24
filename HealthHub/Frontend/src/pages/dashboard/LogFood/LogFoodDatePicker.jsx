@@ -40,7 +40,7 @@ const LogFoodDatePicker = ({ selectedDate, onChange }) => {
         selected={selectedDate}
         onChange={onChange}
         wrapperClassName="bg-[#2f2b3a] rounded border"
-        className="w-full bg-green-800 border border-surface-light rounded p-1 focus:outline-none focus:border-secondary text-surface-light  font-semibold text-center"
+        className="w-full bg-green-800 border border-surface-light rounded p-1 focus:outline-none focus:border-secondary text-surface-light  font-semibold text-center cursor-pointer"
         placeholderText={currentDate}
       />
       <svg
