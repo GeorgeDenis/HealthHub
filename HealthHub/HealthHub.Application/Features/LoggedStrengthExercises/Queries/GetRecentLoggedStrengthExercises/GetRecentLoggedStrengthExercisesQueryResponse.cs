@@ -7,7 +7,7 @@ namespace HealthHub.Application.Features.LoggedStrengthExercises.Queries.GetRece
         public GetRecentLoggedStrengthExercisesQueryResponse() : base()
         {
         }
-        public List<LoggedStrengthExerciseDto> LoggedStrengthExercises { get; set; }
+        public List<LoggedStrengthExerciseDto> LoggedStrengthExercises { get; set; } = [];
 
     }
 }

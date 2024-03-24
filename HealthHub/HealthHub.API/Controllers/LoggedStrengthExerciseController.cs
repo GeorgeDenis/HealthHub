@@ -14,7 +14,7 @@ namespace HealthHub.API.Controllers
 
     public class LoggedStrengthExerciseController : ApiControllerBase
     {
-        private const string ApiUrl = "https://api.api-ninjas.com/v1/exercises?muscle=";
+        private const string APIURL = "https://api.api-ninjas.com/v1/exercises?muscle=";
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -86,7 +86,7 @@ namespace HealthHub.API.Controllers
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("X-Api-Key", DotNetEnv.Env.GetString("APINinjasKey"));
-            string url = $"{ApiUrl}{muscleName}";
+            string url = $"{APIURL}{muscleName}";
             if (difficulty != null)
             {
                 url += $"&difficulty={difficulty}";

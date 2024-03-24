@@ -12,6 +12,9 @@ namespace HealthHub.API.Controllers
 {
     public class LoggedCardioExerciseController : ApiControllerBase
     {
+
+        private const string APIURL = "https://api.api-ninjas.com/v1/caloriesburned?activity=";
+
         [Authorize(Roles = "User")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -85,7 +88,7 @@ namespace HealthHub.API.Controllers
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("X-Api-Key", DotNetEnv.Env.GetString("APINinjasKey"));
-            var response = await client.GetAsync($"https://api.api-ninjas.com/v1/caloriesburned?activity={exerciseName}");
+            var response = await client.GetAsync($"{APIURL}{exerciseName}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -110,7 +113,8 @@ namespace HealthHub.API.Controllers
 
             return BadRequest("Error");
         }
-        
+
+
 
     }
 }

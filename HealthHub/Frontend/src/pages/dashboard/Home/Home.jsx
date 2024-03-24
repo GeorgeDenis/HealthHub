@@ -18,6 +18,9 @@ import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 import { useUser } from "@/context/LoginRequired";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
+import CaloriesBanner from "./CaloriesBanner";
+import NutrientsBanner from "./NutrientsBanner";
+import FatIntakeBanner from "./FatIntakeBanner";
 
 export function Home() {
   const currentUser = useUser();
@@ -104,44 +107,55 @@ export function Home() {
 
   return (
     <div className="mt-10 text-surface-light">
-      <div className="mb-16">
-        <h2 className="text-4xl font-bold">
-          Good{" "}
-          {time < 4 || time >= 18
-            ? "evening"
-            : time <= 12
-            ? "morning"
-            : "afternoon"}
-          , <span className="text-white">{currentUser?.username}</span>!
-        </h2>
-      </div>
       {/* main container */}
-      <div className="text-center">
-        <Typography variant="h4" className="text-white p-2">
-          Calories Remaining: {calories}
-        </Typography>
-        {currentUserMacronutrients && (
-          <div>
-            <Typography variant="h4" className="text-white p-2">
-              Proteins Remaining: {currentUserMacronutrients.protein}
-            </Typography>
-            <Typography variant="h4" className="text-white p-2">
-              Carbohydrates Remaining: {currentUserMacronutrients.carbohydrates}
-            </Typography>
-            <Typography variant="h4" className="text-white p-2">
-              Fats Remaining: {currentUserMacronutrients.fats}
-            </Typography>
-          </div>
-        )}
-        {currentWeight && (
-          <div>
-            <Typography variant="h4" className="text-white p-2">
-              Last recorded weight: {currentWeight.weight} kg on{" "}
-              {new Date(currentWeight.dateLogged).toLocaleDateString()}
-            </Typography>
-          </div>
-        )}
+      <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-surface-dark">
+        <div className="absolute inset-0 h-full w-full" />
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold p-4">
+            Good{" "}
+            {time < 4 || time >= 18
+              ? "evening"
+              : time <= 12
+              ? "morning"
+              : "afternoon"}
+            , <span className="text-white">{currentUser?.username}</span>!
+          </h2>
+        </div>
       </div>
+      <Card className="mx-3 -mt-48 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center p-4">
+        <div className="flex flex-col md:flex-row gap-10">
+          <CaloriesBanner caloriesNeeded={calories} />
+          <NutrientsBanner />
+          <FatIntakeBanner />
+        </div>
+        <div className="text-center flex flex-col items-center">
+          <Typography variant="h4" className="text-white p-2">
+            Calories Remaining: {calories}
+          </Typography>
+          {currentUserMacronutrients && (
+            <div>
+              <Typography variant="h4" className="text-white p-2">
+                Proteins Remaining: {currentUserMacronutrients.protein}
+              </Typography>
+              <Typography variant="h4" className="text-white p-2">
+                Carbohydrates Remaining:{" "}
+                {currentUserMacronutrients.carbohydrates}
+              </Typography>
+              <Typography variant="h4" className="text-white p-2">
+                Fats Remaining: {currentUserMacronutrients.fats}
+              </Typography>
+            </div>
+          )}
+          {currentWeight && (
+            <div>
+              <Typography variant="h4" className="text-white p-2">
+                Last recorded weight: {currentWeight.weight} kg on{" "}
+                {new Date(currentWeight.dateLogged).toLocaleDateString()}
+              </Typography>
+            </div>
+          )}
+        </div>
+      </Card>
     </div>
   );
 }

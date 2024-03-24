@@ -4,7 +4,7 @@ namespace HealthHub.Domain.Entities
 {
     public class LoggedStrengthExercise
     {
-        private LoggedStrengthExercise(Guid userId, string name, string muscleGroup,int numberOfSets,int weightPerSet)
+        private LoggedStrengthExercise(Guid userId, string name, string muscleGroup,int numberOfSets,string weightPerSet)
         {
             LoggedStrengthExerciseId = Guid.NewGuid();
             UserId = userId;
@@ -22,9 +22,9 @@ namespace HealthHub.Domain.Entities
         public string Name { get; private set; }
         public string MuscleGroup { get; private set; }
         public int NumberOfSets { get; private set; }
-        public int WeightPerSet { get; private set; }
+        public string WeightPerSet { get; private set; }
         public DateTime DateLogged { get; private set; }
-        public static Result<LoggedStrengthExercise> Create(Guid userId, string name, string muscleGroup, int numberOfSets, int weightPerSet)
+        public static Result<LoggedStrengthExercise> Create(Guid userId, string name, string muscleGroup, int numberOfSets, string weightPerSet)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -38,13 +38,13 @@ namespace HealthHub.Domain.Entities
             {
                 return Result<LoggedStrengthExercise>.Failure("Number of sets cannot be less than 0");
             }
-            if (weightPerSet < 0)
+            if (string.IsNullOrEmpty(weightPerSet))
             {
-                return Result<LoggedStrengthExercise>.Failure("Weight per set cannot be less than 0");
+                return Result<LoggedStrengthExercise>.Failure("Weight per set cannot be empty");
             }
             return Result<LoggedStrengthExercise>.Success(new LoggedStrengthExercise(userId, name, muscleGroup, numberOfSets, weightPerSet));
         }
-        public  Result<LoggedStrengthExercise> Update(string name,string muscleGroup,int numberOfSets, int weightPerSet)
+        public  Result<LoggedStrengthExercise> Update(string name,string muscleGroup,int numberOfSets, string weightPerSet)
         {
             if(string.IsNullOrEmpty(name))
             {
@@ -58,9 +58,9 @@ namespace HealthHub.Domain.Entities
             {
                 return Result<LoggedStrengthExercise>.Failure("Number of sets cannot be less than 0");
             }
-            if(weightPerSet < 0)
+            if (string.IsNullOrEmpty(weightPerSet))
             {
-                return Result<LoggedStrengthExercise>.Failure("Weight per set cannot be less than 0");
+                return Result<LoggedStrengthExercise>.Failure("Weight per set cannot be empty");
             }
             Name = name;
             MuscleGroup = muscleGroup;

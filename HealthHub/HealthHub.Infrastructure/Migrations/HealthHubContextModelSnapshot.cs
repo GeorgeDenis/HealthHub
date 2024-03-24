@@ -114,8 +114,9 @@ namespace HealthHub.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
-                    b.Property<int>("WeightPerSet")
-                        .HasColumnType("integer");
+                    b.Property<string>("WeightPerSet")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("LoggedStrengthExerciseId");
 

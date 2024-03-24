@@ -28,7 +28,7 @@ namespace HealthHub.Application.Features.LoggedStrengthExercises.Commands.Update
             request.NumberOfSets ??= loggedStrengthExercise.Value.NumberOfSets;
             request.WeightPerSet ??= loggedStrengthExercise.Value.WeightPerSet;
 
-            loggedStrengthExercise.Value.Update(request.Name, request.MuscleGroup, request.NumberOfSets.Value, request.WeightPerSet.Value);
+            loggedStrengthExercise.Value.Update(request.Name, request.MuscleGroup, request.NumberOfSets.Value, request.WeightPerSet);
             var updateResponse = await loggedStrengthExerciseRepository.UpdateAsync(loggedStrengthExercise.Value);
             if (!updateResponse.IsSuccess)
             {

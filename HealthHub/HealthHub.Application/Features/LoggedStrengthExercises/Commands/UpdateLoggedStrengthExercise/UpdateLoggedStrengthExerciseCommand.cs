@@ -9,7 +9,7 @@ namespace HealthHub.Application.Features.LoggedStrengthExercises.Commands.Update
         public string? Name { get; set; }
         public string? MuscleGroup { get; set; }
         public int? NumberOfSets { get; set; }
-        public int? WeightPerSet { get; set; }
+        public string? WeightPerSet { get; set; }
     }
 
 }
