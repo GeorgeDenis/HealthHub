@@ -1,71 +1,115 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Typography } from "@material-tailwind/react";
 
-const CircleProgress = ({ total, needed, progressColor }) => {
+const CircleProgress = ({ total, needed, progressColor, dimension,category }) => {
   const progressPercentage = (total / needed) * 100;
+  let width = dimension === "small" ? 80 : 120;
+  let height = width;
+  let cx = width / 2;
+  let cy = height / 2;
+  let r = (width / 2) * 0.75; 
+
+  let fontSizeFirst = dimension === "small" ? "12" : "16"; 
+  let fontSizeSecond = dimension === "small" ? "10" : "14"; 
+  let viewBox = `0 0 ${width} ${height}`;
 
   return (
     <div className="flex flex-col justify-center items-center gap-2 text-white">
+      <p className="text-white text-sm font-semibold">{category}</p>
       <svg
         className="progress-circle"
-        width="120"
-        height="120"
-        viewBox="0 0 100 100"
+        width={width}
+        height={height}
+        viewBox={viewBox}
       >
         <circle
-          cx="50"
-          cy="50"
-          r="45"
+          cx={cx}
+          cy={cy}
+          r={r}
           fill="none"
           stroke="#FFFFFF"
           strokeWidth="10"
         />
         <text
-          x="50"
-          y="45"
-          className="text-lg font-semibold fill-current text-white"
+          x={cx}
+          y={cy - 10} 
+          fontSize={fontSizeFirst}
           textAnchor="middle"
           alignmentBaseline="middle"
+          fill="white"
         >
           {total}
         </text>
         <text
-          x="50"
-          y="65"
-          className="text-md font-semibold fill-current text-white text-xs"
+          x={cx}
+          y={cy + 10} 
+          fontSize={fontSizeSecond}
           textAnchor="middle"
           alignmentBaseline="middle"
+          fill="white"
         >
           /{needed}g
         </text>
         <circle
-          cx="50"
-          cy="50"
-          r="45"
+          cx={cx}
+          cy={cy}
+          r={r}
           fill="none"
           strokeWidth="10"
           stroke={progressColor}
-          strokeDasharray={`calc(283 * ${progressPercentage / 100}), 283`}
+          strokeDasharray={`${(283 * progressPercentage) / 100} 283`}
           strokeLinecap="round"
-          style={{ transform: "rotate(-90deg) translate(-100%)" }}
+          style={{ transform: `rotate(-90deg) translate(-${width}px, 0px)` }}
+          transform={`rotate(-90, ${cx}, ${cy})`} 
         />
       </svg>
-      <p className="text-sm">{needed - total}g left </p>
+      <p className="text-sm">{needed - total}g left</p>
     </div>
   );
 };
 
 const NutrientsBanner = () => {
+  const [dimension, setDimension] = React.useState("small");
+  useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth > 768) {
+        setDimension("large");
+      } else {
+        setDimension("small");
+      }
+    }
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
-    <div className="w-[20rem] md:w-[26rem] bg-green-900 rounded-md p-6 shadow-lg">
+    <div className="w-[20rem] md:w-[25rem] h-[15rem] bg-green-900 rounded-md p-4 shadow-lg ">
       <div className="flex flex-col items-start gap-4">
         <Typography className="text-md font-semibold" color="white">
           Macros
         </Typography>
-        <div className="w-full flex flex-col md:flex-row items-center justify-between gap-3">
-          <CircleProgress total={36} needed={381} progressColor="#66b2b2" />
-          <CircleProgress total={4} needed={153} progressColor="#7d12ff" />
-          <CircleProgress total={9} needed={102} progressColor="#FF5F1F" />
+        <div className="w-full flex flex-row items-center justify-between gap-1">
+          <CircleProgress
+            total={36}
+            needed={381}
+            progressColor="#66b2b2"
+            dimension={dimension}
+            category="Carbohydrates"
+          />
+          <CircleProgress
+            total={4}
+            needed={153}
+            progressColor="#7d12ff"
+            dimension={dimension}
+            category="Proteins"
+          />
+          <CircleProgress
+            total={9}
+            needed={102}
+            progressColor="#FF5F1F"
+            dimension={dimension}
+            category="Fats"
+          />
         </div>
       </div>
     </div>

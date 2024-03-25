@@ -21,6 +21,7 @@ import { toast } from "react-toastify";
 import CaloriesBanner from "./CaloriesBanner";
 import NutrientsBanner from "./NutrientsBanner";
 import FatIntakeBanner from "./FatIntakeBanner";
+import LoggedWeights from "./LoggedWeights";
 
 export function Home() {
   const currentUser = useUser();
@@ -123,11 +124,13 @@ export function Home() {
         </div>
       </div>
       <Card className="mx-3 -mt-48 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center p-4">
-        <div className="flex flex-col md:flex-row gap-10">
+        <div className="flex flex-col 2xl:flex-row gap-8 w-full justify-center items-center">
           <CaloriesBanner caloriesNeeded={calories} />
           <NutrientsBanner />
-          <FatIntakeBanner />
+          <FatIntakeBanner fatsNeeded={currentUserMacronutrients.fats} />
         </div>
+        <LoggedWeights />
+
         <div className="text-center flex flex-col items-center">
           <Typography variant="h4" className="text-white p-2">
             Calories Remaining: {calories}

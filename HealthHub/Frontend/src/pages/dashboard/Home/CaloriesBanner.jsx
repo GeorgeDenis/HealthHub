@@ -10,18 +10,20 @@ const CaloriesBanner = ({ caloriesNeeded }) => {
   useEffect(() => {}, []);
 
   return (
-    <div className="w-[20rem] md:w-[26rem] bg-green-900 rounded-md p-6 shadow-lg">
+    <div className="w-[20rem] md:w-[25rem] h-[15rem] bg-green-900 rounded-md p-4 shadow-lg ">
       <div className="flex flex-col items-start gap-2">
         <Typography className="text-md font-semibold" color="white">
           Calories
         </Typography>
-        <p className="text-xs mb-2 text-white">Remaining = Goal - Food + Exercise</p>
-        <div className="w-full flex items-center justify-between">
+        <p className="text-xs mb-2 text-white">
+          Remaining = Goal - Food + Exercise
+        </p>
+        <div className="w-full flex items-center justify-around">
           <div className="flex justify-center items-center">
             <svg
               className="progress-circle"
-              width="120"
-              height="120"
+              width="105"
+              height="105"
               viewBox="0 0 100 100"
             >
               <circle
