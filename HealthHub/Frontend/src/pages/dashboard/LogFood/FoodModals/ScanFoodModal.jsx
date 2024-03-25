@@ -42,6 +42,9 @@ const ScanFoodModal = ({
       return;
     }
     setIsSearching(true);
+
+
+
     try {
       const formData = new FormData();
       formData.append("foodImage", foodPhoto);
@@ -129,11 +132,11 @@ const ScanFoodModal = ({
   return (
     <div className="h-full">
       <Modal open={scanFoodModalOpen} onClose={handleCloseScanFoodModal}>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:w-[25rem] w-[90vw] bg-surface-darkest shadow-lg p-5 rounded-lg">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:w-[25rem] w-[90vw]  bg-surface-darkest shadow-lg p-5 rounded-lg">
           <div className="flex flex-col items-center justify-between gap-4">
             {!foodPhoto && (
               <div className="flex flex-col items-center gap-4">
-                <p className="text-surface-light">
+                <p className="text-surface-light rounded bg-green-500 p-2 font-semibold">
                   Upload a picture to identify your dish!
                 </p>
                 <div className="w-full flex justify-center">
@@ -141,12 +144,12 @@ const ScanFoodModal = ({
                     type="file"
                     accept="image/*"
                     onChange={handleInputPhoto}
-                    className="text-center file:border-0 file:text-surface-light file:bg-green-700 rounded-md"
+                    className="text-center file:border-0 file:text-surface-light file:bg-green-700 rounded-md ml-20"
                   />
                 </div>
               </div>
             )}
-            {detectedFoodArray.length === 0 && (
+            {detectedFoodArray.length === 0 && !isSearching && (
               <>
                 <div className="flex flex-col gap-3 items-center justify-center mt-4">
                   {foodPhoto && (

@@ -2,19 +2,13 @@ import React, { useState, useEffect } from "react";
 import api from "../../../../services/api";
 import { toast } from "react-toastify";
 import { Modal } from "@mui/material";
-import {
-  Input,
-  Select,
-  Option,
-  Typography,
-  Button,
-} from "@material-tailwind/react";
+import { Typography, Button } from "@material-tailwind/react";
 import { useUser } from "@/context/LoginRequired";
 const QuickAddModal = ({
   quickAddModalOpen,
   handleCloseQuickAddModal,
   sectionName,
-  refetchLoggedFoods
+  refetchLoggedFoods,
 }) => {
   const currentUser = useUser();
   const [mealType, setMealType] = useState("1");
@@ -33,7 +27,14 @@ const QuickAddModal = ({
     });
   };
   useEffect(() => {
-    const mealTypeConverted = sectionName === "Breakfast" ? "1" : sectionName === "Lunch" ? "2" : sectionName === "Dinner" ? "3" : "4";
+    const mealTypeConverted =
+      sectionName === "Breakfast"
+        ? "1"
+        : sectionName === "Lunch"
+        ? "2"
+        : sectionName === "Dinner"
+        ? "3"
+        : "4";
     setMealType(mealTypeConverted);
   }, []);
   useEffect(() => {
@@ -95,10 +96,16 @@ const QuickAddModal = ({
   return (
     <div className="h-full">
       <Modal open={quickAddModalOpen} onClose={handleCloseQuickAddModal}>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:w-[25rem] w-[90vw]  bg-surface-darkest shadow-lg p-5 rounded-lg">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:w-[25rem] w-[90vw] md:min-h-[32rem]  bg-surface-darkest shadow-lg p-5 rounded-lg">
           <div className="flex flex-col gap-6">
+            <Typography
+              className="text-md font-semibold mx-auto rounded bg-secondary p-2"
+              color="white"
+            >
+              Add Food
+            </Typography>
             <div className="flex justify-between">
-              <Typography color="white">Meal</Typography>
+              <Typography color="white">Meal:</Typography>
 
               <select
                 className="!border-surface-light text-surface-dark focus:!border-secondary rounded-lg select-none w-[10rem] p-2"
@@ -120,7 +127,7 @@ const QuickAddModal = ({
               </select>
             </div>
             <div className="flex justify-between items-center">
-              <Typography color="white">Name</Typography>
+              <Typography color="white">Name:</Typography>
               <input
                 type="text"
                 className=" bg-surface-light rounded-lg w-[10rem]  border border-gray-300 p-2"
@@ -129,7 +136,7 @@ const QuickAddModal = ({
               />
             </div>
             <div className="flex justify-between items-center">
-              <Typography color="white">Calories</Typography>
+              <Typography color="white">Calories:</Typography>
               <input
                 type="number"
                 className=" bg-surface-light rounded-lg w-[10rem]  border border-gray-300 p-2"

@@ -112,27 +112,37 @@ export function Home() {
   };
 
   return (
-    <div className="mt-10 text-surface-light">
+    <div className=" text-surface-light">
       {/* main container */}
-      <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-surface-dark">
-        <div className="absolute inset-0 h-full w-full" />
-        <div className="mb-16">
-          <h2 className="text-4xl font-bold p-4">
-            Good{" "}
-            {time < 4 || time >= 18
-              ? "evening"
-              : time <= 12
-              ? "morning"
-              : "afternoon"}
-            , <span className="text-white">{currentUser?.username}</span>!
-          </h2>
-        </div>
+      <div className="mb-8">
+        <h2 className="text-2xl md:text-4xl font-bold p-4">
+          Good{" "}
+          {time < 4 || time >= 18
+            ? "evening"
+            : time <= 12
+            ? "morning"
+            : "afternoon"}
+          , <span className="text-white">{currentUser?.username}</span>!
+        </h2>
       </div>
-      <Card className="mx-3 -mt-48 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center p-4">
-        <div className="flex flex-col 2xl:flex-row gap-8 w-full justify-center items-center">
-          <CaloriesBanner caloriesNeeded={calories} caloriesFromFood={totalNutrients.calories || 0}/>
-          <NutrientsBanner totalNutrients={totalNutrients} macronutrientsNeeded={currentUserMacronutrients}/>
-          <FatIntakeBanner fatsNeeded={currentUserMacronutrients.fats} />
+      <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl "
+       style={{backgroundImage: "url('../../../public/img/banner2.jpg')", backgroundPosition: 'center 43%', backgroundSize: 'cover'}}>
+        <div className="absolute inset-0 h-full w-full" />
+      </div>
+      <Card className="mx-3 -mt-32 md:-mt-28 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center p-4">
+        <div className="flex flex-col 2xl:flex-row gap-8 w-full justify-center items-center mt-5">
+          <CaloriesBanner
+            caloriesNeeded={calories}
+            caloriesFromFood={totalNutrients.calories || 0}
+          />
+          <NutrientsBanner
+            totalNutrients={totalNutrients}
+            macronutrientsNeeded={currentUserMacronutrients}
+          />
+          <FatIntakeBanner
+            fatsNeeded={currentUserMacronutrients.fats}
+            fatsFromFood={totalNutrients.fat}
+          />
         </div>
         <LoggedWeights />
 

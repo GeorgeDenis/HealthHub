@@ -3,6 +3,7 @@ import { Modal } from "@mui/material";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
 import SortIcon from "@mui/icons-material/Sort";
+import { Spinner } from "@material-tailwind/react";
 
 import { useUser } from "@/context/LoginRequired";
 import {
@@ -21,7 +22,8 @@ import RestaurantIcon from "@mui/icons-material/Restaurant";
 import QuickAddModal from "./FoodModals/QuickAddModal";
 import ScanFoodModal from "./FoodModals/ScanFoodModal";
 import BarcodeAddModal from "./FoodModals/BarcodeAddModal";
-import ExerciseModal from "./LogExercise/ExerciseModal";
+import SearchedAddModal from "./FoodModals/SearchedAddModal";
+
 const FoodModal = ({
   modalOpen,
   handleClose,
@@ -34,20 +36,29 @@ const FoodModal = ({
   const [sortType, setSortType] = useState();
   const [sortMenuOpen, setSortMenuOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [searchedFoodToAdd, setSearchedFoodToAdd] = useState({});
+  const [isSearching, setIsSearching] = useState(false);
 
   const [isQuickAddModalOpen, setIsQuickAddModalOpen] = useState(false);
   const [isScanFoodModalOpen, setIsScanFoodModalOpen] = useState(false);
   const [isBarcodeFoodModalOpen, setIsBarcodeFoodModalOpen] = useState(false);
-
-
+  const [isSearchAddModalOpen, setIsSearchAddModalOpen] = useState(false);
   useEffect(() => {
+    setSearchedFoods([]);
+    setSearchText("");
     fetchLoggedFoods();
-  }, []);
+  }, [modalOpen,handleClose]);
 
   useEffect(() => {
     fetchLoggedFoods();
   }, [isScanFoodModalOpen, isQuickAddModalOpen, isBarcodeFoodModalOpen]);
 
+  const handleSearchText = (e) => {
+    setSearchText(e.target.value);
+    if (e.target.value === "") {
+      setSearchedFoods([]);
+    }
+  };
   const fetchLoggedFoods = async () => {
     try {
       const response = await api.get(
@@ -182,9 +193,21 @@ const FoodModal = ({
   const handleOpenBarcodeFoodModal = () => {
     setIsBarcodeFoodModalOpen(true);
   };
-
+  const handleOpenSearchAddModal = (foodItem) => {
+    setSearchedFoodToAdd(foodItem);
+    setIsSearchAddModalOpen(true);
+  };
+  const handleCloseSearchAddModal = () => {
+    refetchLoggedFoods();
+    setIsSearchAddModalOpen(false);
+  };
 
   const handleSearchFood = async () => {
+    if(!searchText) {
+      toast.error("Please enter a food name to search");
+      return;
+    }
+    setIsSearching(true);
     try {
       const response = await api.get(
         `api/v1/LoggedFood/search-food/byName/${searchText}`,
@@ -195,18 +218,29 @@ const FoodModal = ({
         },
       );
       if (response.status === 200) {
-        setSearchedFoods(response.data);
-        setSearchText("");
+        const foodArray = response.data.map((food) => {
+          return {
+            name: food.name,
+            calories: parseInt(food.calories),
+            servingSizeInGrams: parseInt(food.servingSizeInGrams),
+            protein: parseInt(food.protein),
+            carbohydrates: parseInt(food.carbohydrates),
+            fat: parseInt(food.fat),
+          };
+        });
+        setSearchedFoods(foodArray);
       }
     } catch (error) {
       console.error("Error fetching foods:", error);
+    }finally {
+      setIsSearching(false);
     }
   };
 
   return (
-    <>
+    <div className="flex flex-col items-center">
       <Modal open={modalOpen} onClose={handleClose}>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:w-[25rem] w-[90vw] bg-surface-darkest shadow-lg p-5 rounded-lg">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 md:w-[25rem] md:min-h-[32rem] w-[90vw] bg-surface-darkest shadow-lg p-5 rounded-lg">
           <div className="relative">
             <Input
               label="Search for a food"
@@ -214,7 +248,7 @@ const FoodModal = ({
               crossOrigin={undefined}
               className="text-white w-full"
               value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
+              onChange={handleSearchText}
               icon={
                 <i
                   className="fa-solid fa-search cursor-pointer"
@@ -253,76 +287,117 @@ const FoodModal = ({
               <p>Quick Add</p>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex items-center justify-between mt-4">
-              <Typography color="green">Recent Foods</Typography>
-              <div className="flex gap-1">
-                <SortIcon
-                  className="text-surface-light"
-                  onClick={() => {
-                    setSortMenuOpen(!sortMenuOpen);
-                  }}
-                />
-                {sortMenuOpen && (
-                  <select
-                    className="w-[10rem] rounded text-surface-light bg-green-700"
-                    value={sortType}
-                    onChange={(e) => {
-                      handleSortMenu(Number(e.target.value));
-                    }}
-                  >
-                    <option value="1">Most Recent</option>
-                    <option value="2">A to Z</option>
-                    <option value="3">Z to A</option>
-                  </select>
-                )}
-              </div>
-            </div>
-
-            <div
-              className="text-surface-light overflow-auto max-h-[18rem] flex flex-col gap-3"
-              style={{ scrollbarWidth: "none" }}
-            >
-              {foods.length > 0 ? (
-                foods.map((food, index) => (
+          {searchText && searchedFoods.length > 0 && (
+            <div className="flex flex-col justify-between mt-4">
+              <Typography color="green">Searched Foods</Typography>
+              <div className="flex flex-col gap-2">
+                {searchedFoods.map((food, index) => (
                   <div
                     key={index}
-                    className="flex justify-between items-center border rounded-md w-full p-2 bg-green-700 text-surface-light cursor-pointer"
+                    className="flex justify-between items-center border rounded-md w-full p-2 bg-green-700 text-surface-light gap-2 hover:bg-green-500"
                   >
                     <div>
-                      <p className="text-md">{food.foodName}</p>
+                      <p className="text-md">{food.name}</p>
                       <p className="text-gray-300 md:text-sm text-xs">
                         {food.calories} calories
-                        {food.servingSize > 0 && `, ${food.servingSize} g`}
+                        {food.servingSizeInGrams > 0 &&
+                          `, ${food.servingSizeInGrams} g`}
                       </p>
                     </div>
                     <div>
-                      {food.servingSize && (
+                      {food.servingSizeInGrams && (
                         <p className="text-gray-300 md:text-sm text-xs">
-                          Serving size: {food.servingSize}
-                        </p>
-                      )}
-                      {food.numberOfServings && (
-                        <p className="text-gray-300 md:text-sm text-xs">
-                          Number of servings: {food.numberOfServings}
+                          Serving size: {food.servingSizeInGrams}
                         </p>
                       )}
                     </div>
-
                     <AddCircleIcon
-                      onClick={() => {
-                        addRecentFood(food);
-                      }}
-                    />
+                        className="cursor-pointer"
+                        onClick={() => handleOpenSearchAddModal(food)}
+                      />
                   </div>
-                ))
-              ) : (
-                <div className="border rounded-md w-full p-2 bg-green-700 text-surface-light cursor-pointer">
-                  <p>No foods logged yet</p>
-                </div>
-              )}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
+          {!searchText && (
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between mt-4">
+                <Typography color="green">Recent Foods</Typography>
+                <div className="flex gap-1">
+                  <SortIcon
+                    className="text-surface-light"
+                    onClick={() => {
+                      setSortMenuOpen(!sortMenuOpen);
+                    }}
+                  />
+                  {sortMenuOpen && (
+                    <select
+                      className="w-[10rem] rounded text-surface-light bg-green-700"
+                      value={sortType}
+                      onChange={(e) => {
+                        handleSortMenu(Number(e.target.value));
+                      }}
+                    >
+                      <option value="1">Most Recent</option>
+                      <option value="2">A to Z</option>
+                      <option value="3">Z to A</option>
+                    </select>
+                  )}
+                </div>
+              </div>
+
+              <div
+                className="text-surface-light overflow-auto max-h-[18rem] flex flex-col gap-3"
+                style={{ scrollbarWidth: "none" }}
+              >
+                {foods.length > 0 ? (
+                  foods.map((food, index) => (
+                    <div
+                      key={index}
+                      className="flex justify-between items-center border rounded-md w-full p-2 bg-green-700 text-surface-light"
+                    >
+                      <div>
+                        <p className="text-md">{food.foodName}</p>
+                        <p className="text-gray-300 md:text-sm text-xs">
+                          {food.calories} calories
+                          {food.servingSize > 0 && `, ${food.servingSize} g`}
+                        </p>
+                      </div>
+                      <div>
+                        {food.servingSize && (
+                          <p className="text-gray-300 md:text-sm text-xs">
+                            Serving size: {food.servingSize}
+                          </p>
+                        )}
+                        {food.numberOfServings && (
+                          <p className="text-gray-300 md:text-sm text-xs">
+                            Number of servings: {food.numberOfServings}
+                          </p>
+                        )}
+                      </div>
+
+                      <AddCircleIcon
+                        className="cursor-pointer"
+                        onClick={() => {
+                          addRecentFood(food);
+                        }}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="border rounded-md w-full p-2 bg-green-700 text-surface-light cursor-pointer">
+                    <p>No foods logged yet</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {isSearching && (
+            <div className={"flex justify-center my-48"}>
+              <Spinner className={"h-8 w-8"} />
+            </div>
+          )}
         </div>
       </Modal>
       <QuickAddModal
@@ -343,8 +418,14 @@ const FoodModal = ({
         sectionName={sectionName}
         refetchLoggedFoods={refetchLoggedFoods}
       />
-      
-    </>
+      <SearchedAddModal 
+        isSearchAddModalOpen={isSearchAddModalOpen}
+        handleCloseSearchAddModal={handleCloseSearchAddModal}
+        foodItem={searchedFoodToAdd}
+        sectionName={sectionName}
+        refetchLoggedFoods={refetchLoggedFoods}
+      />
+    </div>
   );
 };
 

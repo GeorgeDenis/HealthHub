@@ -112,7 +112,7 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
               foodsItems.map((food, index) => (
                 <CardContent
                   key={index}
-                  className="p-2 bg-green-900 rounded-lg"
+                  className="p-1 bg-green-900 rounded-lg"
                 >
                   <div className="flex gap-2 justify-between text-xs md:text-sm">
                     <div>
@@ -162,7 +162,7 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
               ))
             ) : (
               <CardContent className="p-2 bg-green-900 rounded-lg w-full flex justify-start items-center">
-                <p className="text-gray-500 text-sm">{promptText}</p>
+                <p className="text-gray-500 text-sm mx-auto">{promptText}</p>
               </CardContent>
             )}
           </div>

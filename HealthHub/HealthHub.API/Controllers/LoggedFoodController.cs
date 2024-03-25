@@ -15,6 +15,11 @@ namespace HealthHub.API.Controllers
 
     public class LoggedFoodController : ApiControllerBase
     {
+        private const string API_LISTBYNAME = "https://api.api-ninjas.com/v1/nutrition?query=";
+        private const string API_FOODCODE = "https://world.openfoodfacts.net/api/v2/product/";
+        private const string SEGMENTATION_URL = "https://api.logmeal.es/v2/image/segmentation/complete";
+        private const string NUTRITIONAL_INFOURL_API = "https://api.logmeal.es/v2/recipe/nutritionalInfo";
+
         [Authorize(Roles = "User")]
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -95,7 +100,7 @@ namespace HealthHub.API.Controllers
         {
             var client = new HttpClient();
             client.DefaultRequestHeaders.Add("X-Api-Key", DotNetEnv.Env.GetString("APINinjasKey"));
-            var response = await client.GetAsync($"https://api.api-ninjas.com/v1/nutrition?query={foodName}");
+            var response = await client.GetAsync($"{API_LISTBYNAME}{foodName}");
 
             if (response.IsSuccessStatusCode)
             {
@@ -129,7 +134,7 @@ namespace HealthHub.API.Controllers
         public async Task<IActionResult> GetFood(string foodCode)
         {
             var client = new HttpClient();
-            var response = await client.GetAsync($"https://world.openfoodfacts.net/api/v2/product/{foodCode}");
+            var response = await client.GetAsync($"{API_FOODCODE}{foodCode}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
@@ -165,7 +170,6 @@ namespace HealthHub.API.Controllers
             using var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiUserToken);
 
-            var segmentationUrl = "https://api.logmeal.es/v2/image/segmentation/complete";
 
             using var imageContent = new StreamContent(foodImage.OpenReadStream());
             imageContent.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
@@ -175,7 +179,7 @@ namespace HealthHub.API.Controllers
                 { imageContent, "image", foodImage.FileName }
             };
 
-            var segmentationResponse = await httpClient.PostAsync(segmentationUrl, formData);
+            var segmentationResponse = await httpClient.PostAsync(SEGMENTATION_URL, formData);
 
             if (!segmentationResponse.IsSuccessStatusCode)
             {
@@ -195,10 +199,9 @@ namespace HealthHub.API.Controllers
                 return BadRequest("Failed to get image ID from segmentation response.");
             }
 
-            var nutritionalInfoUrl = "https://api.logmeal.es/v2/recipe/nutritionalInfo";
             var nutritionalInfoPayload = new { imageId };
 
-            var nutritionalInfoResponse = await httpClient.PostAsJsonAsync(nutritionalInfoUrl, nutritionalInfoPayload);
+            var nutritionalInfoResponse = await httpClient.PostAsJsonAsync(NUTRITIONAL_INFOURL_API, nutritionalInfoPayload);
 
             if (!nutritionalInfoResponse.IsSuccessStatusCode)
             {

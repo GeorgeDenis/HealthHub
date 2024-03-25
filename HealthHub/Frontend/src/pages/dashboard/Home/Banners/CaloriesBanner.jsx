@@ -26,7 +26,6 @@ const CaloriesBanner = ({ caloriesNeeded, caloriesFromFood }) => {
         headers: { Authorization: `Bearer ${currentUser.token}` },
       });
       if(response.status === 200){
-        console.log(response.data);
         setCaloriesFromCardioExercise(response.data.caloriesBurned);
       }
     }catch(error){
@@ -56,7 +55,7 @@ const CaloriesBanner = ({ caloriesNeeded, caloriesFromFood }) => {
                 r="45"
                 fill="none"
                 className="stroke-current text-gray-300"
-                strokeWidth="10"
+                strokeWidth="9"
               />
               <text
                 x="50"
