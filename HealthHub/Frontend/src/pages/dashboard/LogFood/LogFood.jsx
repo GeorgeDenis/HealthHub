@@ -71,7 +71,6 @@ const LogFood = () => {
       });
 
       if (response.status === 200) {
-        // Initialize temporary arrays to hold the food items for each meal type
         let breakfastFoodsTemp = [];
         let lunchFoodsTemp = [];
         let dinnerFoodsTemp = [];
@@ -90,7 +89,6 @@ const LogFood = () => {
             mealType: food.mealType,
           };
 
-          // Add the food item to the corresponding temporary array
           switch (food.mealType) {
             case 1:
               breakfastFoodsTemp.push(foodItem);

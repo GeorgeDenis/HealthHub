@@ -3,6 +3,7 @@ using HealthHub.Application.Features.LoggedCardioExercises.Commands.CreateLogged
 using HealthHub.Application.Features.LoggedCardioExercises.Commands.DeleteLoggedCardioExercise;
 using HealthHub.Application.Features.LoggedCardioExercises.Commands.UpdateLoggedCardioExercise;
 using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetLoggedCardioExerciseByUserIdAndDate;
+using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetLoggedCardioExerciseCaloriesBurnedByUserIdAndDate;
 using HealthHub.Application.Features.LoggedCardioExercises.Queries.GetRecentLoggedCardioExercises;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -74,6 +75,19 @@ namespace HealthHub.API.Controllers
         public async Task<IActionResult> GetRecentLoggedCardioExercises(Guid userId)
         {
             var result = await Mediator.Send(new GetRecentLoggedCardioExercisesQuery { UserId = userId });
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [Authorize(Roles = "User")]
+        [HttpGet("get-calories-burned")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetCaloriesBurned(Guid userId, DateTime dateLogged)
+        {
+            var query = new GetLoggedCardioExerciseCaloriesBurnedByUserIdAndDateQuery { UserId = userId, DateLogged = dateLogged };
+            var result = await Mediator.Send(query);
             if (!result.Success)
             {
                 return BadRequest(result);

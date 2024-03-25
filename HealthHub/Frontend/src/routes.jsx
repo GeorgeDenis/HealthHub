@@ -16,6 +16,7 @@ import ActivityLevelModal from "./pages/auth/RegisterModal/ActivityLevelModal";
 import MainInfoCard from "./pages/auth/RegisterModal/MainInfoCard";
 import GoalTypeModal from "./pages/auth/RegisterModal/GoalTypeModal";
 import WeeklyGoalModal from "./pages/auth/RegisterModal/WeeklyGoalModal";
+import LogWeight from "./pages/dashboard/LogWeight/LogWeight";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -42,6 +43,12 @@ export const routes = [
         name: "log food",
         path: "/log-food",
         element: <LogFood />,
+      },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "log weight",
+        path: "/log-weight",
+        element: <LogWeight />,
       }
     ],
   },

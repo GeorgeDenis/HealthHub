@@ -1,32 +1,19 @@
 import React, { useEffect, useState } from "react";
-import {
-  Typography,
-  Card,
-  CardHeader,
-  CardBody,
-  IconButton,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-  Tooltip,
-  Progress,
-} from "@material-tailwind/react";
-import { EllipsisVerticalIcon, ArrowUpIcon } from "@heroicons/react/24/outline";
-import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
+import { Typography, Card } from "@material-tailwind/react";
+
 import { useUser } from "@/context/LoginRequired";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
-import CaloriesBanner from "./CaloriesBanner";
-import NutrientsBanner from "./NutrientsBanner";
-import FatIntakeBanner from "./FatIntakeBanner";
+import CaloriesBanner from "./Banners/CaloriesBanner";
+import NutrientsBanner from "./Banners/NutrientsBanner";
+import FatIntakeBanner from "./Banners/FatIntakeBanner";
 import LoggedWeights from "./LoggedWeights";
 
 export function Home() {
   const currentUser = useUser();
   const time = new Date().getHours();
-  const [calories, setCalories] = React.useState(0);
+  const [calories, setCalories] = useState(0);
+  const [totalNutrients, setTotalNutrients] = useState({});
   const [currentUserMacronutrients, setCurrentUserMacronutrients] = useState(
     {},
   );
@@ -37,6 +24,7 @@ export function Home() {
   useEffect(() => {
     fetchCalories();
     fetchCurrentUserWeight();
+    fetchLoggedFoodsNutrients();
   }, []);
   const fetchCalories = async () => {
     try {
@@ -105,6 +93,23 @@ export function Home() {
       toast.error("Error fetching user last recorded weight:", error);
     }
   };
+  const fetchLoggedFoodsNutrients = async () => {
+    const selectedDate = new Date().toISOString();
+    try {
+      const response = await api.get(`/api/v1/LoggedFood/get-nutrients`, {
+        params: { userId: currentUser?.userId, dateLogged: selectedDate },
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
+
+      if (response.status === 200) {
+        setTotalNutrients(response.data.loggedFoodNutrients);
+      }
+    } catch (error) {
+      console.error("Error fetching calories:", error);
+    }
+  };
 
   return (
     <div className="mt-10 text-surface-light">
@@ -125,8 +130,8 @@ export function Home() {
       </div>
       <Card className="mx-3 -mt-48 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center p-4">
         <div className="flex flex-col 2xl:flex-row gap-8 w-full justify-center items-center">
-          <CaloriesBanner caloriesNeeded={calories} />
-          <NutrientsBanner />
+          <CaloriesBanner caloriesNeeded={calories} caloriesFromFood={totalNutrients.calories || 0}/>
+          <NutrientsBanner totalNutrients={totalNutrients} macronutrientsNeeded={currentUserMacronutrients}/>
           <FatIntakeBanner fatsNeeded={currentUserMacronutrients.fats} />
         </div>
         <LoggedWeights />

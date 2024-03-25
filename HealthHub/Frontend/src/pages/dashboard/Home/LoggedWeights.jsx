@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import api from "../../../services/api";
-import chartsConfig from "./charts-config";
+import chartsConfig from "./Banners/charts-config";
 import { useUser } from "@/context/LoginRequired";
-import StatisticsChart from "./StatisticsChart";
+import StatisticsChart from "./Banners/StatisticsChart";
 import { func } from "prop-types";
 const LoggedWeights = () => {
   const currentUser = useUser();
