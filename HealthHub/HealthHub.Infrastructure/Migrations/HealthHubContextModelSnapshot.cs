@@ -91,6 +91,38 @@ namespace HealthHub.Infrastructure.Migrations
                     b.ToTable("LoggedFoods");
                 });
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.LoggedMeasurements", b =>
+                {
+                    b.Property<Guid>("LoggedMeasurementsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateLogged")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<float?>("HipCircumference")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("NeckCircumference")
+                        .HasColumnType("real");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<float?>("WaistCircumference")
+                        .HasColumnType("real");
+
+                    b.Property<float?>("Weight")
+                        .HasColumnType("real");
+
+                    b.Property<string>("WeightPhotoUrl")
+                        .HasColumnType("text");
+
+                    b.HasKey("LoggedMeasurementsId");
+
+                    b.ToTable("LoggedMeasurements");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.LoggedStrengthExercise", b =>
                 {
                     b.Property<Guid>("LoggedStrengthExerciseId")

@@ -35,6 +35,7 @@ namespace HealthHub.Infrastructure
             services.AddScoped<ILoggedWeightRepository, LoggedWeightRepository>();
             services.AddScoped<ILoggedFoodRepository, LoggedFoodRepository>();
             services.AddScoped<ILoggedWaterRepository, LoggedWaterRepository>();
+            services.AddScoped<ILoggedMeasurementsRepository, LoggedMeasurementsRepository>();
             services.AddScoped<ILoggedStrengthExerciseRepository, LoggedStrengthExerciseRepository>();
             services.AddScoped<ILoggedCardioExerciseRepository, LoggedCardioExerciseRepository>();
             return services;
