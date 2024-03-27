@@ -18,6 +18,7 @@ const LogExercise = ({
   strengthExercises,
   fetchLoggedCardioExercises,
   fetchLoggedStrengthExercises,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [cardioExerciseToEdit, setCardioExerciseToEdit] = useState({});
@@ -194,6 +195,7 @@ const LogExercise = ({
         handleCloseExerciseModal={handleCloseExerciseModal}
         fetchLoggedCardioExercises={fetchLoggedCardioExercises}
         fetchLoggedStrengthExercises={fetchLoggedStrengthExercises}
+        selectedDate={selectedDate}
       />
       <UpdateCardioExerciseModal
         updateCardioExerciseOpen={updateCardioExerciseOpen}

@@ -25,6 +25,9 @@ namespace HealthHub.Application.Features.LoggedStrengthExercises.Commands.Create
             RuleFor(p => p.WeightPerSet)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull();
+            RuleFor(p => p.DateLogged)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotEqual(System.DateTime.MinValue).WithMessage("{PropertyName} is required.");
         }
     }
 }

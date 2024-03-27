@@ -4,14 +4,14 @@ namespace HealthHub.Domain.Entities
 {
     public class LoggedCardioExercise 
     {
-        private LoggedCardioExercise(Guid userId, string name, int duration, int caloriesBurned)
+        private LoggedCardioExercise(Guid userId, string name, int duration, int caloriesBurned,DateTime dateTime)
         {
             LoggedCardioExerciseId = Guid.NewGuid();
             UserId = userId;
             Name = name;
             Duration = duration;
             CaloriesBurned = caloriesBurned;
-            DateLogged = DateTime.UtcNow;
+            DateLogged = dateTime.ToUniversalTime();
         }
         public LoggedCardioExercise()
         {
@@ -22,7 +22,7 @@ namespace HealthHub.Domain.Entities
         public int Duration { get; private set; }
         public int CaloriesBurned { get; private set; }
         public DateTime DateLogged { get; private set; }
-        public static Result<LoggedCardioExercise> Create(Guid userId, string name, int duration, int caloriesBurned)
+        public static Result<LoggedCardioExercise> Create(Guid userId, string name, int duration, int caloriesBurned,DateTime dateTime)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -36,7 +36,11 @@ namespace HealthHub.Domain.Entities
             {
                 return Result<LoggedCardioExercise>.Failure("Calories burned cannot be less than 0");
             }
-            return Result<LoggedCardioExercise>.Success(new LoggedCardioExercise(userId, name, duration, caloriesBurned));
+            if(dateTime == DateTime.MinValue)
+            {
+                return Result<LoggedCardioExercise>.Failure("Date cannot be empty");
+            }
+            return Result<LoggedCardioExercise>.Success(new LoggedCardioExercise(userId, name, duration, caloriesBurned,dateTime));
         }
         public Result<LoggedCardioExercise> Update(string name, int duration,int caloriesBurned)
         {

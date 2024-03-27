@@ -24,7 +24,7 @@ namespace HealthHub.Application.Features.LoggedCardioExercises.Commands.CreateLo
                     ValidationsErrors = validatorResult.Errors.Select(e => e.ErrorMessage).ToList()
                 };
             }
-            var loggedCardioExercise = LoggedCardioExercise.Create(request.UserId, request.Name, request.Duration, request.CaloriesBurned);
+            var loggedCardioExercise = LoggedCardioExercise.Create(request.UserId, request.Name, request.Duration, request.CaloriesBurned,request.DateLogged);
             var result = await loggedCardioExerciseRepository.AddAsync(loggedCardioExercise.Value);
             if (!result.IsSuccess)
             {

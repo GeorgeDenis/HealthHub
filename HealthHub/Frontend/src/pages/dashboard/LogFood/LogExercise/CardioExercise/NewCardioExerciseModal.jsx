@@ -10,6 +10,7 @@ const NewCardioExerciseModal = ({
   handleCloseNewCardioExerciseModal,
   exerciseName,
   calories_per_hour,
+  selectedDate
 }) => {
   const currentUser = useUser();
   const [areCaloriesPredefined, setAreCaloriesPredefined] = useState(false);
@@ -64,6 +65,7 @@ const NewCardioExerciseModal = ({
           name: exercise.exerciseName,
           caloriesBurned: exercise.caloriesBurned,
           duration: exercise.duration,
+          dateLogged: selectedDate,
         },
         {
           headers: {

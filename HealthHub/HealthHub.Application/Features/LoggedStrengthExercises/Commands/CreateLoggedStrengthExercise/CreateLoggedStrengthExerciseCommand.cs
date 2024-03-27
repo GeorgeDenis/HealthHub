@@ -9,5 +9,6 @@ namespace HealthHub.Application.Features.LoggedStrengthExercises.Commands.Create
         public string MuscleGroup { get; set; }
         public int NumberOfSets { get; set; }
         public string WeightPerSet { get; set; }
+        public DateTime DateLogged { get; set; }
     }
 }

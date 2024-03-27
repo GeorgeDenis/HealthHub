@@ -12,6 +12,7 @@ const AddCardioExerciseModal = ({
   isCardioExerciseModalOpen,
   handleCloseCardioExerciseModal,
   fetchLoggedCardioExercises,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [searchText, setSearchText] = useState("");
@@ -279,6 +280,7 @@ const AddCardioExerciseModal = ({
         handleCloseNewCardioExerciseModal={handleCloseNewCardioExerciseModal}
         exerciseName={currentExercise.exerciseName}
         calories_per_hour={currentExercise.calories_per_hour}
+        selectedDate={selectedDate}
       />
     </>
   );

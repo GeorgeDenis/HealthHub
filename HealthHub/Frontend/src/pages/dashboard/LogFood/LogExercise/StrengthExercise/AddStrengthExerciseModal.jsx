@@ -12,6 +12,7 @@ const AddStrengthExerciseModal = ({
   isStrengthExerciseModalOpen,
   handleCloseStrengthExerciseModal,
   fetchLoggedStrengthExercises,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [searchText, setSearchText] = useState("");
@@ -282,6 +283,7 @@ const AddStrengthExerciseModal = ({
         }
         exerciseName={currentExercise.exerciseName}
         muscle={currentExercise.muscle}
+        selectedDate={selectedDate}
       />
     </>
   );

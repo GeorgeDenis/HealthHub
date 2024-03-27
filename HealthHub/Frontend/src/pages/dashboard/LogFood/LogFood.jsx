@@ -232,6 +232,7 @@ const LogFood = () => {
               strengthExercises={strengthExercises}
               fetchLoggedCardioExercises={fetchLoggedCardioExercises}
               fetchLoggedStrengthExercises={fetchLoggedStrengthExercises}
+              selectedDate={selectedDate}
             />
             <LogWater selectedDate={selectedDate} />
           </div>

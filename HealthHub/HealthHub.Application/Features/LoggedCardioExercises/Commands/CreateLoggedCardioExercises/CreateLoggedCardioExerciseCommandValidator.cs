@@ -21,6 +21,9 @@ namespace HealthHub.Application.Features.LoggedCardioExercises.Commands.CreateLo
             RuleFor(p => p.CaloriesBurned)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .GreaterThan(0).WithMessage("{PropertyName} must be greater than 0.");
+            RuleFor(p => p.DateLogged)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotEqual(System.DateTime.MinValue).WithMessage("{PropertyName} is required.");
         }
     }
 }

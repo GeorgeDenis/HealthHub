@@ -24,7 +24,7 @@ namespace HealthHub.Application.Features.LoggedStrengthExercises.Commands.Create
                     ValidationsErrors = validatorResult.Errors.Select(e => e.ErrorMessage).ToList()
                 };
             }
-            var loggedStrengthExercise = LoggedStrengthExercise.Create(request.UserId, request.Name, request.MuscleGroup, request.NumberOfSets, request.WeightPerSet);
+            var loggedStrengthExercise = LoggedStrengthExercise.Create(request.UserId, request.Name, request.MuscleGroup, request.NumberOfSets, request.WeightPerSet,request.DateLogged);
             var result = await loggedStrengthExerciseRepository.AddAsync(loggedStrengthExercise.Value);
             if (!result.IsSuccess)
             {

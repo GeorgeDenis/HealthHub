@@ -10,6 +10,7 @@ const NewStrengthExerciseModal = ({
   handleCloseNewStrengthExerciseModal,
   exerciseName,
   muscle,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [exercise, setExercise] = useState({
@@ -58,6 +59,7 @@ const NewStrengthExerciseModal = ({
           muscleGroup: exercise.muscleGroup,
           numberOfSets: exercise.numberOfSets,
           weightPerSet: exercise.weightPerSet,
+          dateLogged: selectedDate,
         },
         {
           headers: {

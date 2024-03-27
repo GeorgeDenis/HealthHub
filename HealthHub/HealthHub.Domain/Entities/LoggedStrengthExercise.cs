@@ -4,7 +4,7 @@ namespace HealthHub.Domain.Entities
 {
     public class LoggedStrengthExercise
     {
-        private LoggedStrengthExercise(Guid userId, string name, string muscleGroup,int numberOfSets,string weightPerSet)
+        private LoggedStrengthExercise(Guid userId, string name, string muscleGroup,int numberOfSets,string weightPerSet,DateTime dateLogged)
         {
             LoggedStrengthExerciseId = Guid.NewGuid();
             UserId = userId;
@@ -12,7 +12,7 @@ namespace HealthHub.Domain.Entities
             MuscleGroup = muscleGroup;
             NumberOfSets = numberOfSets;
             WeightPerSet = weightPerSet;
-            DateLogged = DateTime.UtcNow;
+            DateLogged = dateLogged.ToUniversalTime();
         }
         public LoggedStrengthExercise()
         {
@@ -24,7 +24,7 @@ namespace HealthHub.Domain.Entities
         public int NumberOfSets { get; private set; }
         public string WeightPerSet { get; private set; }
         public DateTime DateLogged { get; private set; }
-        public static Result<LoggedStrengthExercise> Create(Guid userId, string name, string muscleGroup, int numberOfSets, string weightPerSet)
+        public static Result<LoggedStrengthExercise> Create(Guid userId, string name, string muscleGroup, int numberOfSets, string weightPerSet,DateTime dateLogged)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -42,7 +42,11 @@ namespace HealthHub.Domain.Entities
             {
                 return Result<LoggedStrengthExercise>.Failure("Weight per set cannot be empty");
             }
-            return Result<LoggedStrengthExercise>.Success(new LoggedStrengthExercise(userId, name, muscleGroup, numberOfSets, weightPerSet));
+            if(dateLogged == DateTime.MinValue)
+            {
+                return Result<LoggedStrengthExercise>.Failure("Date cannot be empty");
+            }
+            return Result<LoggedStrengthExercise>.Success(new LoggedStrengthExercise(userId, name, muscleGroup, numberOfSets, weightPerSet,dateLogged));
         }
         public  Result<LoggedStrengthExercise> Update(string name,string muscleGroup,int numberOfSets, string weightPerSet)
         {

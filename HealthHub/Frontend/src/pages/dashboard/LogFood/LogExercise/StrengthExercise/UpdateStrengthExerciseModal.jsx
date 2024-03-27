@@ -26,7 +26,7 @@ const UpdateStrengthExerciseModal = ({
       id: strengthExerciseToEdit.id,
       exerciseName: strengthExerciseToEdit.exerciseName || "",
       muscleGroup: strengthExerciseToEdit.muscleGroup || "",
-      numberOfSets: strengthExerciseToEdit.numberOfSets || 0,
+      numberOfSets: strengthExerciseToEdit.sets || 0,
       weightPerSet: strengthExerciseToEdit.weightPerSet || 0,
     });
   }, [updateStrengthExerciseOpen, strengthExerciseToEdit]);

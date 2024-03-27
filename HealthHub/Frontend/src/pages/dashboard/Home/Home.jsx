@@ -95,6 +95,7 @@ export function Home() {
   };
   const fetchLoggedFoodsNutrients = async () => {
     const selectedDate = new Date().toISOString();
+    console.log(selectedDate);
     try {
       const response = await api.get(`/api/v1/LoggedFood/get-nutrients`, {
         params: { userId: currentUser?.userId, dateLogged: selectedDate },
