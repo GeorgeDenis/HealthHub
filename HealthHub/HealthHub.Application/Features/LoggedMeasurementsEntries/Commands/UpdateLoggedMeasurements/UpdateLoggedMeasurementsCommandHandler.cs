@@ -49,7 +49,15 @@ namespace HealthHub.Application.Features.LoggedMeasurementsEntries.Commands.Upda
             request.NeckCircumference ??= loggedMeasurements.Value.NeckCircumference;
             request.WeightPhotoUrl ??= loggedMeasurements.Value.WeightPhotoUrl;
 
-            loggedMeasurements.Value.Update(request.Weight, request.WaistCircumference, request.HipCircumference, request.NeckCircumference, request.WeightPhotoUrl);
+            var updateResult = loggedMeasurements.Value.Update(request.Weight, request.WaistCircumference, request.HipCircumference, request.NeckCircumference, request.WeightPhotoUrl);
+            if(!updateResult.IsSuccess)
+            {
+                return new UpdateLoggedMeasurementsCommandResponse
+                {
+                    Success = false,
+                    ValidationsErrors = [updateResult.Error]
+                };
+            }
             var result = await loggedMeasurementsRepository.UpdateAsync(loggedMeasurements.Value);
             if (!result.IsSuccess)
             {

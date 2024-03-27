@@ -3,7 +3,6 @@ import api from "../../../services/api";
 import chartsConfig from "./Banners/charts-config";
 import { useUser } from "@/context/LoginRequired";
 import StatisticsChart from "./Banners/StatisticsChart";
-import { func } from "prop-types";
 const LoggedWeights = () => {
   const currentUser = useUser();
   const [chart, setChart] = useState({});
