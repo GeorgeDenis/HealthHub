@@ -15,5 +15,6 @@ namespace HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood
         public int Carbohydrates { get; set; }
         public int Fat { get; set; }
         public MealType MealType { get; set; }
+        public DateTime DateLogged { get; set; }
     }
 }

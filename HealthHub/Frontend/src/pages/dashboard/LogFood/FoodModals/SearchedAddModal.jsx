@@ -10,6 +10,7 @@ const SearchedAddModal = ({
   foodItem,
   sectionName,
   refetchLoggedFoods,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [foodToAdd, setFoodToAdd] = useState({
@@ -102,6 +103,7 @@ const SearchedAddModal = ({
           carbohydrates: foodToAdd.carbohydrates,
           fat: foodToAdd.fat,
           mealType: mealTypeConverted,
+          dateLogged: selectedDate,
         },
         {
           headers: {

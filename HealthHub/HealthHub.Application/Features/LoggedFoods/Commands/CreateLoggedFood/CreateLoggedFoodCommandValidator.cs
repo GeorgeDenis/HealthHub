@@ -38,9 +38,9 @@ namespace HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
                 .IsInEnum().WithMessage("{PropertyName} is not valid.");
-
-
-            
+            RuleFor(p => p.DateLogged)
+                .NotEmpty().WithMessage("{PropertyName} is required.")
+                .NotEqual(System.DateTime.MinValue).WithMessage("{PropertyName} is required.");
         }
     }
 }

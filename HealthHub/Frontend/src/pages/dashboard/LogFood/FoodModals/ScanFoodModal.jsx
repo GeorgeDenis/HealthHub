@@ -14,6 +14,7 @@ const ScanFoodModal = ({
   handleCloseScanFoodModal,
   sectionName,
   refetchLoggedFoods,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [foodPhoto, setFoodPhoto] = useState(null);
@@ -66,6 +67,7 @@ const ScanFoodModal = ({
         setFoodItem({
           calories: response.data.calories,
           protein: response.data.protein,
+          servingSizeInGrams: response.data.servingSizeInGrams,
           fat: response.data.fat,
           carbohydrates: response.data.carbohydrates,
           servingSize: response.data.servingSizeInGrams,
@@ -110,6 +112,7 @@ const ScanFoodModal = ({
           carbohydrates: foodItem.carbohydrates,
           fat: foodItem.fat,
           mealType: mealTypeConverted,
+          dateLogged: selectedDate,
         },
         {
           headers: {

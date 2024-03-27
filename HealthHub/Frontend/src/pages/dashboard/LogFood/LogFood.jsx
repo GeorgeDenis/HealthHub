@@ -209,16 +209,19 @@ const LogFood = () => {
               fetchLoggedFoods={fetchLoggedFoods}
               foodsItems={breakfastFoods}
               sectionName={"Breakfast"}
+              selectedDate={selectedDate}
             />
             <LogFoodSection
               fetchLoggedFoods={fetchLoggedFoods}
               foodsItems={lunchFoods}
               sectionName={"Lunch"}
+              selectedDate={selectedDate}
             />
             <LogFoodSection
               fetchLoggedFoods={fetchLoggedFoods}
               foodsItems={dinnerFoods}
               sectionName={"Dinner"}
+              selectedDate={selectedDate}
             />
           </div>
           <div>
@@ -226,6 +229,7 @@ const LogFood = () => {
               fetchLoggedFoods={fetchLoggedFoods}
               foodsItems={snackFoods}
               sectionName={"Snack"}
+              selectedDate={selectedDate}
             />
             <LogExercise
               cardioExercises={cardioExercises}

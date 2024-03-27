@@ -25,7 +25,7 @@ namespace HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood
                     ValidationsErrors = validatorResult.Errors.Select(e => e.ErrorMessage).ToList()
                 };
             }
-            var loggedFood = LoggedFood.Create(request.UserId,request.ServingSize,request.NumberOfServings,request.MealType,request.FoodName,request.Calories,request.Protein,request.Carbohydrates,request.Fat);
+            var loggedFood = LoggedFood.Create(request.UserId, request.ServingSize, request.NumberOfServings, request.MealType, request.FoodName, request.Calories, request.Protein, request.Carbohydrates, request.Fat, request.DateLogged);
             var result = await loggedFoodRepository.AddAsync(loggedFood.Value);
             if (!result.IsSuccess)
             {
@@ -39,7 +39,6 @@ namespace HealthHub.Application.Features.LoggedFoods.Commands.CreateLoggedFood
             {
                 Success = true,
             };
-            
         }
     }
 

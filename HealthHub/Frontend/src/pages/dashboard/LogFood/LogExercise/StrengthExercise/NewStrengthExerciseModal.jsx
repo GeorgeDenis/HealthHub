@@ -36,7 +36,6 @@ const NewStrengthExerciseModal = ({
   }, [isNewStrengthExerciseModalOpen, exerciseName, muscle]);
 
   const handleAddExercise = async () => {
-    console.log(exercise);
     if (
       !exercise.exerciseName ||
       !exercise.muscleGroup ||

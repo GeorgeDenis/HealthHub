@@ -5,7 +5,7 @@ namespace HealthHub.Domain.Entities
 {
     public class LoggedFood
     {
-        private LoggedFood(Guid userId, float? servingSize, float? numberOfServings, MealType mealType, string name, int calories, int protein, int carbohydrates, int fat)
+        private LoggedFood(Guid userId, float? servingSize, float? numberOfServings, MealType mealType, string name, int calories, int protein, int carbohydrates, int fat, DateTime dateLogged)
         {
             LoggedFoodId = Guid.NewGuid();
             UserId = userId;
@@ -17,7 +17,7 @@ namespace HealthHub.Domain.Entities
             Protein = protein;
             Carbohydrates = carbohydrates;
             Fat = fat;
-            DateLogged = DateTime.UtcNow;
+            DateLogged = dateLogged.ToUniversalTime();
         }
         public LoggedFood()
         {
@@ -33,12 +33,13 @@ namespace HealthHub.Domain.Entities
         public int Carbohydrates { get; private set; }
         public int Fat { get; private set; }
         public DateTime DateLogged { get; private set; }
-        public static Result<LoggedFood> Create(Guid userId, float? servingSize, float? numberOfServings, MealType mealType, string name, int calories, int protein, int carbohydrates, int fat)
+        public static Result<LoggedFood> Create(Guid userId, float? servingSize, float? numberOfServings, MealType mealType, string name, int calories, int protein, int carbohydrates, int fat, DateTime dateLogged)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 return Result<LoggedFood>.Failure("Name cannot be empty");
             }
+
             if (servingSize <= 0)
             {
                 return Result<LoggedFood>.Failure("Serving size must be greater than 0");
@@ -63,11 +64,15 @@ namespace HealthHub.Domain.Entities
             {
                 return Result<LoggedFood>.Failure("Fat cannot be less than 0");
             }
+            if (dateLogged == DateTime.MinValue)
+            {
+                return Result<LoggedFood>.Failure("Date logged cannot be empty");
+            }
             //if (protein * 4 + carbohydrates * 4 + fat * 9 != calories - 50)
             //{
             //    return Result<LoggedFood>.Failure("Calories must be equal to 4 * protein + 4 * carbohydrates + 9 * fat");
             //}
-            return Result<LoggedFood>.Success(new LoggedFood(userId, servingSize, numberOfServings, mealType, name, calories, protein, carbohydrates, fat));
+            return Result<LoggedFood>.Success(new LoggedFood(userId, servingSize, numberOfServings, mealType, name, calories, protein, carbohydrates, fat,dateLogged));
         }
         public Result<LoggedFood> Update(float? servingSize, float? numberOfServings, MealType mealType, string name, int calories, int protein, int carbohydrates, int fat)
         {

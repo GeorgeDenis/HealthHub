@@ -10,6 +10,7 @@ const BarcodeAddModal = ({
   handleCloseBarcodeAddModal,
   sectionName,
   refetchLoggedFoods,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [barcode, setBarcode] = useState("");
@@ -122,6 +123,7 @@ const BarcodeAddModal = ({
           carbohydrates: foodItem.carbohydrates,
           fat: foodItem.fat,
           mealType: mealTypeConverted,
+          dateLogged: selectedDate,
         },
         {
           headers: {

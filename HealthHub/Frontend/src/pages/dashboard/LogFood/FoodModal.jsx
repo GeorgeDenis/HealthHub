@@ -29,6 +29,7 @@ const FoodModal = ({
   handleClose,
   sectionName,
   refetchLoggedFoods,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [foods, setFoods] = useState([]);
@@ -405,18 +406,22 @@ const FoodModal = ({
         handleCloseQuickAddModal={handleCloseQuickAddModal}
         sectionName={sectionName}
         refetchLoggedFoods={refetchLoggedFoods}
+        selectedDate={selectedDate}
+        
       />
       <ScanFoodModal
         scanFoodModalOpen={isScanFoodModalOpen}
         handleCloseScanFoodModal={handleCloseScanFoodModal}
         sectionName={sectionName}
         refetchLoggedFoods={refetchLoggedFoods}
+        selectedDate={selectedDate}
       />
       <BarcodeAddModal
         barcodeAddModalOpen={isBarcodeFoodModalOpen}
         handleCloseBarcodeAddModal={handleCloseBarcodeFoodModal}
         sectionName={sectionName}
         refetchLoggedFoods={refetchLoggedFoods}
+        selectedDate={selectedDate}
       />
       <SearchedAddModal 
         isSearchAddModalOpen={isSearchAddModalOpen}
@@ -424,6 +429,7 @@ const FoodModal = ({
         foodItem={searchedFoodToAdd}
         sectionName={sectionName}
         refetchLoggedFoods={refetchLoggedFoods}
+        selectedDate={selectedDate}
       />
     </div>
   );

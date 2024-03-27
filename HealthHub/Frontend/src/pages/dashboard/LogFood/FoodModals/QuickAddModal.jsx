@@ -9,6 +9,7 @@ const QuickAddModal = ({
   handleCloseQuickAddModal,
   sectionName,
   refetchLoggedFoods,
+  selectedDate,
 }) => {
   const currentUser = useUser();
   const [mealType, setMealType] = useState("1");
@@ -74,6 +75,7 @@ const QuickAddModal = ({
           carbohydrates: foodItem.carbohydrates,
           fat: foodItem.fat,
           mealType: mealTypeConverted,
+          dateLogged: selectedDate,
         },
         {
           headers: {

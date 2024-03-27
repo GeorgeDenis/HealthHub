@@ -20,7 +20,7 @@ const lunchText = "No lunch items found. Tap the '+' to add your midday meal!";
 const dinnerText = "No dinner items found. Tap the '+' to add your last meal!";
 const snackText = "No snack items found. Tap the '+' to add your snack!";
 
-const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
+const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods,selectedDate }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [updateLogFoodOpen, setUpdateLogFoodOpen] = useState(false);
   
@@ -179,6 +179,7 @@ const LogFoodSection = ({ foodsItems, sectionName, fetchLoggedFoods }) => {
         handleClose={handleClose}
         sectionName={sectionName}
         refetchLoggedFoods={fetchLoggedFoods}
+        selectedDate={selectedDate}
       />
       <UpdateLogFoodModal
         updateLogFoodOpen={updateLogFoodOpen}
