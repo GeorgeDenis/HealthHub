@@ -43,7 +43,11 @@ namespace HealthHub.Application.Features.LoggedMeasurementsEntries.Commands.Upda
                     ValidationsErrors = ["Logged measurements with this id not found"]
                 };
             }
-            request.Weight ??= loggedMeasurements.Value.Weight;
+            if(request.Weight < 0)
+            {
+                request.Weight = loggedMeasurements.Value.Weight;
+            }
+            
             request.WaistCircumference ??= loggedMeasurements.Value.WaistCircumference;
             request.HipCircumference ??= loggedMeasurements.Value.HipCircumference;
             request.NeckCircumference ??= loggedMeasurements.Value.NeckCircumference;

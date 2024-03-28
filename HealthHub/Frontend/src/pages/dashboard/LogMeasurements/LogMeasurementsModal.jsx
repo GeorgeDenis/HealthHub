@@ -4,22 +4,21 @@ import { toast } from "react-toastify";
 import { Modal } from "@mui/material";
 import { useUser } from "@/context/LoginRequired";
 import { Typography, Button } from "@material-tailwind/react";
-const LogMeasurementsModal = ({ isOpen, handleClose, selectedMeasurement,refecthLoggedMeasurements }) => {
+const LogMeasurementsModal = ({
+  isOpen,
+  handleClose,
+  selectedMeasurement,
+  refecthLoggedMeasurements,
+}) => {
   const currentUser = useUser();
-  const [measurementsToEdit, setMeasurementsToEdit] = useState({
-    weight: 0,
-    waistCircumference: 0,
-    hipCircumference: 0,
-    neckCircumference: 0,
-    weightPhotoUrl: "",
-  });
+  const [measurementsToEdit, setMeasurementsToEdit] = useState({});
   useEffect(() => {
     setMeasurementsToEdit({
-      weight: selectedMeasurement.weight || 0,
-      waistCircumference: selectedMeasurement.waistCircumference || 0,
-      hipCircumference: selectedMeasurement.hipCircumference || 0,
-      neckCircumference: selectedMeasurement.neckCircumference || 0,
-      weightPhotoUrl: selectedMeasurement.weightPhotoUrl || "",
+      weight: selectedMeasurement.weight,
+      waistCircumference: selectedMeasurement.waistCircumference,
+      hipCircumference: selectedMeasurement.hipCircumference,
+      neckCircumference: selectedMeasurement.neckCircumference,
+      weightPhotoUrl: selectedMeasurement.weightPhotoUrl,
     });
   }, [isOpen]);
 
@@ -54,7 +53,13 @@ const LogMeasurementsModal = ({ isOpen, handleClose, selectedMeasurement,refecth
         handleClose();
       }
     } catch (error) {
-      toast.error(error.response.data.validationsErrors[0]);
+      let errorMessage = "";
+      if (error.response.data) {
+        if (error.response.data.validationsErrors)
+          errorMessage += error.response.data.validationsErrors[0];
+        else errorMessage += "An error occurred while updating the measurement";
+      }
+      toast.error(errorMessage);
     }
   };
 
@@ -74,7 +79,7 @@ const LogMeasurementsModal = ({ isOpen, handleClose, selectedMeasurement,refecth
               <input
                 type="text"
                 className=" bg-surface-light rounded-lg w-[10rem]  border border-gray-300 p-2"
-                value={measurementsToEdit.weight}
+                value={measurementsToEdit.weight || 0}
                 onChange={(e) => handleMeasurementChange(e, "weight")}
               />
             </div>
@@ -83,7 +88,7 @@ const LogMeasurementsModal = ({ isOpen, handleClose, selectedMeasurement,refecth
               <input
                 type="text"
                 className=" bg-surface-light rounded-lg w-[10rem]  border border-gray-300 p-2"
-                value={measurementsToEdit.waistCircumference}
+                value={measurementsToEdit.waistCircumference || 0}
                 onChange={(e) =>
                   handleMeasurementChange(e, "waistCircumference")
                 }
@@ -94,7 +99,7 @@ const LogMeasurementsModal = ({ isOpen, handleClose, selectedMeasurement,refecth
               <input
                 type="text"
                 className=" bg-surface-light rounded-lg w-[10rem]  border border-gray-300 p-2"
-                value={measurementsToEdit.hipCircumference}
+                value={measurementsToEdit.hipCircumference || 0}
                 onChange={(e) => handleMeasurementChange(e, "hipCircumference")}
               />
             </div>
@@ -103,7 +108,7 @@ const LogMeasurementsModal = ({ isOpen, handleClose, selectedMeasurement,refecth
               <input
                 type="text"
                 className=" bg-surface-light rounded-lg w-[10rem]  border border-gray-300 p-2"
-                value={measurementsToEdit.neckCircumference}
+                value={measurementsToEdit.neckCircumference || 0}
                 onChange={(e) =>
                   handleMeasurementChange(e, "neckCircumference")
                 }

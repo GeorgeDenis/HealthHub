@@ -7,8 +7,82 @@ const LoggedWeights = () => {
   const currentUser = useUser();
   const [chart, setChart] = useState({});
   useEffect(() => {
-    fetchLoggedWeights();
+    //fetchLoggedWeights();
+    fetchLoggedWeightsMeasurement();
   }, []);
+  const fetchLoggedWeightsMeasurement = async () => {
+    try {
+      const response = await api.get(
+        `/api/v1/LoggedMeasurements/${currentUser.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+      if (response.status === 200) {
+        let loggedMeasurements = response.data.loggedMeasurements.sort(
+          (a, b) => {
+            return new Date(b.dateLogged) - new Date(a.dateLogged);
+          },
+        );
+
+        loggedMeasurements = loggedMeasurements
+          .filter((measurement) => measurement.weight !== null)
+          .reverse();
+
+        const weights = loggedMeasurements.map((measurement) => {
+          return {
+            weight: measurement.weight,
+            dateLogged: measurement.dateLogged,
+          };
+        });
+        const chartData = {
+          series: [
+            {
+              name: "Weight",
+              data: weights.map((weight) => weight.weight),
+            },
+          ],
+          chart: {
+            height: 350,
+            type: "line",
+            zoom: {
+              enabled: false,
+            },
+          },
+
+          stroke: {
+            curve: "straight",
+          },
+          title: {
+            text: "Weight Over Time",
+            align: "left",
+          },
+          grid: {
+            row: {
+              colors: ["#FFFFFF", "transparent"],
+              opacity: 0.5,
+            },
+          },
+          options: {
+            ...chartsConfig,
+            colors: ["#4cbb17"],
+            xaxis: {
+              categories: weights.map((weight) =>
+                new Date(weight.dateLogged).toLocaleDateString(),
+              ),
+            },
+          },
+        };
+
+        setChart(chartData);
+      }
+    } catch (error) {
+      console.error("Error fetching logged measurements:", error);
+    }
+  };
+
   const fetchLoggedWeights = async () => {
     try {
       const response = await api.get(
