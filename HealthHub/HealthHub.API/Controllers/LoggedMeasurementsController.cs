@@ -46,11 +46,11 @@ namespace HealthHub.API.Controllers
         }
         [Authorize(Roles = "User")]
         [HttpGet]
-        [Route("get-today")]
+        [Route("get-today/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetLoggedMeasurementsForToday([FromQuery] GetLoggedMeasurementsForTodayQuery query)
+        public async Task<IActionResult> GetLoggedMeasurementsForToday(Guid userId)
         {
-            var result = await Mediator.Send(query);
+            var result = await Mediator.Send(new GetLoggedMeasurementsForTodayQuery { UserId = userId});
             if (!result.Success)
             {
                 return BadRequest(result);

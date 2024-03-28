@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
 import { useUser } from "@/context/LoginRequired";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faWeightScale } from "@fortawesome/free-solid-svg-icons";
 import ScaleIcon from "@mui/icons-material/Scale";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import StraightenIcon from "@mui/icons-material/Straighten";
@@ -15,9 +17,10 @@ import {
   CardHeader,
   Typography,
   CardBody,
+  Button,
 } from "@material-tailwind/react";
-import LoggedWeights from "../Home/LoggedWeights";
-import LogMeasurementsModal from "./LogMeasurementsModal";
+import EditMeasurementsModal from "./EditMeasurementsModal";
+import LogMeasurementsModal from "./LogMeasurementModal";
 import LoggedWaist from "./Charts/LoggedWaist";
 import LoggedNeck from "./Charts/LoggedNeck";
 import LoggedHip from "./Charts/LoggedHip";
@@ -52,9 +55,12 @@ const LogMeasurements = () => {
   const currentUser = useUser();
   const [loggedMeasurements, setLoggedMeasurements] = useState([]);
   const [currentChart, setCurrentChart] = useState("1");
+  const [isEditMeasurementsModalOpen, setIsEditMeasurementsModalOpen] =
+    useState(false);
   const [isLogMeasurementsModalOpen, setIsLogMeasurementsModalOpen] =
     useState(false);
   const [selectedMeasurement, setSelectedMeasurement] = useState({});
+
   useEffect(() => {
     fetchLoggedMeasurements();
   }, []);
@@ -80,14 +86,21 @@ const LogMeasurements = () => {
       console.error("Error fetching logged measurements:", error);
     }
   };
-  const handleOpenLogMeasurementsModal = (item) => {
-    console.log(item);
-    setSelectedMeasurement(item);
+
+  const handleOpenLogMeasurementsModal = () => {
     setIsLogMeasurementsModalOpen(true);
   };
   const handleCloseLogMeasurementsModal = () => {
     setIsLogMeasurementsModalOpen(false);
   };
+  const handleOpenEditMeasurementsModal = (item) => {
+    setSelectedMeasurement(item);
+    setIsEditMeasurementsModalOpen(true);
+  };
+  const handleCloseEditMeasurementsModal = () => {
+    setIsEditMeasurementsModalOpen(false);
+  };
+
   const handleChartChange = (value) => {
     setCurrentChart(value);
   };
@@ -103,6 +116,14 @@ const LogMeasurements = () => {
             <Typography variant="h5" className="mb-1 text-surface-light">
               Your Measurements
             </Typography>
+            <Button
+              className="w-16 h-10 bg-secondary hover:bg-primary duration-200 flex items-center justify-center gap-2 p-2 rounded-lg"
+              onClick={() => {
+                handleOpenLogMeasurementsModal();
+              }}
+            >
+              <FontAwesomeIcon icon={faWeightScale} size="2xl" beatFade />
+            </Button>
           </CardHeader>
           <CardBody className="px-0 pt-0 pb-2 ">
             <div className="p-3">
@@ -135,7 +156,7 @@ const LogMeasurements = () => {
                     <div
                       key={index}
                       className="flex justify-between items-center h-8 bg-green-700 rounded-lg p-2 text-xs md:text-base hover:bg-green-200 cursor-pointer transition duration-200 ease-in-out"
-                      onClick={() => handleOpenLogMeasurementsModal(item)}
+                      onClick={() => handleOpenEditMeasurementsModal(item)}
                       style={{
                         backgroundColor: index === 0 ? "#74C365" : undefined,
                       }}
@@ -176,7 +197,7 @@ const LogMeasurements = () => {
         </Card>
         <div className="flex flex-col items-start">
           <select
-            className="w-[10rem] h-10 rounded-lg text-surface-light bg-green-700 border-2 border-green-800 focus:border-green-500 focus:ring-2 focus:ring-green-500 focus:outline-none appearance-none relative -mb-5"
+            className="w-[10rem] h-10 rounded-lg text-surface-light bg-green-700 focus:outline-none appearance-none relative -mb-5 p-2"
             onChange={(e) => handleChartChange(e.target.value)}
             style={{
               backgroundImage: `url("data:image/svg+xml,%3Csvg width='20' height='20' fill='white' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'/%3E%3C/svg%3E")`,
@@ -207,12 +228,21 @@ const LogMeasurements = () => {
           </div>
         </div>
       </div>
-      <LogMeasurementsModal
-        isOpen={isLogMeasurementsModalOpen}
-        handleClose={handleCloseLogMeasurementsModal}
-        selectedMeasurement={selectedMeasurement}
-        refecthLoggedMeasurements={fetchLoggedMeasurements}
-      />
+      {isEditMeasurementsModalOpen && (
+        <EditMeasurementsModal
+          isOpen={isEditMeasurementsModalOpen}
+          handleClose={handleCloseEditMeasurementsModal}
+          selectedMeasurement={selectedMeasurement}
+          refecthLoggedMeasurements={fetchLoggedMeasurements}
+        />
+      )}
+      {isLogMeasurementsModalOpen && (
+        <LogMeasurementsModal
+          isOpen={isLogMeasurementsModalOpen}
+          handleClose={handleCloseLogMeasurementsModal}
+          refecthLoggedMeasurements={fetchLoggedMeasurements}
+        />
+      )}
     </>
   );
 };
