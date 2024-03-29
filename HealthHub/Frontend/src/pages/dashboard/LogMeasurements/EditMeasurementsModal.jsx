@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 import { Modal } from "@mui/material";
 import { useUser } from "@/context/LoginRequired";
 import { Typography, Button } from "@material-tailwind/react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
+
 const EditMeasurementsModal = ({
   isOpen,
   handleClose,
@@ -29,7 +32,6 @@ const EditMeasurementsModal = ({
     });
   };
   const handleEditMeasurement = async () => {
-    
     try {
       const response = await api.put(
         `/api/v1/LoggedMeasurements`,
@@ -115,6 +117,14 @@ const EditMeasurementsModal = ({
                 }
               />
             </div>
+            <Button
+              className="w-12 h-10 bg-secondary hover:bg-primary duration-200 flex items-center justify-center gap-2 p-2 rounded-lg ml-[80%]"
+              // onClick={() => {
+              //   handleOpenLogMeasurementsModal();
+              // }}
+            >
+              <FontAwesomeIcon icon={faCameraRetro} size="2xl" beatFade />
+            </Button>
             <Button
               className="mt-6 bg-secondary hover:bg-primary duration-200 w-[30%] mx-[35%]"
               onClick={() => {

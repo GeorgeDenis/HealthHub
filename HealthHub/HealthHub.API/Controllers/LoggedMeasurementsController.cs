@@ -2,6 +2,7 @@
 using HealthHub.Application.Features.LoggedMeasurementsEntries.Commands.UpdateLoggedMeasurements;
 using HealthHub.Application.Features.LoggedMeasurementsEntries.Queries.GetLoggedMeasurements;
 using HealthHub.Application.Features.LoggedMeasurementsEntries.Queries.GetLoggedMeasurementsForToday;
+using HealthHub.Application.Features.LoggedMeasurementsEntries.Queries.GetPhotosForLoggedMeasurements;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -50,7 +51,20 @@ namespace HealthHub.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLoggedMeasurementsForToday(Guid userId)
         {
-            var result = await Mediator.Send(new GetLoggedMeasurementsForTodayQuery { UserId = userId});
+            var result = await Mediator.Send(new GetLoggedMeasurementsForTodayQuery { UserId = userId });
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+
+        [HttpGet]
+        [Route("get-photos/{userId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPhotosForLoggedMeasurements(Guid userId)
+        {
+            var result = await Mediator.Send(new GetPhotosForLoggedMeasurementsQuery { UserId = userId });
             if (!result.Success)
             {
                 return BadRequest(result);

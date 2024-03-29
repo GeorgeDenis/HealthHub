@@ -602,3 +602,5 @@ C:\Licenta2024\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\refint\Healt
 C:\Licenta2024\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\HealthHub.API.pdb
 C:\Licenta2024\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\HealthHub.API.genruntimeconfig.cache
 C:\Licenta2024\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\ref\HealthHub.API.dll
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\AWSSDK.Core.dll
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\AWSSDK.S3.dll

@@ -25,6 +25,7 @@ import LoggedWaist from "./Charts/LoggedWaist";
 import LoggedNeck from "./Charts/LoggedNeck";
 import LoggedHip from "./Charts/LoggedHip";
 import LoggedWeight from "./Charts/LoggedWeight";
+import MeasurementsPhotos from "./MeasurementsPhotos";
 
 const CustomTooltip = ({ text, children }) => {
   return (
@@ -60,6 +61,7 @@ const LogMeasurements = () => {
   const [isLogMeasurementsModalOpen, setIsLogMeasurementsModalOpen] =
     useState(false);
   const [selectedMeasurement, setSelectedMeasurement] = useState({});
+  const [measurementsPhoto, setMeasurementsPhoto] = useState(null);
 
   useEffect(() => {
     fetchLoggedMeasurements();
@@ -104,6 +106,47 @@ const LogMeasurements = () => {
   const handleChartChange = (value) => {
     setCurrentChart(value);
   };
+
+  const handleMeasurementsPhoto = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setMeasurementsPhoto(file);
+    }
+  };
+  const handleSavePhoto = async () => {
+    if (!measurementsPhoto) {
+      toast.error("No photo selected");
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append("measurementsPhoto", measurementsPhoto);
+      const response = await api.post(
+        "/api/Cloud/upload-measurements-photo",
+        {
+          userId: currentUser?.userId,
+          loggedMeasurementsId: "947aca23-1c2f-4a1a-995d-03cc3c0e7cf4",
+          file: formData,
+        },
+
+        {
+          params: {},
+          headers: {
+            "Content-Type": undefined,
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        toast.success("Photo saved successfully");
+      } else {
+        toast.error("Unexpected response status: " + response.status);
+      }
+    } catch (error) {
+      toast.error("Error saving photo: " + error.toString());
+    }
+  };
   return (
     <>
       <div className="flex flex-col 2xl:flex-row items-center w-full gap-5">
@@ -117,7 +160,7 @@ const LogMeasurements = () => {
               Your Measurements
             </Typography>
             <Button
-              className="w-16 h-10 bg-secondary hover:bg-primary duration-200 flex items-center justify-center gap-2 p-2 rounded-lg"
+              className="w-12 h-10 bg-secondary hover:bg-primary duration-200 flex items-center justify-center gap-2 p-2 rounded-lg"
               onClick={() => {
                 handleOpenLogMeasurementsModal();
               }}
@@ -192,6 +235,13 @@ const LogMeasurements = () => {
                   ))}
                 </div>
               )}
+              {loggedMeasurements.length === 0 && (
+                <div>
+                  <p className="my-auto rounded-lg p-2 text-surface-light text-center mt-10 h-10 bg-green-700">
+                    No measurements logged yet
+                  </p>
+                </div>
+              )}
             </div>
           </CardBody>
         </Card>
@@ -228,6 +278,15 @@ const LogMeasurements = () => {
           </div>
         </div>
       </div>
+      <div className="w-full flex justify-center">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleMeasurementsPhoto}
+          className="text-center file:border-0 file:text-surface-light file:bg-green-700 rounded-md ml-20"
+        />
+        <button onClick={handleSavePhoto}>Save</button>
+      </div>
       {isEditMeasurementsModalOpen && (
         <EditMeasurementsModal
           isOpen={isEditMeasurementsModalOpen}
@@ -243,6 +302,7 @@ const LogMeasurements = () => {
           refecthLoggedMeasurements={fetchLoggedMeasurements}
         />
       )}
+      <MeasurementsPhotos />
     </>
   );
 };

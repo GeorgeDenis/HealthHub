@@ -19,6 +19,7 @@
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.10",
     "apexcharts": "3.44.0",
+    "aws-sdk": "^2.1587.0",
     "axios": "^1.6.7",
     "countries-list": "^3.0.6",
     "prop-types": "15.8.1",

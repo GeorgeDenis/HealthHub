@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "+pm+Vo0jvNtkanYDIz6roJiurm9+ygLvVAPlPtunvwfCjjbiLvPi4QcscljJQeoDPcadkQBk3Fh8bn3v9CqKAA==",
+  "dgSpecHash": "l09vmEsewCTmMYUfc08jw71Rf0/e5ywcgcrqKehdCfIFddDn8u86ui5v4L3iVSHInQcGu4oPpQ6KmVRPrTaHZw==",
   "success": true,
   "projectFilePath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\georg\\.nuget\\packages\\awssdk.core\\3.7.303.3\\awssdk.core.3.7.303.3.nupkg.sha512",
+    "C:\\Users\\georg\\.nuget\\packages\\awssdk.s3\\3.7.307.4\\awssdk.s3.3.7.307.4.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\azure.core\\1.36.0\\azure.core.1.36.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\azure.identity\\1.10.4\\azure.identity.1.10.4.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\azure.security.keyvault.certificates\\4.5.1\\azure.security.keyvault.certificates.4.5.1.nupkg.sha512",

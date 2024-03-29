@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v8.0": {
       "HealthHub.API/1.0.0": {
         "dependencies": {
+          "AWSSDK.S3": "3.7.307.4",
           "DotNetEnv": "3.0.0",
           "HealthHub.Application": "1.0.0",
           "HealthHub.Identity": "1.0.0",
@@ -23,6 +24,25 @@
         },
         "runtime": {
           "HealthHub.API.dll": {}
+        }
+      },
+      "AWSSDK.Core/3.7.303.3": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.303.3"
+          }
+        }
+      },
+      "AWSSDK.S3/3.7.307.4": {
+        "dependencies": {
+          "AWSSDK.Core": "3.7.303.3"
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.S3.dll": {
+            "assemblyVersion": "3.3.0.0",
+            "fileVersion": "3.7.307.4"
+          }
         }
       },
       "Azure.Core/1.36.0": {
@@ -1815,6 +1835,20 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/3.7.303.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-JpjXhU5gjv0XgyZWQnc+uqiXH1qnCtMqYn9FzKUyewFfTQFn0HUzzXE+Uqfn49Uv5PtrE94nSjloUL3oIMQXsA==",
+      "path": "awssdk.core/3.7.303.3",
+      "hashPath": "awssdk.core.3.7.303.3.nupkg.sha512"
+    },
+    "AWSSDK.S3/3.7.307.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RBBs4izlRh8YYEKh4wb0BdPvV0d5Re9TzsfEyTpkZ7sLvfRKyLD0untRg0jtL9QA5LfbTDRk/69Tyg60cAvhuw==",
+      "path": "awssdk.s3/3.7.307.4",
+      "hashPath": "awssdk.s3.3.7.307.4.nupkg.sha512"
     },
     "Azure.Core/1.36.0": {
       "type": "package",

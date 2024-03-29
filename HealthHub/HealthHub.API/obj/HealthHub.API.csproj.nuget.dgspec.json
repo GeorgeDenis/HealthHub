@@ -50,6 +50,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "AWSSDK.S3": {
+              "target": "Package",
+              "version": "[3.7.307.4, )"
+            },
             "DotNetEnv": {
               "target": "Package",
               "version": "[3.0.0, )"
