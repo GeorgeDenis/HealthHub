@@ -85,6 +85,12 @@ namespace HealthHub.Domain.Entities
             this.WeightPhotoUrl = WeightPhotoUrl;
             return Result<LoggedMeasurements>.Success(this);
         }
+        public Result<LoggedMeasurements> DeletePhoto()
+        {
+            this.WeightPhotoUrl = null;
+            return Result<LoggedMeasurements>.Success(this);
+        }
+
 
     }
 }

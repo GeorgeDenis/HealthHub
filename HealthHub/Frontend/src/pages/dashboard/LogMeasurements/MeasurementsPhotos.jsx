@@ -4,83 +4,96 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useUser } from "@/context/LoginRequired";
 import api, { s3 } from "../../../services/api";
 import { toast } from "react-toastify";
-
-const MeasurementsPhotos = () => {
+import { TrashIcon } from "@heroicons/react/24/solid";
+const MeasurementsPhotos = (refreshTrigger) => {
   const currentUser = useUser();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [photos, setPhotos] = useState([]);
-
   useEffect(() => {
-    const fetchPhotos = async () => {
-      try {
-        const response = await api.get(
-          `/api/v1/LoggedMeasurements/get-photos/${currentUser.userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`,
-            },
+    fetchAndSetPhotos();
+  }, [currentUser, refreshTrigger]);
+  const fetchAndSetPhotos = async () => {
+    try {
+      const response = await api.get(
+        `/api/v1/LoggedMeasurements/get-photos/${currentUser.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
           },
+        },
+      );
+      if (response.status === 200) {
+        const sortedPhotos = response.data.photos.sort(
+          (a, b) => new Date(b.dateLogged) - new Date(a.dateLogged),
         );
-        if (response.status === 200) {
-          setPhotos(response.data.photos);
-        }
-      } catch (error) {
-        console.error(error);
-        toast.error("Failed to fetch photo metadata");
+
+        await fetchPhotosFromS3(sortedPhotos);
       }
-    };
-
-    fetchPhotos();
-  }, [currentUser]);
-
-  useEffect(() => {
-    const sortedMeasurements = photos.sort((a, b) => {
-      return new Date(b.dateLogged) - new Date(a.dateLogged);
-    });
-    setPhotos(sortedMeasurements);
-    const fetchPhotosAws = async () => {
-      const fetchPromises = photos.map((photo) => {
-        return new Promise((resolve, reject) => {
-          if (photo.cloudUrl) {
-            s3.getObject(
-              {
-                Bucket: "ergo-project",
-                Key: photo.cloudUrl,
-              },
-              (err, data) => {
-                if (err) {
-                  console.error("Error fetching from AWS S3", err);
-                  toast.error("Failed to fetch image from AWS S3");
-                  reject(err);
-                } else if (data.Body) {
-                  resolve({
-                    ...photo,
-                    photo: URL.createObjectURL(new Blob([data.Body])),
-                  });
-                }
-              },
-            );
-          } else {
-            resolve(null);
-          }
-        });
-      });
-
-      Promise.all(fetchPromises)
-        .then((data) => {
-          const validPhotos = data.filter((file) => file !== null);
-          setPhotos(validPhotos);
-        })
-        .catch((error) => {
-          console.error("Failed to fetch one or more files from AWS S3", error);
-          toast.error("Failed to fetch one or more files from AWS S3");
-        });
-    };
-
-    if (photos.length > 0) {
-      fetchPhotosAws();
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to fetch photo metadata");
     }
-  }, [photos.length]);
+  };
+
+  const fetchPhotosFromS3 = async (photosWithMetadata) => {
+    const fetchPromises = photosWithMetadata.map((photo) => {
+      return new Promise((resolve, reject) => {
+        if (photo.cloudUrl) {
+          s3.getObject(
+            {
+              Bucket: "ergo-project",
+              Key: photo.cloudUrl,
+            },
+            (err, data) => {
+              if (err) {
+                console.error("Error fetching from AWS S3", err);
+                reject(err);
+              } else if (data.Body) {
+                resolve({
+                  ...photo,
+                  photo: URL.createObjectURL(new Blob([data.Body])),
+                });
+              }
+            },
+          );
+        } else {
+          resolve(null);
+        }
+      });
+    });
+
+    Promise.all(fetchPromises)
+      .then((data) => {
+        const validPhotos = data.filter((file) => file !== null);
+        setPhotos(validPhotos);
+      })
+      .catch((error) => {
+        console.error("Failed to fetch one or more files from AWS S3", error);
+        toast.error("Failed to fetch one or more files from AWS S3");
+      });
+  };
+  const handleDeletePhoto = async () => {
+    try {
+      const response = await api.delete(`/api/Cloud/measurements-photo`, {
+        data: {
+          loggedMeasurementsId: photos[currentIndex].loggedMeasurementId,
+          userId: currentUser.userId,
+        },
+        headers: {
+          Authorization: `Bearer ${currentUser.token}`,
+        },
+      });
+      if (response.status === 200) {
+        toast.success("Photo deleted successfully");
+        fetchAndSetPhotos();
+      } else {
+        toast.error("Unexpected response status: " + response.status);
+      }
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || error.toString();
+      toast.error("Error deleting photo: " + errorMessage);
+    }
+  };
 
   const prevSlide = () => {
     setCurrentIndex((prevIndex) =>
@@ -98,7 +111,7 @@ const MeasurementsPhotos = () => {
     <>
       {photos.length !== 0 && (
         <div className="flex flex-col items-center">
-          <div className="max-w-[1400px] h-[320px] md:h-[500px] lg:h-[780px] w-[75%] m-auto py-16 px-4 relative group bg-cover">
+          <div className="max-w-[1300px] h-[320px] md:h-[500px] lg:h-[780px] w-[75%] m-auto py-16 px-4 relative group bg-cover">
             <div className="w-full h-full rounded-2xl bg-center bg-cover duration-500 bg-surface-dark">
               <div
                 style={{
@@ -111,6 +124,12 @@ const MeasurementsPhotos = () => {
                 }}
                 className="rounded-2xl duration-500"
               ></div>
+            </div>
+            <div className="hidden group-hover:block absolute top-20 right-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer hover:bg-red-800">
+              <TrashIcon
+                className="w-6 h-6 text-white cursor-pointer"
+                onClick={() => handleDeletePhoto()}
+              />
             </div>
             <div className="hidden group-hover:block absolute top-[50%] -translate-x-0 translate-y-[-50%] left-5 text-2xl rounded-full p-2 bg-black/20 text-white cursor-pointer">
               <ChevronLeftIcon onClick={prevSlide} />

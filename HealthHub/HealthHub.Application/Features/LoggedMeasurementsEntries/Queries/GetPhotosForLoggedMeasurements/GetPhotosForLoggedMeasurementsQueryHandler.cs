@@ -35,7 +35,7 @@ namespace HealthHub.Application.Features.LoggedMeasurementsEntries.Queries.GetPh
                 };
             }
             var loggedMeasurements = await loggedMeasurementsRepository.GetLoggedMeasurementsByUserId(request.UserId);
-            if (loggedMeasurements != null)
+            if (loggedMeasurements.Value.Count != 0)
             {
                 if (request.UserId != loggedMeasurements.Value[0].UserId)
                 {

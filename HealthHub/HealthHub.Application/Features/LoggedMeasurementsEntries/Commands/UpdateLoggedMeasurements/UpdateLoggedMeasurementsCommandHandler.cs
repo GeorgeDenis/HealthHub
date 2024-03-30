@@ -43,7 +43,8 @@ namespace HealthHub.Application.Features.LoggedMeasurementsEntries.Commands.Upda
                     ValidationsErrors = ["Logged measurements with this id not found"]
                 };
             }
-            if(request.Weight < 0)
+            request.Weight ??= loggedMeasurements.Value.Weight;
+            if (request.Weight < 0)
             {
                 request.Weight = loggedMeasurements.Value.Weight;
             }

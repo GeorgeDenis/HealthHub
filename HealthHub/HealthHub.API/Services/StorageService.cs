@@ -35,7 +35,7 @@ namespace HealthHub.API.Services
             }
         }
 
-        public async Task<Models.AwsS3.S3ResponseDto> UploadFileAsync(S3Object s3Object, AWSCredential aWSCredentials)
+        public async Task<S3ResponseDto> UploadFileAsync(S3Object s3Object, AWSCredential aWSCredentials)
         {
             var credentials = new BasicAWSCredentials(aWSCredentials.AwsKey, aWSCredentials.AwsSecretKey);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import api from "../../../services/api";
 import { toast } from "react-toastify";
 import { Modal } from "@mui/material";
@@ -12,16 +12,23 @@ const EditMeasurementsModal = ({
   handleClose,
   selectedMeasurement,
   refecthLoggedMeasurements,
+  refreshPhotos,
 }) => {
   const currentUser = useUser();
   const [measurementsToEdit, setMeasurementsToEdit] = useState({});
+  const [photo, setPhoto] = useState(null);
+
+  const fileInputRef = useRef(null);
+
+  const handleAddPhotoClick = () => {
+    fileInputRef.current.click();
+  };
   useEffect(() => {
     setMeasurementsToEdit({
       weight: selectedMeasurement.weight,
       waistCircumference: selectedMeasurement.waistCircumference,
       hipCircumference: selectedMeasurement.hipCircumference,
       neckCircumference: selectedMeasurement.neckCircumference,
-      weightPhotoUrl: selectedMeasurement.weightPhotoUrl,
     });
   }, [isOpen]);
 
@@ -30,6 +37,23 @@ const EditMeasurementsModal = ({
       ...measurementsToEdit,
       [type]: e.target.value,
     });
+  };
+  const handleSaveData = async () => {
+    if (
+      measurementsToEdit.weight !== selectedMeasurement.weight ||
+      measurementsToEdit.waistCircumference !==
+        selectedMeasurement.waistCircumference ||
+      measurementsToEdit.hipCircumference !==
+        selectedMeasurement.hipCircumference ||
+      measurementsToEdit.neckCircumference !==
+        selectedMeasurement.neckCircumference
+    ) {
+      handleEditMeasurement();
+    }
+    if (photo) {
+      handleSavePhoto();
+    }
+    handleClose();
   };
   const handleEditMeasurement = async () => {
     try {
@@ -42,7 +66,6 @@ const EditMeasurementsModal = ({
           waistCircumference: measurementsToEdit.waistCircumference,
           hipCircumference: measurementsToEdit.hipCircumference,
           neckCircumference: measurementsToEdit.neckCircumference,
-          weightPhotoUrl: measurementsToEdit.weightPhotoUrl,
         },
         {
           headers: {
@@ -65,6 +88,49 @@ const EditMeasurementsModal = ({
       toast.error(errorMessage);
     }
   };
+  const handlePhotoNameSlice = (photoName) => {
+    if (photoName.length > 10) {
+      return photoName.slice(0, 15) + "..." + photoName.slice(-3);
+    }
+    return photoName;
+  };
+  const handleSavePhoto = async () => {
+    if (!photo) {
+      toast.error("No photo selected");
+      return;
+    }
+    try {
+      const formData = new FormData();
+      formData.append("File", photo);
+      formData.append(
+        "LoggedMeasurementsId",
+        measurementsToEdit.id || selectedMeasurement.id,
+      );
+
+      formData.append("UserId", currentUser.userId);
+
+      const response = await api.post(
+        "/api/Cloud/measurements-photo",
+        formData,
+        {
+          headers: {
+            "Content-Type": undefined,
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        toast.success("Photo saved successfully");
+        refreshPhotos();
+      } else {
+        toast.error("Unexpected response status: " + response.status);
+      }
+    } catch (error) {
+      toast.error("Error saving photo: " + error.toString());
+    }
+  };
+  
 
   return (
     <>
@@ -117,18 +183,36 @@ const EditMeasurementsModal = ({
                 }
               />
             </div>
-            <Button
-              className="w-12 h-10 bg-secondary hover:bg-primary duration-200 flex items-center justify-center gap-2 p-2 rounded-lg ml-[80%]"
-              // onClick={() => {
-              //   handleOpenLogMeasurementsModal();
-              // }}
-            >
-              <FontAwesomeIcon icon={faCameraRetro} size="2xl" beatFade />
-            </Button>
+            <div className="flex flex-col">
+              <div className="flex justify-between items-center">
+                <Typography color="white">Add a photo: </Typography>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => {
+                    setPhoto(e.target.files[0]);
+                    console.log(e.target.files[0]);
+                  }}
+                />
+                <Button
+                  className="w-12 h-10 bg-secondary hover:bg-primary duration-200 flex items-center justify-center gap-2 p-2 rounded-lg mx-auto"
+                  onClick={handleAddPhotoClick}
+                >
+                  <FontAwesomeIcon icon={faCameraRetro} size="2xl" beatFade />
+                </Button>
+              </div>
+              {photo && (
+                <p className="text-surface-light mx-auto mt-6">
+                  {handlePhotoNameSlice(photo.name)}
+                </p>
+              )}
+            </div>
             <Button
               className="mt-6 bg-secondary hover:bg-primary duration-200 w-[30%] mx-[35%]"
               onClick={() => {
-                handleEditMeasurement();
+                handleSaveData();
               }}
             >
               Save

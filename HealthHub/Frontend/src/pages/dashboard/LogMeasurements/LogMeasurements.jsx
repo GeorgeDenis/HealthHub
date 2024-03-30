@@ -61,11 +61,15 @@ const LogMeasurements = () => {
   const [isLogMeasurementsModalOpen, setIsLogMeasurementsModalOpen] =
     useState(false);
   const [selectedMeasurement, setSelectedMeasurement] = useState({});
-  const [measurementsPhoto, setMeasurementsPhoto] = useState(null);
+  const [refreshPhotos, setRefreshPhotos] = useState(false);
 
   useEffect(() => {
     fetchLoggedMeasurements();
   }, []);
+  const refreshMeasurementsPhotos = () => {
+    setRefreshPhotos((oldValue) => !oldValue);
+  };
+
   const fetchLoggedMeasurements = async () => {
     try {
       const response = await api.get(
@@ -107,46 +111,6 @@ const LogMeasurements = () => {
     setCurrentChart(value);
   };
 
-  const handleMeasurementsPhoto = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setMeasurementsPhoto(file);
-    }
-  };
-  const handleSavePhoto = async () => {
-    if (!measurementsPhoto) {
-      toast.error("No photo selected");
-      return;
-    }
-    try {
-      const formData = new FormData();
-      formData.append("measurementsPhoto", measurementsPhoto);
-      const response = await api.post(
-        "/api/Cloud/upload-measurements-photo",
-        {
-          userId: currentUser?.userId,
-          loggedMeasurementsId: "947aca23-1c2f-4a1a-995d-03cc3c0e7cf4",
-          file: formData,
-        },
-
-        {
-          params: {},
-          headers: {
-            "Content-Type": undefined,
-            Authorization: `Bearer ${currentUser.token}`,
-          },
-        },
-      );
-
-      if (response.status === 200) {
-        toast.success("Photo saved successfully");
-      } else {
-        toast.error("Unexpected response status: " + response.status);
-      }
-    } catch (error) {
-      toast.error("Error saving photo: " + error.toString());
-    }
-  };
   return (
     <>
       <div className="flex flex-col 2xl:flex-row items-center w-full gap-5">
@@ -278,21 +242,14 @@ const LogMeasurements = () => {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-center">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleMeasurementsPhoto}
-          className="text-center file:border-0 file:text-surface-light file:bg-green-700 rounded-md ml-20"
-        />
-        <button onClick={handleSavePhoto}>Save</button>
-      </div>
+
       {isEditMeasurementsModalOpen && (
         <EditMeasurementsModal
           isOpen={isEditMeasurementsModalOpen}
           handleClose={handleCloseEditMeasurementsModal}
           selectedMeasurement={selectedMeasurement}
           refecthLoggedMeasurements={fetchLoggedMeasurements}
+          refreshPhotos={refreshMeasurementsPhotos}
         />
       )}
       {isLogMeasurementsModalOpen && (
@@ -302,7 +259,7 @@ const LogMeasurements = () => {
           refecthLoggedMeasurements={fetchLoggedMeasurements}
         />
       )}
-      <MeasurementsPhotos />
+      <MeasurementsPhotos refreshTrigger={refreshPhotos} />
     </>
   );
 };
