@@ -130,6 +130,7 @@ const FoodModal = ({
           protein: food.protein,
           carbohydrates: food.carbohydrates,
           fat: food.fat,
+          dateLogged: selectedDate,
           mealType,
         },
         {
