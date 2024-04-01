@@ -54,7 +54,7 @@ const PopularRecipes = () => {
           {popular.map((recipe) => (
             <SplideSlide key={recipe.id}>
               <div className="min-h-[15rem] rounded-2xl overflow-hidden relative">
-                <Link to={`/recipes/details/${recipe.id}`}>
+                <Link to={`/dashboard/recipes/details/${recipe.id}`}>
                   <p className="absolute z-10 left-1/2 bottom-0 -translate-x-1/2 text-white w-full text-center font-semibold text-base h-2/5 flex justify-center items-center">
                     {recipe.title}
                   </p>
