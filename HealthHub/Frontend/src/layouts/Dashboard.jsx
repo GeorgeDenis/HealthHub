@@ -1,17 +1,13 @@
 import { Routes, Route } from "react-router-dom";
-import {
-  Sidenav,
-  DashboardNavbar,
-} from "@/widgets/layout";
+import { Sidenav, DashboardNavbar } from "@/widgets/layout";
 import routes from "@/routes";
 
 export function Dashboard() {
-
   return (
     //<div className="min-h-screen bg-gradient-to-r from-surface-darkest to-surface-mid-dark">
     <div className="min-h-screen bg-surface-darkest">
       <Sidenav
-      brandName={"HealthHub"}
+        brandName={"HealthHub"}
         routes={routes}
         brandImg={"/img/logo-ct.png"}
       />
@@ -23,14 +19,15 @@ export function Dashboard() {
               layout === "dashboard" &&
               pages.map(({ path, element }) => (
                 <Route exact path={path} element={element} />
-              ))
+              )),
           )}
         </Routes>
-
       </div>
-      </div>
+    </div>
   );
 }
+
+
 
 Dashboard.displayName = "/src/layout/dashboard.jsx";
 

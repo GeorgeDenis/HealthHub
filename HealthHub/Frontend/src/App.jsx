@@ -5,9 +5,9 @@ import LoginRequired from "./context/LoginRequired";
 function App() {
   return (
     <Routes>
-      <Route element={<LoginRequired/>}>
-            <Route path="/dashboard/*" element={<Dashboard/>}/>
-        </Route>
+      <Route element={<LoginRequired />}>
+        <Route path="/dashboard/*" element={<Dashboard />} />
+      </Route>
       <Route path="/auth/*" element={<Auth />} />
       <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
     </Routes>

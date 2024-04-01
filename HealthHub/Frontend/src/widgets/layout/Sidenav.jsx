@@ -1,21 +1,17 @@
 import PropTypes from "prop-types";
 import { Link, NavLink } from "react-router-dom";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { RectangleStackIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { Button, IconButton, Typography } from "@material-tailwind/react";
 import {
-  RectangleStackIcon,
-  TrashIcon
-} from "@heroicons/react/24/solid";
-import {
-  Button,
-  IconButton,
-  Typography,
-} from "@material-tailwind/react";
-import { useMaterialTailwindController, setOpenSidenav } from "@/context/MaterialTailwind";
+  useMaterialTailwindController,
+  setOpenSidenav,
+} from "@/context/MaterialTailwind";
 import { useEffect, useState } from "react";
 import api from "@/services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export function Sidenav({ brandImg, brandName, routes }) {
   const navigate = useNavigate();
@@ -29,9 +25,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
         openSidenav ? "translate-x-0" : "-translate-x-80"
       } fixed inset-0 z-50 my-4 ml-4 w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 `}
     >
-      <div
-        className={`relative`}
-      >
+      <div className={`relative`}>
         <Link to="/" className="pt-5 flex items-center justify-center">
           <img src={brandImg} alt="logo" className="h-24 ml-[-0.75rem]" />
           {/* <Typography
@@ -58,13 +52,23 @@ export function Sidenav({ brandImg, brandName, routes }) {
           <ul key={key} className="flex flex-col gap-1 opacity-80">
             {pages
               // .filter(({ name }) => layout === "dashboard" && !["profile"].includes(name))
-              .filter(({ name }) => layout === "dashboard" || layout === "profile".includes(name))
+              .filter(
+                ({ name }) =>
+                  layout === "dashboard" &&
+                  name !== "cuisine" &&
+                  name !== "search-recipe" &&
+                  name !== "recipe-details",
+              )
               .map(({ icon, name, path }) => (
                 <li key={name} className="py-1 ![&>a]:flex-1">
                   <NavLink to={`/${layout}${path}`} className={"flex-1"}>
                     {({ isActive }) => (
                       <Button
-                        className={`flex gap-2 items-center px-4 hover:bg-secondary ${isActive ? 'bg-primary' : 'bg-surface-dark shadow-none'} `}
+                        className={`flex gap-2 items-center px-4 hover:bg-secondary ${
+                          isActive
+                            ? "bg-primary"
+                            : "bg-surface-dark shadow-none"
+                        } `}
                         fullWidth
                       >
                         {icon}

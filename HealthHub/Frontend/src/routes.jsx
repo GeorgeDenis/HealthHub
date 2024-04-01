@@ -17,6 +17,11 @@ import MainInfoCard from "./pages/auth/RegisterModal/MainInfoCard";
 import GoalTypeModal from "./pages/auth/RegisterModal/GoalTypeModal";
 import WeeklyGoalModal from "./pages/auth/RegisterModal/WeeklyGoalModal";
 import LogWeight from "./pages/dashboard/LogMeasurements/LogMeasurements";
+import RecipesPages from "./pages/dashboard/Recipes/RecipesPages";
+import { element } from "prop-types";
+import Cuisine from "./pages/dashboard/Recipes/Cuisine";
+import SearchedRecipe from "./pages/dashboard/Recipes/SearchedRecipe";
+import RecipeDetails from "./pages/dashboard/Recipes/RecipeDetails";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -49,7 +54,31 @@ export const routes = [
         name: "log weight",
         path: "/log-weight",
         element: <LogWeight />,
-      }
+      },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "recipes",
+        path: "/recipes",
+        element: <RecipesPages />,
+      },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "cuisine",
+        path: "/recipes/cuisine/:type",
+        element: <Cuisine />,
+      },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "search-recipe",
+        path: "/recipes/search/:query",
+        element: <SearchedRecipe />,
+      },
+      {
+        icon: <TableCellsIcon {...icon} />,
+        name: "recipe-details",
+        path: "/recipes/details/:id",
+        element: <RecipeDetails />,
+      },
     ],
   },
   {
