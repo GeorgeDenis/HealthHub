@@ -16,6 +16,9 @@ module.exports = withMT({
         'primary': '#84bd6a',
         'secondary': '#2a8a32'
       },
+      screens:{
+        '3xl': '1500px'
+      }
     },
   },
   plugins: [],

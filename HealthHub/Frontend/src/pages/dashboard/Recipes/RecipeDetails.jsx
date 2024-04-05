@@ -17,19 +17,25 @@ const RecipeDetails = () => {
   const [details, setDetails] = useState();
   const [nutrition, setNutrition] = useState();
   const [activeTab, setActiveTab] = useState("instructions");
+  const [recipeInstructions, setRecipeInstructions] = useState([]);
   const [recipeComments, setRecipeComments] = useState([]);
+
   let params = useParams();
 
   const fetchDetails = async () => {
     const check = localStorage.getItem("details");
     if (check) {
       setDetails(JSON.parse(check));
+      const recipeDetailesParsed = JSON.parse(check).instructions.split("\n");
+      setRecipeInstructions(recipeDetailesParsed);
     } else {
       try {
         const response = await api.get(
           `https://api.spoonacular.com/recipes/${params.id}/information/?apiKey=${APIKEY}`,
         );
         localStorage.setItem("details", JSON.stringify(response.data));
+        const recipeDetailesParsed = response.data.instructions.split("\n");
+        setRecipeInstructions(recipeDetailesParsed);
         setDetails(response.data);
       } catch (error) {
         console.log(error);
@@ -41,14 +47,13 @@ const RecipeDetails = () => {
     const check = localStorage.getItem("nutrition");
     if (check) {
       const parsedCheck = JSON.parse(check);
-      console.log(parsedCheck);
       const nutritionValues = {
         calories: parseFloat(parsedCheck.calories),
         carbs: parseFloat(parsedCheck.carbs.split("g")[0]),
         fat: parseFloat(parsedCheck.fat.split("g")[0]),
         protein: parseFloat(parsedCheck.protein.split("g")[0]),
       };
-      setNutrition(nutritionValues); // Already an object, no need to parse
+      setNutrition(nutritionValues); 
     } else {
       try {
         const response = await api.get(
@@ -68,7 +73,6 @@ const RecipeDetails = () => {
     }
   };
   const fetchRecipeComments = async () => {
-    console.log(currentUser);
     try {
       const response = await api.get(
         `https://localhost:7016/api/v1/RecipeComment/${params.id}`,
@@ -101,11 +105,11 @@ const RecipeDetails = () => {
       initial={{ opacity: 0 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
-      className="w-[80%] mx-auto mt-[10rem] mb-[10rem] p-4 shadow-lg rounded-lg bg-surface-dark"
+      className="w-full md:w-[75%] 3xl:w-[60%]  mx-auto mt-[2rem] mb-[10rem] p-4 shadow-lg rounded-lg bg-surface-dark"
     >
       {details && (
         <>
-          <div className="flex justify-between">
+          <div className="flex flex-col md:flex-row gap-16 items-center">
             <div>
               <h2 className="text-2xl font-bold mb-4 text-white">
                 {details.title}
@@ -116,64 +120,22 @@ const RecipeDetails = () => {
                 alt={details.title}
                 className="w-[20rem] h-[15rem] rounded-md"
               />
-              <div>
-                <div>
-                  <StarIcon className="text-yellow-700 cursor-pointer" />
-                  <StarIcon className="text-yellow-700 cursor-pointer" />
-                  <StarIcon className="text-yellow-700 cursor-pointer" />
-                  <StarIcon className="text-yellow-700 cursor-pointer" />
-                  <StarIcon className="text-yellow-700 cursor-pointer" />
-                </div>
-                <p className="text-white">121 reviews</p>
-              </div>
-            </div>
-            {activeTab === "instructions" && (
-              <div className="w-[60%]">
-                <h3 className="text-xl font-semibold text-white">
-                  Instructions
-                </h3>
-                <p
-                  dangerouslySetInnerHTML={{ __html: details.instructions }}
-                  className="text-white text-justify"
-                ></p>
-              </div>
-            )}
-            {activeTab === "ingredients" && (
-              <div className="w-[60%]">
-                <h3 className="text-xl font-semibold text-white">
-                  Ingredients
-                </h3>
-                <ul style={{ "list-style-type": "disc" }}>
-                  {details.extendedIngredients.map((ingredient) => (
-                    <li key={ingredient.id} className="text-white">
-                      {ingredient.original}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-
-          <div className="my-4">
-            <div className="flex justify-center gap-2 mb-4">
-              <Button
-                color={activeTab === "instructions" ? "green" : "gray"}
-                onClick={() => setActiveTab("instructions")}
-              >
-                Instructions
-              </Button>
-              <Button
-                color={activeTab === "ingredients" ? "green" : "gray"}
-                onClick={() => setActiveTab("ingredients")}
-              >
-                Ingredients
-              </Button>
             </div>
             {nutrition && (
-              <>
-                <p className="text-white mb-3">Nutrition per Serving</p>
+              <div className="flex flex-col items-start gap-5">
+                <div className="flex items-center justify-center">
+                  <div>
+                    <StarIcon className="text-yellow-700 cursor-pointer" />
+                    <StarIcon className="text-yellow-700 cursor-pointer" />
+                    <StarIcon className="text-yellow-700 cursor-pointer" />
+                    <StarIcon className="text-yellow-700 cursor-pointer" />
+                    <StarIcon className="text-yellow-700 cursor-pointer" />
+                  </div>
 
-                <div className="flex gap-10 items-center">
+                  <p className="text-white text-sm">(121 reviews)</p>
+                </div>
+                <p className="text-white mb-3">Nutrition per Serving</p>
+                <div className="flex gap-8 items-center">
                   <CircleProgress
                     calories={nutrition.calories}
                     carbsProcent={parseInt(
@@ -224,7 +186,60 @@ const RecipeDetails = () => {
                     <p className="text-xs">Protein</p>
                   </div>
                 </div>
-              </>
+              </div>
+            )}
+          </div>
+
+          <div className="my-4">
+            <div className="flex justify-center gap-2 mb-4">
+              <Button
+                color={activeTab === "instructions" ? "green" : "gray"}
+                onClick={() => setActiveTab("instructions")}
+              >
+                Instructions
+              </Button>
+              <Button
+                color={activeTab === "ingredients" ? "green" : "gray"}
+                onClick={() => setActiveTab("ingredients")}
+              >
+                Ingredients
+              </Button>
+            </div>
+            {activeTab === "instructions" && (
+              <div
+                className="text-surface-light overflow-auto max-h-[16rem]"
+                style={{ scrollbarWidth: "none" }}
+              >
+                <h3 className="text-xl font-semibold text-white underline">
+                  Instructions
+                </h3>
+                <ol
+                  // dangerouslySetInnerHTML={{ __html: details.instructions }}
+                  style={{ listStyleType: "decimal" }}
+                  className="text-white text-justify pl-5"
+                >
+                  {recipeInstructions.map((instruction, index) => (
+                    <li key={index}>{instruction}</li>
+                  ))}
+                </ol>
+              </div>
+            )}
+            {activeTab === "ingredients" && (
+              <div
+                className="text-surface-light overflow-auto max-h-[18rem]"
+                style={{ scrollbarWidth: "none" }}
+              >
+                <h3 className="text-xl font-semibold text-white underline">
+                  Ingredients
+                </h3>
+                <ul style={{ listStyleType: "disc" }} className="pl-5">
+                  {details.extendedIngredients.map((ingredient, index) => (
+                    <li key={index} className="text-white">
+                      {ingredient.original}
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         </>
@@ -243,11 +258,10 @@ const CircleProgress = ({
   const radius = 45;
   const circumference = 2 * Math.PI * radius;
 
-  // Calculate the inverse percentages for stroke dash offsets
   const percentColors = {
-    carbsProcent, // teal
-    proteinProcent, // purple
-    fatProcent, // orange
+    carbsProcent,
+    proteinProcent,
+    fatProcent,
   };
 
   const offsetForCarbs =
@@ -257,10 +271,6 @@ const CircleProgress = ({
     ((100 - percentColors.proteinProcent) / 100) * circumference;
   const offsetForFat =
     offsetForProtein + ((100 - percentColors.fatProcent) / 100) * circumference;
-
-  // Make sure the circles are stacked in the correct order:
-  // The first (bottom) circle should have the smallest offset,
-  // and the last (top) circle should have the largest offset
   return (
     <div className="relative flex items-center justify-center">
       <svg
