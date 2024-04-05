@@ -243,6 +243,31 @@ namespace HealthHub.Infrastructure.Migrations
                     b.ToTable("PasswordResetCodes");
                 });
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.RecipeComment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RecipeId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RecipeComments");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("UserId")

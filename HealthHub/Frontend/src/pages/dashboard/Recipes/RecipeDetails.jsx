@@ -6,12 +6,18 @@ import api from "../../../services/api";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { Button } from "@material-tailwind/react";
+import StarOutlineIcon from "@mui/icons-material/StarOutline";
+import StarIcon from "@mui/icons-material/Star";
+import { useUser } from "@/context/LoginRequired";
+
 const APIKEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
 
 const RecipeDetails = () => {
+  const currentUser = useUser();
   const [details, setDetails] = useState();
   const [nutrition, setNutrition] = useState();
   const [activeTab, setActiveTab] = useState("instructions");
+  const [recipeComments, setRecipeComments] = useState([]);
   let params = useParams();
 
   const fetchDetails = async () => {
@@ -34,7 +40,7 @@ const RecipeDetails = () => {
   const fetchNutrition = async () => {
     const check = localStorage.getItem("nutrition");
     if (check) {
-      const parsedCheck = JSON.parse(check); // Parse the string to an object
+      const parsedCheck = JSON.parse(check);
       console.log(parsedCheck);
       const nutritionValues = {
         calories: parseFloat(parsedCheck.calories),
@@ -61,11 +67,30 @@ const RecipeDetails = () => {
       }
     }
   };
+  const fetchRecipeComments = async () => {
+    console.log(currentUser);
+    try {
+      const response = await api.get(
+        `https://localhost:7016/api/v1/RecipeComment/${params.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+      if (response.status === 200) {
+        setRecipeComments(response.data.recipeComments);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Error fetching recipes comments");
+    }
+  };
 
   useEffect(() => {
     fetchDetails();
     fetchNutrition();
-    console.log(nutrition);
+    fetchRecipeComments();
   }, [params.id]);
 
   const isActive = (tab) => (activeTab === tab ? "bg-primary" : "bg-secondary");
@@ -91,6 +116,16 @@ const RecipeDetails = () => {
                 alt={details.title}
                 className="w-[20rem] h-[15rem] rounded-md"
               />
+              <div>
+                <div>
+                  <StarIcon className="text-yellow-700 cursor-pointer" />
+                  <StarIcon className="text-yellow-700 cursor-pointer" />
+                  <StarIcon className="text-yellow-700 cursor-pointer" />
+                  <StarIcon className="text-yellow-700 cursor-pointer" />
+                  <StarIcon className="text-yellow-700 cursor-pointer" />
+                </div>
+                <p className="text-white">121 reviews</p>
+              </div>
             </div>
             {activeTab === "instructions" && (
               <div className="w-[60%]">
@@ -108,7 +143,7 @@ const RecipeDetails = () => {
                 <h3 className="text-xl font-semibold text-white">
                   Ingredients
                 </h3>
-                <ul>
+                <ul style={{ "list-style-type": "disc" }}>
                   {details.extendedIngredients.map((ingredient) => (
                     <li key={ingredient.id} className="text-white">
                       {ingredient.original}
