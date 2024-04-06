@@ -35,6 +35,7 @@ namespace HealthHub.Application.Features.Users.Queries.GetAll
                     WeeklyGoal = u.WeeklyGoal,
                     GoalType = u.GoalType,
                     Activity = u.Activity,
+                    ProfilePictureUrl = u.ProfilePictureUrl,                 
                     Roles = u.Roles
                 }).ToList();
             }

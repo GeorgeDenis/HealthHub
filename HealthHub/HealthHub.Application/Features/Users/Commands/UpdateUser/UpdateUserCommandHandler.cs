@@ -42,6 +42,7 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
             request.WeeklyGoal ??= user.Value.WeeklyGoal;
             request.GoalType ??= user.Value.GoalType;
             request.Activity ??= user.Value.Activity;
+            request.ProfilePhotoUrl ??= user.Value.ProfilePictureUrl;
 
             var validator = new UpdateUserCommandValidator();
             var validationResult = await validator.ValidateAsync(request);
@@ -93,7 +94,8 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
                 GoalWeight = request.GoalWeight,
                 WeeklyGoal = request.WeeklyGoal,
                 GoalType = request.GoalType,
-                Activity = request.Activity
+                Activity = request.Activity,
+                ProfilePictureUrl = request.ProfilePhotoUrl
             };
 
             var result = await userRepository.UpdateAsync(userDto);
@@ -125,7 +127,8 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
                     GoalWeight = result.Value.GoalWeight,
                     WeeklyGoal = result.Value.WeeklyGoal,
                     GoalType = result.Value.GoalType,
-                    Activity = result.Value.Activity              
+                    Activity = result.Value.Activity,
+                    ProfilePictureUrl = result.Value.ProfilePictureUrl
                 }
             };
         }

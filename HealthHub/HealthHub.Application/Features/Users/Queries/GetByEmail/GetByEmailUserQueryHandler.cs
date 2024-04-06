@@ -39,6 +39,7 @@ namespace HealthHub.Application.Features.Users.Queries.GetByEmail
                     GoalWeight = userDto.GoalWeight,
                     WeeklyGoal = userDto.WeeklyGoal,
                     GoalType = userDto.GoalType,
+                    ProfilePictureUrl = userDto.ProfilePictureUrl,
                     Activity = userDto.Activity
                 }
             };

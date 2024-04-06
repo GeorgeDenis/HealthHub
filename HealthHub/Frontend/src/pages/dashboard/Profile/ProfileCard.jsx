@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../../../services/api";
 import ProfileInfoCard from "./ProfileInfoCard";
+import ProfileUserAvatar from "./ProfileUserAvatar";
 const isFormValid = (editedUserData) => {
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
   if (
@@ -27,6 +28,7 @@ const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
   const isOwnProfile = userId === currentUser.userId || !userId;
   const [isInEditMode, setIsInEditMode] = useState(false);
   const [editedUserData, setEditedUserData] = useState(userData);
+  const [editedUserPhoto, setEditedUserPhoto] = useState(null);
 
   useEffect(() => {
     setEditedUserData(userData);
@@ -35,6 +37,37 @@ const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
   const onSaveEdit = async () => {
     if (!isFormValid(editedUserData)) return;
     setIsInEditMode(false);
+    if (editedUserPhoto) {
+      const formData = new FormData();
+      formData.append("file", editedUserPhoto);
+
+      try {
+        let response;
+        console.log("Uploading user photo", userData?.photoUrl);
+
+        response = await api.post(
+          `api/Cloud/profile-photo?UserId=${currentUser.userId}`,
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${currentUser.token}`,
+              "Content-Type": undefined,
+            },
+          },
+        );
+        if (response.status === 200) {
+          console.log(response.data);
+          setUserData({
+            ...userData,
+            photoUrl: response.data.user.profilePictureUrl,
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to upload user photo");
+      }
+      setEditedUserPhoto(null);
+    }
     try {
       const response = await api.put(
         `/api/v1/Users/${currentUser.userId}`,
@@ -71,17 +104,24 @@ const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
   const onCancelEdit = () => {
     setIsInEditMode(false);
     setEditedUserData(userData);
+    setEditedUserPhoto(null);
   };
   return (
     <>
       <div className="mb-10 flex items-center justify-between flex-wrap gap-6">
         <div className="flex items-center gap-6">
-          <Avatar
+          {/* <Avatar
             src="/img/bruce-mars.jpeg"
             alt="bruce-mars"
             size="xl"
             variant="rounded"
             className="rounded-lg shadow-lg shadow-blue-gray-500/40"
+          /> */}
+          <ProfileUserAvatar
+            photoUrl={userData.photoUrl}
+            editedUserPhoto={editedUserPhoto}
+            setEditedUserPhoto={setEditedUserPhoto}
+            isInEditMode={isInEditMode}
           />
           <div>
             {!isInEditMode ? (
@@ -112,24 +152,24 @@ const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
         </div>
       </div>
       <div>
-      <div className="grid-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-3 text-surface-darkest">
-        <ProfileInfoCard
-          bio={userData?.bio}
-          details={{
-            mobile: userData?.mobile,
-            email: userData?.email,
-            location: userData?.location,
-          }}
-          isEditable={isEditable}
-          isInEditMode={isInEditMode}
-          onEnterEditMode={() => setIsInEditMode(true)}
-          editedUserData={editedUserData}
-          setEditedUserData={setEditedUserData}
-          onSaveEdit={onSaveEdit}
-          onCancelEdit={onCancelEdit}
-        />
+        <div className="grid-cols-1 mb-12 grid gap-12 px-4 lg:grid-cols-2 xl:grid-cols-3 text-surface-darkest">
+          <ProfileInfoCard
+            bio={userData?.bio}
+            details={{
+              mobile: userData?.mobile,
+              email: userData?.email,
+              location: userData?.location,
+            }}
+            isEditable={isEditable}
+            isInEditMode={isInEditMode}
+            onEnterEditMode={() => setIsInEditMode(true)}
+            editedUserData={editedUserData}
+            setEditedUserData={setEditedUserData}
+            onSaveEdit={onSaveEdit}
+            onCancelEdit={onCancelEdit}
+          />
+        </div>
       </div>
-    </div>
     </>
   );
 };

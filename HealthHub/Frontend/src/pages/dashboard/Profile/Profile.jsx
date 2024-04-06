@@ -24,43 +24,43 @@ export function Profile() {
   const [showLogoutDialog, setShowLogoutDialog] = useState(false);
 
   useEffect(() => {
-    const getUserData = async () => {
-      try {
-        const response = await api.get(
-          `/api/v1/Users/${userId || currentUser.userId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${currentUser.token}`,
-            },
-          },
-        );
-
-        if (response.status === 200) {
-          setUserData({
-            name: response.data.user?.name || "John Doe",
-            username: response.data.user?.username || "Unknown username",
-            email: response.data.user?.email,
-            bio: response.data.user?.bio,
-            mobile: response.data.user?.mobile,
-            location: response.data.user?.location,
-          });
-        }
-      } catch (error) {
-        if (axios.isAxiosError(error) && error.response) {
-          if (error.response.status === 404 || error.response.status === 500) {
-            navigate("/404");
-          } else {
-            toast.error("Failed to fetch user data");
-          }
-        } else {
-          console.log(error);
-          toast.error("An unexpected error occurred");
-        }
-      }
-    };
-
     getUserData();
   }, [userId]);
+  const getUserData = async () => {
+    try {
+      const response = await api.get(
+        `/api/v1/Users/${userId || currentUser.userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        setUserData({
+          name: response.data.user?.name || "John Doe",
+          username: response.data.user?.username || "Unknown username",
+          email: response.data.user?.email,
+          bio: response.data.user?.bio,
+          mobile: response.data.user?.mobile,
+          location: response.data.user?.location,
+          photoUrl: response.data.user?.profilePictureUrl,
+        });
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+        if (error.response.status === 404 || error.response.status === 500) {
+          navigate("/404");
+        } else {
+          toast.error("Failed to fetch user data");
+        }
+      } else {
+        console.log(error);
+        toast.error("An unexpected error occurred");
+      }
+    }
+  };
 
   return (
     <>

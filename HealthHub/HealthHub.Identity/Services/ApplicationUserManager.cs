@@ -144,8 +144,7 @@ namespace HealthHub.Identity.Services
             user.WeeklyGoal = userDto.WeeklyGoal;
             user.GoalType = (Models.Enums.GoalType?)userDto.GoalType;
             user.Activity = (ActivityLevel?)userDto.Activity;
-
-
+            user.ProfilePictureUrl = userDto.ProfilePictureUrl;
         }
         private UserDto MapToUserDto(ApplicationUser user)
         {
@@ -167,6 +166,7 @@ namespace HealthHub.Identity.Services
                 WeeklyGoal = user.WeeklyGoal,
                 GoalType = (Application.Features.Users.GoalType?)user.GoalType,
                 Activity = (Application.Features.ActivityLevel?)user.Activity,
+                ProfilePictureUrl = user.ProfilePictureUrl
             };
         }
 

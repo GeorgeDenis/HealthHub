@@ -22,5 +22,6 @@ namespace HealthHub.Application.Models
         public float? WeeklyGoal { get; set; }
         public GoalType? GoalType { get; set; }
         public ActivityLevel? Activity { get; set; }
+        public string? ProfilePictureUrl { get; set; }
     }
 }

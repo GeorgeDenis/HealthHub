@@ -21,5 +21,6 @@ namespace HealthHub.Application.Features.Users.Commands.UpdateUser
         public float? WeeklyGoal { get; set; }
         public GoalType? GoalType { get; set; }
         public ActivityLevel? Activity { get; set; }
+        public string? ProfilePhotoUrl { get; set; }
     }
 }

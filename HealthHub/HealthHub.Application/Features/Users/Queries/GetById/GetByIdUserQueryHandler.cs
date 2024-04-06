@@ -42,6 +42,7 @@ namespace HealthHub.Application.Features.Users.Queries.GetById
                     WeeklyGoal = userDto.WeeklyGoal,
                     Activity = userDto.Activity,
                     GoalType = userDto.GoalType,
+                    ProfilePictureUrl = userDto.ProfilePictureUrl,
                     Roles = userDto.Roles,
                 }
             };

@@ -2,6 +2,7 @@
 using HealthHub.API.Models.AwsS3;
 using HealthHub.API.Services;
 using HealthHub.Application.Features.LoggedMeasurementsEntries.Commands.UpdateLoggedMeasurements;
+using HealthHub.Application.Features.Users.Commands.UpdateUser;
 using HealthHub.Application.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,16 +17,18 @@ namespace HealthHub.API.Controllers
     {
         private readonly IStorageService storageService;
         private readonly ILoggedMeasurementsRepository loggedMeasurementsRepository;
+        private readonly IUserManager userManager;
         private string AwsKeyEnv { get; set; }
         private string AwsSecretKeyEnv { get; set; }
 
-        public CloudController(IStorageService storageService, ILoggedMeasurementsRepository loggedMeasurementsRepository)
+        public CloudController(IStorageService storageService, ILoggedMeasurementsRepository loggedMeasurementsRepository, IUserManager userManager)
         {
 
             this.storageService = storageService;
             AwsKeyEnv = DotNetEnv.Env.GetString("AWSAccessKey");
             AwsSecretKeyEnv = DotNetEnv.Env.GetString("AWSSecretKey");
             this.loggedMeasurementsRepository = loggedMeasurementsRepository;
+            this.userManager = userManager;
         }
         [Authorize(Roles = "User")]
         [HttpPost]
@@ -72,6 +75,52 @@ namespace HealthHub.API.Controllers
                 return BadRequest(photoResult);
             }
             return Ok();
+        }
+        [Authorize(Roles = "User")]
+        [HttpPost]
+        [Route("profile-photo")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> UploadProfillePhoto(AddProfilePhotoDto addPhoto)
+        {
+            await using var memoryStr = new MemoryStream();
+            await addPhoto.File.CopyToAsync(memoryStr);
+
+            var fileExt = Path.GetExtension(addPhoto.File.FileName);
+            var objName = $"{Guid.NewGuid()}{fileExt}";
+            var s3Object = new S3Object()
+            {
+                BucketName = "ergo-project",
+                InputStream = memoryStr,
+                Name = objName
+            };
+
+            var cred = new AWSCredential()
+            {
+                AwsKey = AwsKeyEnv,
+                AwsSecretKey = AwsSecretKeyEnv
+            };
+            var result = await storageService.UploadFileAsync(s3Object, cred);
+            //var loggedMeasurements = await loggedMeasurementsRepository.FindByIdAsync(addPhoto.LoggedMeasurementsId);
+            var user = await userManager.FindByIdAsync(addPhoto.UserId);
+            if (user.IsSuccess)
+            {
+                if (!string.IsNullOrEmpty(user.Value.ProfilePictureUrl))
+                {
+                    await storageService.DeleteFileAsync(user.Value.ProfilePictureUrl, cred);
+                }
+            }
+            var command = new UpdateUserCommand()
+            {
+                Id = addPhoto.UserId,
+                ProfilePhotoUrl = objName
+            };
+            var photoResult = await Mediator.Send(command);
+            if (!photoResult.Success)
+            {
+                await storageService.DeleteFileAsync(objName, cred);
+                return BadRequest(photoResult);
+            }
+            return Ok(photoResult);
         }
         [Authorize(Roles = "User")]
         [HttpDelete]
