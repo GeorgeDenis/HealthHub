@@ -9,9 +9,22 @@ import { Button } from "@material-tailwind/react";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import StarIcon from "@mui/icons-material/Star";
 import { useUser } from "@/context/LoginRequired";
+import RecipeDetailsComments from "./RecipeDetailsComments";
 
 const APIKEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
 
+const parseRecipe = (recipeDetailsParsed) => {
+  if (recipeDetailsParsed.includes("<li>")) {
+    recipeDetailsParsed = recipeDetailsParsed.replace(/<\/?ol>/g, "");
+    recipeDetailsParsed = recipeDetailsParsed.replace(/<li>/g, "");
+    recipeDetailsParsed = recipeDetailsParsed
+      .split("</li>")
+      .filter((instruction) => instruction.trim() !== "");
+  } else {
+    recipeDetailsParsed = recipeDetailsParsed.split("\n");
+  }
+  return recipeDetailsParsed;
+};
 const RecipeDetails = () => {
   const currentUser = useUser();
   const [details, setDetails] = useState();
@@ -26,15 +39,17 @@ const RecipeDetails = () => {
     const check = localStorage.getItem("details");
     if (check) {
       setDetails(JSON.parse(check));
-      const recipeDetailesParsed = JSON.parse(check).instructions.split("\n");
-      setRecipeInstructions(recipeDetailesParsed);
+      let recipeDetailsParsed = JSON.parse(check).instructions;
+      recipeDetailsParsed = parseRecipe(recipeDetailsParsed);
+
+      setRecipeInstructions(recipeDetailsParsed);
     } else {
       try {
         const response = await api.get(
           `https://api.spoonacular.com/recipes/${params.id}/information/?apiKey=${APIKEY}`,
         );
         localStorage.setItem("details", JSON.stringify(response.data));
-        const recipeDetailesParsed = response.data.instructions.split("\n");
+        const recipeDetailesParsed = parseRecipe(response.data.instructions);
         setRecipeInstructions(recipeDetailesParsed);
         setDetails(response.data);
       } catch (error) {
@@ -53,7 +68,7 @@ const RecipeDetails = () => {
         fat: parseFloat(parsedCheck.fat.split("g")[0]),
         protein: parseFloat(parsedCheck.protein.split("g")[0]),
       };
-      setNutrition(nutritionValues); 
+      setNutrition(nutritionValues);
     } else {
       try {
         const response = await api.get(
@@ -97,8 +112,6 @@ const RecipeDetails = () => {
     fetchRecipeComments();
   }, [params.id]);
 
-  const isActive = (tab) => (activeTab === tab ? "bg-primary" : "bg-secondary");
-
   return (
     <motion.div
       animate={{ opacity: 1 }}
@@ -111,7 +124,7 @@ const RecipeDetails = () => {
         <>
           <div className="flex flex-col md:flex-row gap-16 items-center">
             <div>
-              <h2 className="text-2xl font-bold mb-4 text-white">
+              <h2 className="text-md font-bold mb-4 text-white">
                 {details.title}
               </h2>
 
@@ -134,56 +147,60 @@ const RecipeDetails = () => {
 
                   <p className="text-white text-sm">(121 reviews)</p>
                 </div>
-                <p className="text-white mb-3">Nutrition per Serving</p>
-                <div className="flex gap-8 items-center">
-                  <CircleProgress
-                    calories={nutrition.calories}
-                    carbsProcent={parseInt(
-                      (4 * nutrition.carbs * 100) / nutrition.calories,
-                    )}
-                    proteinProcent={parseInt(
-                      (4 * nutrition.protein * 100) / nutrition.calories,
-                    )}
-                    fatProcent={parseInt(
-                      (9 * nutrition.fat * 100) / nutrition.calories,
-                    )}
-                  />
-                  <div className="flex flex-col items-center justify-center text-white">
-                    <p
-                      className="text-sm font-semibold"
-                      style={{ color: "#66b2b2" }}
-                    >
-                      {parseInt(
+                <div className="bg-surface-darkest p-5 rounded-md">
+                  <p className="text-white mb-3">Nutrition per Serving</p>
+                  <div className="flex gap-8 items-center ">
+                    <CircleProgress
+                      calories={nutrition.calories}
+                      carbsProcent={parseInt(
                         (4 * nutrition.carbs * 100) / nutrition.calories,
                       )}
-                      %
-                    </p>
-                    <p>{nutrition.carbs}g</p>
-                    <p className="text-xs">Carbs</p>
-                  </div>
-                  <div className="flex flex-col items-center justify-center text-white">
-                    <p
-                      className="text-sm font-semibold"
-                      style={{ color: "#7d12ff" }}
-                    >
-                      {parseInt((9 * nutrition.fat * 100) / nutrition.calories)}
-                      %
-                    </p>
-                    <p>{nutrition.fat}g</p>
-                    <p className="text-xs">Fat</p>
-                  </div>
-                  <div className="flex flex-col items-center justify-center text-white">
-                    <p
-                      className="text-sm font-semibold"
-                      style={{ color: "#FF5F1F" }}
-                    >
-                      {parseInt(
+                      proteinProcent={parseInt(
                         (4 * nutrition.protein * 100) / nutrition.calories,
                       )}
-                      %
-                    </p>
-                    <p>{nutrition.protein}g</p>
-                    <p className="text-xs">Protein</p>
+                      fatProcent={parseInt(
+                        (9 * nutrition.fat * 100) / nutrition.calories,
+                      )}
+                    />
+                    <div className="flex flex-col items-center justify-center text-white">
+                      <p
+                        className="text-sm font-semibold"
+                        style={{ color: "#66b2b2" }}
+                      >
+                        {parseInt(
+                          (4 * nutrition.carbs * 100) / nutrition.calories,
+                        )}
+                        %
+                      </p>
+                      <p>{nutrition.carbs}g</p>
+                      <p className="text-xs">Carbs</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center text-white">
+                      <p
+                        className="text-sm font-semibold"
+                        style={{ color: "#7d12ff" }}
+                      >
+                        {parseInt(
+                          (9 * nutrition.fat * 100) / nutrition.calories,
+                        )}
+                        %
+                      </p>
+                      <p>{nutrition.fat}g</p>
+                      <p className="text-xs">Fat</p>
+                    </div>
+                    <div className="flex flex-col items-center justify-center text-white">
+                      <p
+                        className="text-sm font-semibold"
+                        style={{ color: "#FF5F1F" }}
+                      >
+                        {parseInt(
+                          (4 * nutrition.protein * 100) / nutrition.calories,
+                        )}
+                        %
+                      </p>
+                      <p>{nutrition.protein}g</p>
+                      <p className="text-xs">Protein</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -206,42 +223,48 @@ const RecipeDetails = () => {
               </Button>
             </div>
             {activeTab === "instructions" && (
-              <div
-                className="text-surface-light overflow-auto max-h-[16rem]"
-                style={{ scrollbarWidth: "none" }}
-              >
+              <>
                 <h3 className="text-xl font-semibold text-white underline">
                   Instructions
                 </h3>
-                <ol
-                  // dangerouslySetInnerHTML={{ __html: details.instructions }}
-                  style={{ listStyleType: "decimal" }}
-                  className="text-white text-justify pl-5"
+                <div
+                  className="text-surface-light overflow-auto max-h-[20rem]"
+                  style={{ scrollbarWidth: "none" }}
                 >
-                  {recipeInstructions.map((instruction, index) => (
-                    <li key={index}>{instruction}</li>
-                  ))}
-                </ol>
-              </div>
+                  <ol
+                    // dangerouslySetInnerHTML={{ __html: details.instructions }}
+                    style={{ listStyleType: "decimal" }}
+                    className="text-white text-justify pl-5"
+                  >
+                    {recipeInstructions.map((instruction, index) => (
+                      <li key={index}>{instruction}</li>
+                    ))}
+                  </ol>
+                </div>
+              </>
             )}
             {activeTab === "ingredients" && (
-              <div
-                className="text-surface-light overflow-auto max-h-[18rem]"
-                style={{ scrollbarWidth: "none" }}
-              >
+              <>
                 <h3 className="text-xl font-semibold text-white underline">
                   Ingredients
                 </h3>
-                <ul style={{ listStyleType: "disc" }} className="pl-5">
-                  {details.extendedIngredients.map((ingredient, index) => (
-                    <li key={index} className="text-white">
-                      {ingredient.original}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                <div
+                  className="text-surface-light overflow-auto max-h-[20rem]"
+                  style={{ scrollbarWidth: "none" }}
+                >
+                  <ul style={{ listStyleType: "disc" }} className="pl-5">
+                    {details.extendedIngredients.map((ingredient, index) => (
+                      <li key={index} className="text-white">
+                        {ingredient.original}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
             )}
           </div>
+          <hr className="bg-green-500" />
+          <RecipeDetailsComments recipeId={params.id} />
         </>
       )}
     </motion.div>

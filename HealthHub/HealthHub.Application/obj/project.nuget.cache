@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Jtiv8JQEwfj4YodEICYF2wv52XeEwf+pPNSH5TuU9mrJalA4jcVOoJmCVVVsYJdC8JSk9wG8HIKR8RruPtY5Kg==",
+  "dgSpecHash": "87LEhuY5R5BCUztBxNPkXsuDrq8M7JhZZgEMTC5IZr9qsOX9bx/mxkrHW+tstc8cUnD0rxuYYtdR7q/wk5R4Vg==",
   "success": true,
   "projectFilePath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Application\\HealthHub.Application.csproj",
   "expectedPackageFiles": [
@@ -31,6 +31,7 @@
     "C:\\Users\\georg\\.nuget\\packages\\microsoft.extensions.options\\8.0.0\\microsoft.extensions.options.8.0.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\georg\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",

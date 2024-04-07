@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "J93K6VCtvjpDfqSS2SUE74hKL/hQ+mX/djmeHp/3xphGIxSY5ZRFIaBmzoQ53QPhhSe+QMb+CirQu4d0ZSxObw==",
+  "dgSpecHash": "JohQ91PLGWadvo9M+SH8vdWHTiyE5AnbqDxeueneYqgzhVT44XyGCEXan5LLU1AeCOcpSFAK8JoKMkADm6mgug==",
   "success": true,
   "projectFilePath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.Identity\\HealthHub.Identity.csproj",
   "expectedPackageFiles": [
@@ -43,6 +43,7 @@
     "C:\\Users\\georg\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.0.3\\microsoft.identitymodel.protocols.openidconnect.7.0.3.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.0.3\\microsoft.identitymodel.tokens.7.0.3.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\georg\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\npgsql\\8.0.0\\npgsql.8.0.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0\\npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",

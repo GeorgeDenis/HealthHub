@@ -6,9 +6,11 @@ namespace HealthHub.Application.Features.RecipeComments.Queries.GetRecipeComment
     public class GetRecipeCommentsByRecipeIdQueryHandler : IRequestHandler<GetRecipeCommentsByRecipeIdQuery, GetRecipeCommentsByRecipeIdResponse>
     {
         private readonly IRecipeCommentRepository recipeCommentRepository;
-        public GetRecipeCommentsByRecipeIdQueryHandler(IRecipeCommentRepository recipeCommentRepository)
+        private readonly IUserManager userRepository;
+        public GetRecipeCommentsByRecipeIdQueryHandler(IRecipeCommentRepository recipeCommentRepository, IUserManager userRepository)
         {
             this.recipeCommentRepository = recipeCommentRepository;
+            this.userRepository = userRepository;
         }
         public async Task<GetRecipeCommentsByRecipeIdResponse> Handle(GetRecipeCommentsByRecipeIdQuery request, CancellationToken cancellationToken)
         {
@@ -31,18 +33,33 @@ namespace HealthHub.Application.Features.RecipeComments.Queries.GetRecipeComment
                     ValidationsErrors = new List<string> { "An error occurred while fetching recipe comments" }
                 };
             }
+            var recipeComments = new List<RecipeCommentDto>();
+
+            foreach (var rc in result.Value)
+            {
+                var commentUser = await userRepository.FindByIdAsync(rc.UserId);
+
+                recipeComments.Add(new RecipeCommentDto
+                {
+                    Id = rc.Id,
+                    CreatedBy = new CommentCreatedBy
+                    {
+                        Name = commentUser.Value.Name,
+                        ProfilePhotoUrl = commentUser.Value.ProfilePictureUrl
+                    },
+                    RecipeId = rc.RecipeId,
+                    Comment = rc.Comment,
+                    CreatedDate = rc.Date,
+                    UserId = rc.UserId
+                });
+            }
+
             return new GetRecipeCommentsByRecipeIdResponse
             {
                 Success = true,
-                RecipeComments = new List<RecipeCommentDto>(result.Value.Select(rc => new RecipeCommentDto
-                {
-                    Id = rc.Id,
-                    RecipeId = rc.RecipeId,
-                    Comment = rc.Comment,
-                    Created = rc.Date,
-                    UserId = rc.UserId
-                }))
+                RecipeComments = recipeComments
             };
+
         }
     }
 }

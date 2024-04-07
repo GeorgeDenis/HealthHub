@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "l09vmEsewCTmMYUfc08jw71Rf0/e5ywcgcrqKehdCfIFddDn8u86ui5v4L3iVSHInQcGu4oPpQ6KmVRPrTaHZw==",
+  "dgSpecHash": "4AFPOHrYJnwgOZD2Xe20xGGV9bxzoUtDuKVbt3S3bPw532sNXEpzVJgwMsCE9Y9y++dTTvMdMjwZDFTJY3u52A==",
   "success": true,
   "projectFilePath": "I:\\HealthHub - Licenta\\Licenta2024\\HealthHub\\HealthHub.API\\HealthHub.API.csproj",
   "expectedPackageFiles": [
@@ -80,6 +80,7 @@
     "C:\\Users\\georg\\.nuget\\packages\\mimekit\\4.3.0\\mimekit.4.3.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
+    "C:\\Users\\georg\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\npgsql\\8.0.1\\npgsql.8.0.1.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\8.0.0\\npgsql.entityframeworkcore.postgresql.8.0.0.nupkg.sha512",
     "C:\\Users\\georg\\.nuget\\packages\\octokit\\9.0.0\\octokit.9.0.0.nupkg.sha512",

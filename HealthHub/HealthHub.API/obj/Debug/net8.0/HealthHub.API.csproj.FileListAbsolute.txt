@@ -604,3 +604,4 @@ C:\Licenta2024\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\HealthHub.AP
 C:\Licenta2024\Licenta2024\HealthHub\HealthHub.API\obj\Debug\net8.0\ref\HealthHub.API.dll
 I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\AWSSDK.Core.dll
 I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\AWSSDK.S3.dll
+I:\HealthHub - Licenta\Licenta2024\HealthHub\HealthHub.API\bin\Debug\net8.0\Newtonsoft.Json.dll
