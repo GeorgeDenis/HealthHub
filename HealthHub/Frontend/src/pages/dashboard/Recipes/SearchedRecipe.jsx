@@ -14,17 +14,17 @@ const SearchedRecipe = () => {
     if (check) {
       setSearchedRecipes(JSON.parse(check));
     } else {
-      // try {
-      //   console.log(name);
-      //   const response = await api.get(
-      //     `https://api.spoonacular.com/recipes/complexSearch?apiKey=${APIKEY}&query=${name}&number=3`,
-      //   );
-      //   console.log(response.data.results);
-      //   localStorage.setItem("searched", JSON.stringify(response.data.results));
-      //   setSearchedRecipes(response.data.results);
-      // } catch (error) {
-      //   toast.error("Error fetching recipes");
-      // }
+      try {
+        console.log(name);
+        const response = await api.get(
+          `https://api.spoonacular.com/recipes/complexSearch?apiKey=${APIKEY}&query=${name}&number=9`,
+        );
+        console.log(response.data.results);
+        localStorage.setItem("searched", JSON.stringify(response.data.results));
+        setSearchedRecipes(response.data.results);
+      } catch (error) {
+        toast.error("Error fetching recipes");
+      }
     }
   };
   useEffect(() => {
@@ -49,9 +49,11 @@ const SearchedRecipe = () => {
                 <img
                   src={item.image}
                   alt="recipe"
-                  className="w-[17rem] h-[15rem] object-cover rounded-2xl"
+                  className="w-[17rem] h-[15rem] object-cover rounded-t-2xl"
                 />
-                <h1 className="text-white text-base">{item.title}</h1>
+                <div className="bg-gray-900 text-white font-semibold text-xs md:text-sm px-2 py-2 text-center rounded-b-2xl">
+                    {item.title}
+                  </div>
               </Link>
             </motion.div>
           );

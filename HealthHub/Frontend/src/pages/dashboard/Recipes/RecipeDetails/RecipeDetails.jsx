@@ -28,7 +28,6 @@ const parseRecipe = (recipeDetailsParsed) => {
   return recipeDetailsParsed;
 };
 
-
 const activeMenuStyles = "bg-gray-100 text-gray-900";
 const inactiveMenuStyles = "text-gray-700";
 const menuStyles =
@@ -48,7 +47,18 @@ const RecipeDetails = () => {
   const handleSelectMeal = (meal) => {
     setSelectedMeal(meal);
   };
-
+  // const fetchImage = async () => {
+  //   try {
+  //     const response = await api.get(
+  //       `https://api.spoonacular.com/recipes/complexSearch?apiKey=${APIKEY}&query=${params.id}&number=9`,
+  //     );
+  //     console.log(response.data.results);
+  //     localStorage.setItem("searched", JSON.stringify(response.data.results));
+  //     setSearchedRecipes(response.data.results);
+  //   } catch (error) {
+  //     toast.error("Error fetching recipes");
+  //   }
+  // }
   const fetchDetails = async () => {
     const check = localStorage.getItem("details");
     if (check) {
@@ -191,7 +201,7 @@ const RecipeDetails = () => {
     >
       {details && (
         <div className="flex flex-col items-center">
-          <div className="flex flex-col md:flex-row gap-16 items-center">
+          <div className="flex flex-col lg:flex-row gap-16 items-center">
             <div>
               <h2 className="text-base font-bold mb-4 text-white">
                 {details.title}

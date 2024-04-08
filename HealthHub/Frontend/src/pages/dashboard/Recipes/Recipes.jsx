@@ -2,6 +2,9 @@ import React from "react";
 import VegetarianRecipes from "./components/VegetarianRecipes";
 import PopularRecipes from "./components/PopularRecipes";
 import { motion } from "framer-motion";
+import HighProteinRecipes from "./components/HighProteinRecipes";
+import LowFatRecipes from "./components/LowFatRecipes";
+import HighCarbsRecipes from "./components/HighCarbsRecipes";
 const Recipes = () => {
   return (
     <motion.div
@@ -10,8 +13,11 @@ const Recipes = () => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <VegetarianRecipes />
       <PopularRecipes />
+      <VegetarianRecipes />
+      <HighProteinRecipes />
+      <HighCarbsRecipes />
+      <LowFatRecipes />
     </motion.div>
   );
 };

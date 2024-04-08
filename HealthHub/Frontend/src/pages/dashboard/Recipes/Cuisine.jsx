@@ -55,7 +55,7 @@ const Cuisine = () => {
                 <img
                   src={item.image}
                   alt={item.title}
-                  className="w-full h-full object-cover rounded-2xl"
+                  className="w-full h-full object-cover rounded-t-2xl"
                 />
                 <h4 className="absolute z-10 left-1/2 bottom-0 -translate-x-1/2 text-white w-full text-center font-semibold text-base h-2/5 flex justify-center items-center">
                   {item.title}

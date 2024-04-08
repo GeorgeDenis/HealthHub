@@ -5,27 +5,29 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import { Link } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
-
 const APIKEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
-const PopularRecipes = () => {
-  const [popular, setPopular] = useState([]);
+const HighCarbsRecipes = () => {
+  const [highCarbs, setHighCarbs] = useState([]);
   useEffect(() => {
-    getPopular();
+    getHighCarbs();
   }, []);
 
-  const getPopular = async () => {
-    const check = localStorage.getItem("popular");
+  const getHighCarbs = async () => {
+    const check = localStorage.getItem("highCarbs");
     if (check) {
-      setPopular(JSON.parse(check));
+      setHighCarbs(JSON.parse(check));
     } else {
       try {
         const response = await api.get(
-          `https://api.spoonacular.com/recipes/random?apiKey=${APIKEY}&number=9`,
+          `https://api.spoonacular.com/recipes/findByNutrients?apiKey=${APIKEY}&minCarbs=30&number=7`,
         );
-        localStorage.setItem("popular", JSON.stringify(response.data.recipes));
-        setPopular(response.data.recipes);
+        const carbsArray = response.data.filter(
+          (recipe) => recipe.id !== 157219,
+        );
+        localStorage.setItem("highCarbs", JSON.stringify(carbsArray));
+        setHighCarbs(response.data);
       } catch (error) {
-        toast.error("Error fetching popular recipes");
+        toast.error("Error fetching high in carbs recipes");
       }
     }
   };
@@ -36,7 +38,7 @@ const PopularRecipes = () => {
           variant="h4"
           className=" text-white font-medium mt-4 mb-2 text-center p-2 border-y-green-600 border-y-2"
         >
-          Popular Picks
+          High in carbohydrates
         </Typography>
         <Splide
           options={{
@@ -58,7 +60,7 @@ const PopularRecipes = () => {
             },
           }}
         >
-          {popular.map((recipe) => (
+          {highCarbs.map((recipe) => (
             <SplideSlide key={recipe.id}>
               <div className="min-h-[15rem] min-w-[10rem] rounded-2xl overflow-hidden relative transition-transform transform hover:scale-105">
                 <Link
@@ -85,4 +87,4 @@ const Gradient = () => {
   return <div className="absolute z-3 w-full h-full gradient-bg"></div>;
 };
 
-export default PopularRecipes;
+export default HighCarbsRecipes;
