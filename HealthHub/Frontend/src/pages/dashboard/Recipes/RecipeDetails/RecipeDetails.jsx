@@ -6,11 +6,13 @@ import api from "../../../../services/api";
 import { toast } from "react-toastify";
 import { motion } from "framer-motion";
 import { Button } from "@material-tailwind/react";
-import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import StarIcon from "@mui/icons-material/Star";
 import { useUser } from "@/context/LoginRequired";
 import RecipeDetailsComments from "./RecipeDetailsComments";
-
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { Menu } from "@headlessui/react";
+import tagStyles from "./tagStyles";
+import CircleProgress from "./CircleProgress";
 const APIKEY = import.meta.env.VITE_SPOONACULAR_API_KEY;
 
 const parseRecipe = (recipeDetailsParsed) => {
@@ -25,24 +27,41 @@ const parseRecipe = (recipeDetailsParsed) => {
   }
   return recipeDetailsParsed;
 };
+
+
+const activeMenuStyles = "bg-gray-100 text-gray-900";
+const inactiveMenuStyles = "text-gray-700";
+const menuStyles =
+  "group flex rounded-md items-center w-full px-2 py-2 text-sm";
 const RecipeDetails = () => {
   const currentUser = useUser();
   const [details, setDetails] = useState();
   const [nutrition, setNutrition] = useState();
   const [activeTab, setActiveTab] = useState("instructions");
   const [recipeInstructions, setRecipeInstructions] = useState([]);
+  const [recipeTags, setRecipeTags] = useState([]);
   const [recipeComments, setRecipeComments] = useState([]);
+  const [selectedMeal, setSelectedMeal] = useState("Breakfast");
 
   let params = useParams();
+
+  const handleSelectMeal = (meal) => {
+    setSelectedMeal(meal);
+  };
 
   const fetchDetails = async () => {
     const check = localStorage.getItem("details");
     if (check) {
       setDetails(JSON.parse(check));
+
       let recipeDetailsParsed = JSON.parse(check).instructions;
       recipeDetailsParsed = parseRecipe(recipeDetailsParsed);
-
       setRecipeInstructions(recipeDetailsParsed);
+      const tagsParsed = JSON.parse(check).dishTypes;
+      if (tagsParsed.includes("antipasti")) {
+        tagsParsed.splice(tagsParsed.indexOf("antipasti"), 1);
+      }
+      setRecipeTags(tagsParsed);
     } else {
       try {
         const response = await api.get(
@@ -51,6 +70,7 @@ const RecipeDetails = () => {
         localStorage.setItem("details", JSON.stringify(response.data));
         const recipeDetailesParsed = parseRecipe(response.data.instructions);
         setRecipeInstructions(recipeDetailesParsed);
+        setRecipeTags(response.data.dishTypes);
         setDetails(response.data);
       } catch (error) {
         console.log(error);
@@ -111,6 +131,55 @@ const RecipeDetails = () => {
     fetchNutrition();
     fetchRecipeComments();
   }, [params.id]);
+
+  const logFood = async () => {
+    console.log(selectedMeal);
+    console.log(details.title);
+    console.log(nutrition);
+    const isValidNumber = (value) =>
+      !isNaN(parseFloat(value)) && isFinite(value) && value > 0;
+    if (!selectedMeal) {
+      toast.error("Please select a meal type by clicking on the 3 dots");
+      return;
+    }
+    if (
+      !details.title ||
+      !isValidNumber(nutrition.calories) ||
+      !isValidNumber(nutrition.fat) ||
+      !isValidNumber(nutrition.carbs) ||
+      !isValidNumber(nutrition.protein)
+    ) {
+      toast.error("Could not log recipe. Please try again later.");
+      return;
+    }
+    try {
+      const response = await api.post(
+        `/api/v1/LoggedFood`,
+        {
+          userId: currentUser.userId,
+          foodName: details.title,
+          calories: nutrition.calories,
+          protein: nutrition.protein,
+          carbohydrates: nutrition.carbs,
+          fat: nutrition.fat,
+          mealType: selectedMeal,
+          dateLogged: new Date().toISOString(),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        toast.success("Recipe logged successfully");
+      }
+    } catch (error) {
+      console.error("Error logging recipe:", error);
+      toast.error("Error logging recipe");
+    }
+  };
 
   return (
     <motion.div
@@ -201,78 +270,133 @@ const RecipeDetails = () => {
                       <p className="text-xs">Protein</p>
                     </div>
                   </div>
+                  <div className="flex items-center mt-2 ml-[50%]">
+                    <Button
+                      variant="gradient"
+                      className=" rounded-full"
+                      onClick={logFood}
+                    >
+                      Quick add
+                    </Button>
+                    <Menu as="div" className="relative inline-block text-left">
+                      <Menu.Button>
+                        <EllipsisVerticalIcon className="h-6 w-6 text-gray-900 cursor-pointer" />
+                      </Menu.Button>
+                      <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="py-1">
+                          {[
+                            { type: "Breakfast", value: 1 },
+                            { type: "Lunch", value: 2 },
+                            { type: "Dinner", value: 3 },
+                            { type: "Snack", value: 4 },
+                          ].map((meal, index) => (
+                            <Menu.Item key={index}>
+                              {({ active }) => (
+                                <button
+                                  className={`${
+                                    active
+                                      ? activeMenuStyles
+                                      : inactiveMenuStyles
+                                  } ${menuStyles}`}
+                                  onClick={() => handleSelectMeal(meal.value)}
+                                >
+                                  {meal.type}
+                                </button>
+                              )}
+                            </Menu.Item>
+                          ))}
+                        </div>
+                      </Menu.Items>
+                    </Menu>
+                  </div>
+                  <div></div>
                 </div>
               </div>
             )}
           </div>
+          <div className="mx-auto mt-6 mb-3 flex flex-wrap gap-2">
+            {recipeTags &&
+              recipeTags.map((tag, index) => {
+                const style = tagStyles[index % tagStyles.length];
+                return (
+                  <span
+                    key={index}
+                    className={`${style.bg} ${style.text} text-sm font-medium me-2 px-2.5 py-0.5 rounded-full ${style.darkBg} ${style.darkText}`}
+                  >
+                    {tag}
+                  </span>
+                );
+              })}
+          </div>
 
-          <div className="my-4">
+          <div className="my-4 w-full">
             <div className="flex justify-center gap-2 mb-4">
               <Button
+                variant="gradient"
                 color={activeTab === "instructions" ? "green" : "gray"}
                 onClick={() => setActiveTab("instructions")}
               >
                 Instructions
               </Button>
               <Button
+                variant="gradient"
                 color={activeTab === "ingredients" ? "green" : "gray"}
                 onClick={() => setActiveTab("ingredients")}
               >
                 Ingredients
               </Button>
             </div>
-            {activeTab === "instructions" && (
-              <motion.div
-                animate={{ opacity: 1 }}
-                initial={{ opacity: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mx-auto"
-              >
-                <h3 className="text-xl mb-2 font-semibold text-white underline">
-                  Instructions
-                </h3>
-                <div
-                  className="w-[95%] mx-auto text-surface-light overflow-auto max-h-[20rem]"
-                  style={{ scrollbarWidth: "none" }}
+            <div className="flex items-start w-full mx-5">
+              {activeTab === "instructions" && (
+                <motion.div
+                  animate={{ opacity: 1 }}
+                  initial={{ opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <ol
-                    // dangerouslySetInnerHTML={{ __html: details.instructions }}
-                    style={{ listStyleType: "decimal" }}
-                    className="text-white text-justify pl-5"
+                  <h3 className="text-xl mb-2 font-semibold text-white underline">
+                    Instructions
+                  </h3>
+                  <div
+                    className="w-[95%] mx-auto text-surface-light overflow-auto max-h-[20rem]"
+                    style={{ scrollbarWidth: "none" }}
                   >
-                    {recipeInstructions.map((instruction, index) => (
-                      <li key={index}>{instruction}</li>
-                    ))}
-                  </ol>
-                </div>
-              </motion.div>
-            )}
-            {activeTab === "ingredients" && (
-              <motion.div
-                animate={{ opacity: 1 }}
-                initial={{ opacity: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.5 }}
-                className="mx-auto"
-              >
-                <h3 className="text-xl mb-2 font-semibold text-white underline">
-                  Ingredients
-                </h3>
-                <div
-                  className="w-[95%]  text-surface-light overflow-auto max-h-[20rem]"
-                  style={{ scrollbarWidth: "none" }}
+                    <ol
+                      style={{ listStyleType: "decimal" }}
+                      className="text-white text-justify pl-5"
+                    >
+                      {recipeInstructions.map((instruction, index) => (
+                        <li key={index}>{instruction}</li>
+                      ))}
+                    </ol>
+                  </div>
+                </motion.div>
+              )}
+              {activeTab === "ingredients" && (
+                <motion.div
+                  animate={{ opacity: 1 }}
+                  initial={{ opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5 }}
                 >
-                  <ul style={{ listStyleType: "disc" }} className="pl-5">
-                    {details.extendedIngredients.map((ingredient, index) => (
-                      <li key={index} className="text-white">
-                        {ingredient.original}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            )}
+                  <h3 className="text-xl mb-2 font-semibold text-white underline">
+                    Ingredients
+                  </h3>
+                  <div
+                    className="w-[95%]  text-surface-light overflow-auto max-h-[20rem]"
+                    style={{ scrollbarWidth: "none" }}
+                  >
+                    <ul style={{ listStyleType: "disc" }} className="pl-5">
+                      {details.extendedIngredients.map((ingredient, index) => (
+                        <li key={index} className="text-white">
+                          {ingredient.original}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </motion.div>
+              )}
+            </div>
           </div>
           <hr />
           <RecipeDetailsComments recipeId={params.id} />
@@ -281,89 +405,4 @@ const RecipeDetails = () => {
     </motion.div>
   );
 };
-
-const CircleProgress = ({
-  calories,
-  carbsProcent,
-  proteinProcent,
-  fatProcent,
-}) => {
-  const strokeWidth = 10;
-  const radius = 45;
-  const circumference = 2 * Math.PI * radius;
-
-  const percentColors = {
-    carbsProcent,
-    proteinProcent,
-    fatProcent,
-  };
-
-  const offsetForCarbs =
-    ((100 - percentColors.carbsProcent) / 100) * circumference;
-  const offsetForProtein =
-    offsetForCarbs +
-    ((100 - percentColors.proteinProcent) / 100) * circumference;
-  const offsetForFat =
-    offsetForProtein + ((100 - percentColors.fatProcent) / 100) * circumference;
-  return (
-    <div className="relative flex items-center justify-center">
-      <svg
-        width="100"
-        height="100"
-        viewBox="0 0 100 100"
-        className="transform -rotate-90"
-      >
-        {/* Background circle */}
-        <circle
-          cx="50"
-          cy="50"
-          r={radius}
-          fill="transparent"
-          stroke="#DDD"
-          strokeWidth={strokeWidth - 2}
-        />
-
-        {/* Fat (Orange) */}
-        <circle
-          cx="50"
-          cy="50"
-          r={radius}
-          fill="transparent"
-          stroke="#FF5F1F"
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={offsetForFat}
-        />
-
-        {/* Protein (Purple) */}
-        <circle
-          cx="50"
-          cy="50"
-          r={radius}
-          fill="transparent"
-          stroke="#7d12ff"
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={offsetForProtein}
-        />
-
-        {/* Carbs (Teal) */}
-        <circle
-          cx="50"
-          cy="50"
-          r={radius}
-          fill="transparent"
-          stroke="#66b2b2"
-          strokeWidth={strokeWidth}
-          strokeDasharray={circumference}
-          strokeDashoffset={offsetForCarbs}
-        />
-      </svg>
-      <span className="absolute text-lg font-semibold text-white">
-        {calories} cal
-      </span>
-    </div>
-  );
-};
-
 export default RecipeDetails;
