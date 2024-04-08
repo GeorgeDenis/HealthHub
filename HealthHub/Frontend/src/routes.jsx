@@ -5,7 +5,9 @@ import {
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
+  ScaleIcon
 } from "@heroicons/react/24/solid";
+
 import { Home, Profile } from "@/pages/dashboard";
 import LogFood from "./pages/dashboard/LogFood/LogFood";
 import { SignIn, SignUp } from "@/pages/auth";
@@ -13,16 +15,16 @@ import SendResetCode from "./pages/auth/SendResetCode";
 import VerifyResetCode from "./pages/auth/VerifyResetCode";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ActivityLevelModal from "./pages/auth/RegisterModal/ActivityLevelModal";
+import RestaurantIcon from '@mui/icons-material/Restaurant';
 import MainInfoCard from "./pages/auth/RegisterModal/MainInfoCard";
 import GoalTypeModal from "./pages/auth/RegisterModal/GoalTypeModal";
 import WeeklyGoalModal from "./pages/auth/RegisterModal/WeeklyGoalModal";
 import LogWeight from "./pages/dashboard/LogMeasurements/LogMeasurements";
 import RecipesPages from "./pages/dashboard/Recipes/RecipesPages";
-import { element } from "prop-types";
 import Cuisine from "./pages/dashboard/Recipes/Cuisine";
 import SearchedRecipe from "./pages/dashboard/Recipes/SearchedRecipe";
-import RecipeDetails from "./pages/dashboard/Recipes/RecipeDetails";
-
+import RecipeDetails from "./pages/dashboard/Recipes/RecipeDetails/RecipeDetails";
+import KitchenIcon from '@mui/icons-material/Kitchen';
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -44,19 +46,19 @@ export const routes = [
         element: <Profile />,
       },
       {
-        icon: <TableCellsIcon {...icon} />,
+        icon: <RestaurantIcon {...icon} />,
         name: "log food",
         path: "/log-food",
         element: <LogFood />,
       },
       {
-        icon: <TableCellsIcon {...icon} />,
+        icon: <ScaleIcon {...icon} />,
         name: "log weight",
         path: "/log-weight",
         element: <LogWeight />,
       },
       {
-        icon: <TableCellsIcon {...icon} />,
+        icon: <KitchenIcon {...icon} />,
         name: "recipes",
         path: "/recipes",
         element: <RecipesPages />,

@@ -13,7 +13,7 @@ namespace HealthHub.Application.Features.RecipeComments.Commands.UpdateRecipeCom
             RuleFor(p => p.Comment)
                 .NotEmpty().WithMessage("{PropertyName} is required.")
                 .NotNull()
-                .MaximumLength(500).WithMessage("{PropertyName} must not exceed 500 characters.");
+                .MaximumLength(1000).WithMessage("{PropertyName} must not exceed 1000 characters.");
 
             RuleFor(p => p.UserId)
                 .NotEmpty().WithMessage("{PropertyName} is required.")

@@ -1,4 +1,5 @@
 ﻿using HealthHub.Application.Features.RecipeComments.Commands.CreateRecipeComment;
+using HealthHub.Application.Features.RecipeComments.Commands.DeleteRecipeComment;
 using HealthHub.Application.Features.RecipeComments.Commands.UpdateRecipeComment;
 using HealthHub.Application.Features.RecipeComments.Queries.GetRecipeCommentsByRecipeId;
 using Microsoft.AspNetCore.Authorization;
@@ -49,6 +50,19 @@ namespace HealthHub.API.Controllers
                 return BadRequest(result);
             }
             return Ok(result);
+        }
+        [Authorize(Roles = "User")]
+        [HttpDelete]
+        [Route("{commentId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteRecipeComment(Guid commentId, Guid userId)
+        {
+            var result = await Mediator.Send(new DeleteRecipeCommentCommand { CommentId = commentId, UserId = userId });
+            if (!result.Success)
+            {
+                return BadRequest(result);
+            }
+            return NoContent();
         }
     }
 }

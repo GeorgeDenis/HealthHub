@@ -58,7 +58,7 @@ const VegetarianRecipes = () => {
         >
           {vegetarian.map((recipe) => (
             <SplideSlide key={recipe.id}>
-              <div className="min-h-[15rem] min-w-[10rem] rounded-2xl overflow-hidden relative">
+              <div className="min-h-[15rem] min-w-[10rem] rounded-2xl overflow-hidden relative transition-transform transform hover:scale-105">
                 <Link to={`/dashboard/recipes/details/${recipe.id}`}>
                   <p className="absolute z-10 left-1/2 bottom-0 -translate-x-1/2 text-white w-full text-center font-semibold text-base h-2/5 flex justify-center items-center">
                     {recipe.title}
