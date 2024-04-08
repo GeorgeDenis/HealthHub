@@ -46,6 +46,13 @@ export const routes = [
         element: <Profile />,
       },
       {
+        icon: <UserCircleIcon {...icon} />,
+        name: "other-profile",
+        path: "/profile/:userId?",
+        dynamic: true,
+        element: <Profile />,
+      },
+      {
         icon: <RestaurantIcon {...icon} />,
         name: "log food",
         path: "/log-food",

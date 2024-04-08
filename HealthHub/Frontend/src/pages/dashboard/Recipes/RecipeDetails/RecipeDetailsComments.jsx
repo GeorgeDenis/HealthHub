@@ -2,18 +2,16 @@ import React, { useState, useEffect } from "react";
 import api from "../../../../services/api";
 import { useUser } from "@/context/LoginRequired";
 import { toast } from "react-toastify";
-import { Input } from "@material-tailwind/react";
-import { Textarea, Button, IconButton } from "@material-tailwind/react";
-
+import { Textarea, Button } from "@material-tailwind/react";
 import { motion } from "framer-motion";
-
+import { useNavigate } from "react-router-dom";
 import { Card, CardBody, Typography } from "@material-tailwind/react";
 import UserAvatar from "../../utils/UserAvatar";
 import { TrashIcon, PencilIcon } from "@heroicons/react/24/solid";
-import EditIcon from "@mui/icons-material/Edit";
 import EditRecipeCommentModal from "./EditRecipeCommentModal";
 
 const RecipeDetailsComments = ({ recipeId }) => {
+  const navigate = useNavigate();
   const currentUser = useUser();
   const [recipeComments, setRecipeComments] = useState([]);
   const [comment, setComment] = useState("");
@@ -189,11 +187,12 @@ const RecipeDetailsComments = ({ recipeId }) => {
             <div className="flex gap-5 items-center">
               <UserAvatar
                 photoUrl={comment.createdBy.profilePhotoUrl}
-                className={"w-[2.5rem] h-[2.5rem] rounded-full"}
+                className={"w-[2.5rem] h-[2.5rem] rounded-full cursor-pointer"}
                 loadingClassName={
                   "w-[2.5rem] h-[2.5rem] bg-surface-mid-dark rounded-full"
                 }
                 loadingProps={{ className: "w-5 h-5" }}
+                onClick={() => navigate(`/dashboard/profile/${comment.userId}`)}
               />
               {comment.createdBy.name}
             </div>
@@ -225,13 +224,15 @@ const RecipeDetailsComments = ({ recipeId }) => {
           <p className="text-sm text-white ml-auto">{comment.createdDate}</p>
         </Card>
       ))}
-      {editRecipeCommentModalOpen && <EditRecipeCommentModal
-        editRecipeCommentModalOpen={editRecipeCommentModalOpen}
-        handleCloseEditRecipeCommentModal={handleCloseEditRecipeCommentModal}
-        commentId={selectedComment.id}
-        commentText={selectedComment.comment}
-        fetchRecipeComments={fetchRecipeComments}
-      />}
+      {editRecipeCommentModalOpen && (
+        <EditRecipeCommentModal
+          editRecipeCommentModalOpen={editRecipeCommentModalOpen}
+          handleCloseEditRecipeCommentModal={handleCloseEditRecipeCommentModal}
+          commentId={selectedComment.id}
+          commentText={selectedComment.comment}
+          fetchRecipeComments={fetchRecipeComments}
+        />
+      )}
     </motion.div>
   );
 };
