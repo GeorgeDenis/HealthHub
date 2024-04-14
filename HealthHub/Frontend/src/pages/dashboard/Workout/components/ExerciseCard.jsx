@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Button, Stack, Typography } from "@mui/material";
+import { motion } from "framer-motion";
 
 const ExerciseCard = ({ exercise }) => {
   return (
-    <Link className="" to={`/exercise/${exercise.id}`}>
-      <div className="w-[300px] flex flex-col items-center justify-between cursor-pointer bg-[#0b6e4f] rounded-md p-3 gap-3">
+    <Link className="" to={`/dashboard/workout/${exercise.id}`}>
+      <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }} className="w-[300px] flex flex-col items-center justify-between cursor-pointer bg-[#0b6e4f] rounded-md p-3 gap-3">
         <img
           className="rounded-lg w-64 h-64"
           src={exercise.gifUrl}
@@ -23,7 +27,7 @@ const ExerciseCard = ({ exercise }) => {
         <p className="text-white capitalize text-center mb-4">
           {exercise.name}
         </p>
-      </div>
+      </motion.div>
     </Link>
   );
 };

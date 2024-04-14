@@ -1,5 +1,4 @@
 import React from "react";
-import { Box } from "@mui/material";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import BodyPart from "./BodyPart";
 

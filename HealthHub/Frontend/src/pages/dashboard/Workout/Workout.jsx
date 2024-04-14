@@ -5,7 +5,7 @@ import Exercises from "./Exercises";
 import HorizontalScrollbar from "./components/HorizontalScrollbar";
 import { toast } from "react-toastify";
 import api from "../../../services/api";
-import { options } from "./options";
+import { options } from "./components/options";
 
 const Workout = () => {
   const [exercises, setExercises] = useState([]);
@@ -38,7 +38,6 @@ const Workout = () => {
     const check = localStorage.getItem("bodyPartsExercises");
     if (check) {
       setExercises(JSON.parse(check));
-
     } else {
       try {
         const response = await api.get(

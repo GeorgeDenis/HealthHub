@@ -3,7 +3,7 @@ import { Box, Stack } from "@mui/material";
 import { toast } from "react-toastify";
 import api from "../../../services/api";
 import HorizontalScrollbar from "./components/HorizontalScrollbar";
-import { options } from "./options";
+import { options } from "./components/options";
 
 const SearchExercises = ({ setExercises }) => {
   const [search, setSearch] = useState("");

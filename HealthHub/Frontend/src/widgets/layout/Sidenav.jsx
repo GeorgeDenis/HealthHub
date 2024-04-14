@@ -58,7 +58,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   name !== "cuisine" &&
                   name !== "search-recipe" &&
                   name !== "recipe-details" &&
-                  name !== "other-profile"
+                  name !== "other-profile" &&
+                  name !== "workout-details" 
               )
               .map(({ icon, name, path }) => (
                 <li key={name} className="py-1 ![&>a]:flex-1">

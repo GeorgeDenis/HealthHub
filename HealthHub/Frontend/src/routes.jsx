@@ -27,6 +27,7 @@ import RecipeDetails from "./pages/dashboard/Recipes/RecipeDetails/RecipeDetails
 import KitchenIcon from "@mui/icons-material/Kitchen";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import Workout from "./pages/dashboard/Workout/Workout";
+import ExerciseDetails from "./pages/dashboard/Workout/ExerciseDetails/ExerciseDetails";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -95,7 +96,13 @@ export const routes = [
         name: "workout",
         path: "/workout",
         element: <Workout />,
-      }
+      },
+      {
+        icon: <FitnessCenterIcon {...icon} />,
+        name: "workout-details",
+        path: "/workout/:id",
+        element: <ExerciseDetails />,
+      },
     ],
   },
   {

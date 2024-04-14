@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Pagination } from "@mui/material";
 import { Box, Stack, Typography } from "@mui/material";
 import ExerciseCard from "./components/ExerciseCard";
+import { motion } from "framer-motion";
 
 const Exercises = ({ exercises, setExercises }) => {
   return (
+
     <Box id="exercises" sx={{ mt: { lg: "50px" } }} mt="50px" p="20px">
       <Stack
         direction="row"
@@ -17,6 +18,7 @@ const Exercises = ({ exercises, setExercises }) => {
         ))}
       </Stack>
     </Box>
+
   );
 };
 
