@@ -5,7 +5,7 @@ import {
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
-  ScaleIcon
+  ScaleIcon,
 } from "@heroicons/react/24/solid";
 
 import { Home, Profile } from "@/pages/dashboard";
@@ -15,7 +15,7 @@ import SendResetCode from "./pages/auth/SendResetCode";
 import VerifyResetCode from "./pages/auth/VerifyResetCode";
 import ResetPassword from "./pages/auth/ResetPassword";
 import ActivityLevelModal from "./pages/auth/RegisterModal/ActivityLevelModal";
-import RestaurantIcon from '@mui/icons-material/Restaurant';
+import RestaurantIcon from "@mui/icons-material/Restaurant";
 import MainInfoCard from "./pages/auth/RegisterModal/MainInfoCard";
 import GoalTypeModal from "./pages/auth/RegisterModal/GoalTypeModal";
 import WeeklyGoalModal from "./pages/auth/RegisterModal/WeeklyGoalModal";
@@ -24,7 +24,9 @@ import RecipesPages from "./pages/dashboard/Recipes/RecipesPages";
 import Cuisine from "./pages/dashboard/Recipes/Cuisine";
 import SearchedRecipe from "./pages/dashboard/Recipes/SearchedRecipe";
 import RecipeDetails from "./pages/dashboard/Recipes/RecipeDetails/RecipeDetails";
-import KitchenIcon from '@mui/icons-material/Kitchen';
+import KitchenIcon from "@mui/icons-material/Kitchen";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import Workout from "./pages/dashboard/Workout/Workout";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -88,6 +90,12 @@ export const routes = [
         path: "/recipes/details/:id",
         element: <RecipeDetails />,
       },
+      {
+        icon: <FitnessCenterIcon {...icon} />,
+        name: "workout",
+        path: "/workout",
+        element: <Workout />,
+      }
     ],
   },
   {

@@ -15,7 +15,6 @@ const SearchedRecipe = () => {
       setSearchedRecipes(JSON.parse(check));
     } else {
       try {
-        console.log(name);
         const response = await api.get(
           `https://api.spoonacular.com/recipes/complexSearch?apiKey=${APIKEY}&query=${name}&number=9`,
         );
