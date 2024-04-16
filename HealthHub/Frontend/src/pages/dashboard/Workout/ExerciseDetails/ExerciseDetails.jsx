@@ -38,6 +38,8 @@ const ExerciseDetails = () => {
         );
         setExerciseDetail(response.data);
         fetchExerciseVideos(response.data.name);
+        fetchSimilarExercises(response.data.target);
+        fetchEquipmentExercises(response.data.equipment);
 
         localStorage.setItem("exerciseDetail", JSON.stringify(response.data));
       } catch (error) {

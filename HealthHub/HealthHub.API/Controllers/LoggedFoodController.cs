@@ -128,7 +128,7 @@ namespace HealthHub.API.Controllers
 
 
 
-        [Authorize(Roles = "User")]
+
         [HttpGet("search-food/byCode/{foodCode}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetFood(string foodCode)
@@ -154,7 +154,9 @@ namespace HealthHub.API.Controllers
                     ServingSizeInGrams = tempFood.Product.NutrimentsData.ServingSizeInGrams,
                     Protein = tempFood.Product.NutrimentsData.Proteins,
                     Carbohydrates = tempFood.Product.NutrimentsData.Carbohydrates,
-                    Fat = tempFood.Product.NutrimentsData.Fat
+                    Fat = tempFood.Product.NutrimentsData.Fat,
+                    Sodium = tempFood.Product.NutrimentsData.Sodium
+                   
                 };
 
                 return Ok(foodByBarCode);

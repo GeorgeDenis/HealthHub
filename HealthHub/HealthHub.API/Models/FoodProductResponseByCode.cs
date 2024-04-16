@@ -16,6 +16,9 @@ namespace HealthHub.API.Models
 
         [JsonPropertyName("energy-kcal_100g")]
         public float Calories { get; set; }
+
+        [JsonPropertyName("sodium")]
+        public float Sodium { get; set; }
         public float ServingSizeInGrams { get; set; } = 100;
 
     }

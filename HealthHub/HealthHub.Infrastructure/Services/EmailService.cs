@@ -30,5 +30,59 @@ namespace Infrastructure.Services
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);
         }
+        public async Task SendEmailWithAttachmentAsync(string to, string subject, string body, MemoryStream attachmentStream, string attachmentFilename)
+        {
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(emailSettings.FromAddress));
+            email.To.Add(MailboxAddress.Parse(to));
+            email.Subject = subject;
+
+            var builder = new BodyBuilder
+            {
+                HtmlBody = body 
+            };
+
+            attachmentStream.Position = 0;
+            builder.Attachments.Add(attachmentFilename, attachmentStream.ToArray(), ContentType.Parse("text/csv"));
+
+            email.Body = builder.ToMessageBody();
+
+            using (var smtp = new SmtpClient())
+            {
+                await smtp.ConnectAsync(emailSettings.SmtpServer, emailSettings.SmtpPort, SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync(emailSettings.SmtpUsername, emailSettings.SmtpPassword);
+                await smtp.SendAsync(email);
+                await smtp.DisconnectAsync(true);
+            }
+        }
+        public async Task SendEmailWithMultipleAttachmentsAsync(string to, string subject, string body, List<(MemoryStream Stream, string Filename)> attachments)
+        {
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(emailSettings.FromAddress));
+            email.To.Add(MailboxAddress.Parse(to));
+            email.Subject = subject;
+
+            var builder = new BodyBuilder
+            {
+                HtmlBody = body
+            };
+
+            foreach (var attachment in attachments)
+            {
+                attachment.Stream.Position = 0;  
+                builder.Attachments.Add(attachment.Filename, attachment.Stream.ToArray(), ContentType.Parse("text/csv"));
+            }
+
+            email.Body = builder.ToMessageBody();
+
+            using (var smtp = new SmtpClient())
+            {
+                await smtp.ConnectAsync(emailSettings.SmtpServer, emailSettings.SmtpPort, SecureSocketOptions.StartTls);
+                await smtp.AuthenticateAsync(emailSettings.SmtpUsername, emailSettings.SmtpPassword);
+                await smtp.SendAsync(email);
+                await smtp.DisconnectAsync(true);
+            }
+        }
+
     }
 }
