@@ -193,7 +193,7 @@ const EditMeasurementsModal = ({
                   className="hidden"
                   onChange={(e) => {
                     setPhoto(e.target.files[0]);
-                    console.log(e.target.files[0]);
+                    console.log("poze",e.target.files[0]);
                   }}
                 />
                 <Button

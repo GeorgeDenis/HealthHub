@@ -55,7 +55,7 @@ namespace Infrastructure.Services
                 await smtp.DisconnectAsync(true);
             }
         }
-        public async Task SendEmailWithMultipleAttachmentsAsync(string to, string subject, string body, List<(MemoryStream Stream, string Filename)> attachments)
+        public async Task SendEmailWithMultipleAttachmentAsync(string to, string subject, string body, MemoryStream attachmentStream, string attachmentFilename)
         {
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(emailSettings.FromAddress));
@@ -67,11 +67,9 @@ namespace Infrastructure.Services
                 HtmlBody = body
             };
 
-            foreach (var attachment in attachments)
-            {
-                attachment.Stream.Position = 0;  
-                builder.Attachments.Add(attachment.Filename, attachment.Stream.ToArray(), ContentType.Parse("text/csv"));
-            }
+            // Attach the ZIP file
+            attachmentStream.Position = 0;
+            builder.Attachments.Add(attachmentFilename, attachmentStream.ToArray(), ContentType.Parse("application/zip"));
 
             email.Body = builder.ToMessageBody();
 

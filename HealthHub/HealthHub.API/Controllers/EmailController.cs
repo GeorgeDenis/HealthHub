@@ -10,7 +10,7 @@ namespace HealthHub.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetLoggedFoodsData(Guid userId)
         {
-            var query = new GetUserLoggedFoodDataQuery { UserId = userId };
+            var query = new GetUserLoggedDataQuery { UserId = userId };
             var result = await Mediator.Send(query);
             if (!result.Success)
             {
