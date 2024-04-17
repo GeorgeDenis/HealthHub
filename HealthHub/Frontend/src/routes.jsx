@@ -63,7 +63,7 @@ export const routes = [
       },
       {
         icon: <ScaleIcon {...icon} />,
-        name: "log weight",
+        name: "log measures",
         path: "/log-weight",
         element: <LogWeight />,
       },

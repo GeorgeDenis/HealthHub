@@ -9,8 +9,6 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import StraightenIcon from "@mui/icons-material/Straighten";
 import SquareFootIcon from "@mui/icons-material/SquareFoot";
 import PersonIcon from "@mui/icons-material/Person";
-import Tooltip from "@mui/material/Tooltip";
-import Grow from "@mui/material/Grow";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import {
   Card,
@@ -18,6 +16,7 @@ import {
   Typography,
   CardBody,
   Button,
+  Tooltip,
 } from "@material-tailwind/react";
 import EditMeasurementsModal from "./EditMeasurementsModal";
 import LogMeasurementsModal from "./LogMeasurementModal";
@@ -27,27 +26,19 @@ import LoggedHip from "./Charts/LoggedHip";
 import LoggedWeight from "./Charts/LoggedWeight";
 import MeasurementsPhotos from "./MeasurementsPhotos";
 
-const CustomTooltip = ({ text, children }) => {
+export const CustomTooltip = ({ text, children }) => {
   return (
     <Tooltip
-      TransitionComponent={Grow}
-      TransitionProps={{ timeout: 600 }}
-      title={text}
-      className="w-1/5 flex flex-col items-center cursor-pointer"
-      slotProps={{
-        popper: {
-          modifiers: [
-            {
-              name: "offset",
-              options: {
-                offset: [0, -14],
-              },
-            },
-          ],
-        },
+      placement="bottom"
+      animate={{
+        mount: { scale: 1, y: 0 },
+        unmount: { scale: 0, y: 25 },
       }}
+      content={<div className="w-60">{text}</div>}
     >
-      <div>{children}</div>
+      <div className="w-1/5 flex flex-col items-center cursor-pointer">
+        {children}
+      </div>
     </Tooltip>
   );
 };

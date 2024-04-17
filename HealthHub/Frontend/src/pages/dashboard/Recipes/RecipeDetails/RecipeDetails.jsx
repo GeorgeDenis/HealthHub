@@ -40,7 +40,7 @@ const RecipeDetails = () => {
   const [recipeInstructions, setRecipeInstructions] = useState([]);
   const [recipeTags, setRecipeTags] = useState([]);
   const [recipeComments, setRecipeComments] = useState([]);
-  const [selectedMeal, setSelectedMeal] = useState("Breakfast");
+  const [selectedMeal, setSelectedMeal] = useState(1);
 
   let params = useParams();
 
@@ -143,9 +143,6 @@ const RecipeDetails = () => {
   }, [params.id]);
 
   const logFood = async () => {
-    console.log(selectedMeal);
-    console.log(details.title);
-    console.log(nutrition);
     const isValidNumber = (value) =>
       !isNaN(parseFloat(value)) && isFinite(value) && value > 0;
     if (!selectedMeal) {

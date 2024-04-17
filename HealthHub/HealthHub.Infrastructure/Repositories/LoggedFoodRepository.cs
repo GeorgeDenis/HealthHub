@@ -1,4 +1,5 @@
-﻿using HealthHub.Application.Features.LoggedFoods.Queries.GetLoggedFoodByUserIdAndDate;
+﻿using HealthHub.Application.Features.EmailMessages.Queries.GetUserData;
+using HealthHub.Application.Features.LoggedFoods.Queries.GetLoggedFoodByUserIdAndDate;
 using HealthHub.Application.Persistence;
 using HealthHub.Domain.Common;
 using HealthHub.Domain.Entities;
@@ -56,6 +57,46 @@ namespace HealthHub.Infrastructure.Repositories
                     DateLogged = x.DateLogged
                 }).ToListAsync();
             return Result<List<LoggedFoodDto>>.Success(loggedFoods);
+        }
+        public async Task<Result<List<LoggedFoodDto>>> GetByUserIdAndDateInterval(Guid userId, DateRange dateRange)
+        {
+            var fromDate = GetFromDate(dateRange);
+            var toDate = DateTime.UtcNow;
+            var loggedFoods = await context.LoggedFoods
+                .Where(x => x.UserId == userId && x.DateLogged >= fromDate && x.DateLogged <= toDate)
+                .OrderByDescending(x => x.DateLogged)
+                .Select(x => new LoggedFoodDto
+                {
+                    Id = x.LoggedFoodId,
+                    UserId = x.UserId,
+                    FoodName = x.Name,
+                    ServingSize = x.ServingSize,
+                    NumberOfServings = x.NumberOfServings,
+                    Calories = x.Calories,
+                    Protein = x.Protein,
+                    Carbohydrates = x.Carbohydrates,
+                    Fat = x.Fat,
+                    MealType = x.MealType,
+                    DateLogged = x.DateLogged
+                }).ToListAsync();
+            return Result<List<LoggedFoodDto>>.Success(loggedFoods);
+
+        }
+        private DateTime GetFromDate(DateRange range)
+        {
+            switch (range)
+            {
+                case DateRange.Last7Days:
+                    return DateTime.UtcNow.AddDays(-7);
+                case DateRange.Last90Days:
+                    return DateTime.UtcNow.AddDays(-90);
+                case DateRange.Last180Days:
+                    return DateTime.UtcNow.AddDays(-180);
+                case DateRange.LastYear:
+                    return DateTime.UtcNow.AddYears(-1);
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(range), range, null);
+            }
         }
     }
 }

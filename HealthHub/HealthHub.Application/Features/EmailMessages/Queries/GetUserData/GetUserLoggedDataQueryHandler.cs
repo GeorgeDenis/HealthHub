@@ -37,7 +37,7 @@ namespace HealthHub.Application.Features.EmailMessages.Queries.GetUserData
             {
                 return new GetUserLoggedDataQueryResponse { Success = false, Message = "User not found" };
             }
-            var foodList = await loggedFoodRepository.GetByUserIdAndDateAsync(request.UserId, DateTime.UtcNow);
+            var foodList = await loggedFoodRepository.GetByUserIdAndDateInterval(request.UserId, request.DateRange);
             if (!foodList.IsSuccess)
             {
                 return new GetUserLoggedDataQueryResponse { Success = false, Message = "No logged food found" };
@@ -60,7 +60,7 @@ namespace HealthHub.Application.Features.EmailMessages.Queries.GetUserData
                     DateLogged = food.DateLogged
                 });
             }
-            var cardioExercises = await loggedCardioExerciseRepository.GetByUserIdAndDateAsync(request.UserId, DateTime.UtcNow);
+            var cardioExercises = await loggedCardioExerciseRepository.GetByUserIdAndDateInterval(request.UserId, request.DateRange);
             var loggedCardioExercise = new List<LoggedCardioExerciseExportDto>();
             foreach (var cardioExercise in cardioExercises.Value)
             {
@@ -72,7 +72,7 @@ namespace HealthHub.Application.Features.EmailMessages.Queries.GetUserData
                     DateLogged = cardioExercise.DateLogged
                 });
             }
-            var strengthExercises = await loggedStrengthExerciseRepository.GetByUserIdAndDateAsync(request.UserId, DateTime.UtcNow);
+            var strengthExercises = await loggedStrengthExerciseRepository.GetByUserIdAndDateInterval(request.UserId, request.DateRange);
             var loggedStrengthExercise = new List<LoggedStrengthExerciseExportDto>();
             foreach (var strengthExercise in strengthExercises.Value)
             {
@@ -85,7 +85,7 @@ namespace HealthHub.Application.Features.EmailMessages.Queries.GetUserData
                     DateLogged = strengthExercise.DateLogged
                 });
             }
-            var measurements = await loggedMeasurementsRepository.GetLoggedMeasurementsByUserId(request.UserId);
+            var measurements = await loggedMeasurementsRepository.GetByUserIdAndDateInterval(request.UserId,request.DateRange);
             var loggedMeasurements = new List<LoggedMeasurementsExportDto>();
             foreach (var measurement in measurements.Value)
             {

@@ -6,6 +6,12 @@ import { toast } from "react-toastify";
 import api from "../../../services/api";
 import ProfileInfoCard from "./ProfileInfoCard";
 import ProfileUserAvatar from "./ProfileUserAvatar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFileExport } from "@fortawesome/free-solid-svg-icons";
+import { Tooltip } from "@material-tailwind/react";
+
+import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { Menu } from "@headlessui/react";
 const isFormValid = (editedUserData) => {
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
   if (
@@ -21,7 +27,10 @@ const isFormValid = (editedUserData) => {
   }
   return true;
 };
-
+const activeMenuStyles = "bg-gray-100 text-gray-900";
+const inactiveMenuStyles = "text-gray-700";
+const menuStyles =
+  "group flex rounded-md items-center w-full px-2 py-2 text-sm";
 const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
   const currentUser = useUser();
   const { userId } = useParams();
@@ -29,6 +38,7 @@ const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
   const [isInEditMode, setIsInEditMode] = useState(false);
   const [editedUserData, setEditedUserData] = useState(userData);
   const [editedUserPhoto, setEditedUserPhoto] = useState(null);
+  const [exportType, setExportType] = useState(1);
 
   useEffect(() => {
     setEditedUserData(userData);
@@ -106,6 +116,33 @@ const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
     setEditedUserData(userData);
     setEditedUserPhoto(null);
   };
+
+  const handleSelectExportType = (value) => {
+    setExportType(value);
+    console.log("Export type selected", value);
+  };
+  const handleExportData = async () => {
+    if (!exportType) {
+      toast.error("Please select an export type");
+    }
+    try {
+      const response = await api.get(
+        `/api/v1/Email/${currentUser.userId}?dateRange=${exportType}`,
+        {
+          headers: {
+            Authorization: `Bearer ${currentUser.token}`,
+          },
+        },
+      );
+      if (response.status === 200) {
+        toast.success("Data exported successfully. Please check your email");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to export data");
+    }
+  };
+
   return (
     <>
       <div className="mb-10 flex items-center justify-between flex-wrap gap-6">
@@ -123,31 +160,90 @@ const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
             setEditedUserPhoto={setEditedUserPhoto}
             isInEditMode={isInEditMode}
           />
-          <div>
-            {!isInEditMode ? (
-              <Typography variant="h5" className="mb-1 text-surface-light">
-                {userData.name}
+          <div className="flex items-center">
+            <div>
+              {!isInEditMode ? (
+                <Typography variant="h5" className="mb-1 text-surface-light">
+                  {userData.name}
+                </Typography>
+              ) : (
+                <Input
+                  value={editedUserData.name}
+                  onChange={(e) =>
+                    setEditedUserData({
+                      ...editedUserData,
+                      name: e.target.value,
+                    })
+                  }
+                  variant={"outlined"}
+                  label={"Name"}
+                  size={"md"}
+                  color={"green"}
+                  className={"text-white"}
+                  crossOrigin={undefined}
+                />
+              )}
+              <Typography
+                variant="small"
+                className="font-normal text-surface-mid-light"
+              >
+                {"@" + userData?.username || "Unknown username"}
               </Typography>
-            ) : (
-              <Input
-                value={editedUserData.name}
-                onChange={(e) =>
-                  setEditedUserData({ ...editedUserData, name: e.target.value })
-                }
-                variant={"outlined"}
-                label={"Name"}
-                size={"md"}
-                color={"green"}
-                className={"text-white"}
-                crossOrigin={undefined}
-              />
+            </div>
+
+            {isOwnProfile && !isInEditMode && (
+              <div className="flex items-center ml-20">
+                <Tooltip
+                  animate={{
+                    mount: { scale: 1, y: 0 },
+                    unmount: { scale: 0, y: 25 },
+                  }}
+                  content={
+                    <div className="w-44">
+                      Export your data to email by selecting the date range!
+                    </div>
+                  }
+                >
+                  <FontAwesomeIcon
+                    icon={faFileExport}
+                    size="lg"
+                    // beatFade
+                    className="text-white  cursor-pointer"
+                    onClick={handleExportData}
+                  />
+                </Tooltip>
+                <Menu as="div" className="relative inline-block text-left">
+                  <Menu.Button>
+                    <EllipsisVerticalIcon className="h-7 w-7 text-gray-900 cursor-pointer mt-1" />
+                  </Menu.Button>
+                  <Menu.Items className="z-10 origin-top-right absolute right-0 mt-2 w-28 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div className="py-1">
+                      {[
+                        { type: "Last 7 days", value: 1 },
+                        { type: "Last 90 days", value: 2 },
+                        { type: "Last 180 days", value: 3 },
+                        { type: "Last year", value: 4 },
+                      ].map((exportData, index) => (
+                        <Menu.Item key={index}>
+                          {({ active }) => (
+                            <button
+                              className={`${
+                                active ? activeMenuStyles : inactiveMenuStyles
+                              } ${menuStyles}`}
+                              onClick={() =>
+                                handleSelectExportType(exportData.value)
+                              }
+                            >
+                              {exportData.type}
+                            </button>
+                          )}
+                        </Menu.Item>
+                      ))}
+                    </div>
+                  </Menu.Items>
+                </Menu>
+              </div>
             )}
-            <Typography
-              variant="small"
-              className="font-normal text-surface-mid-light"
-            >
-              {"@" + userData?.username || "Unknown username"}
-            </Typography>
           </div>
         </div>
       </div>

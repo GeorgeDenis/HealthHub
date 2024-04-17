@@ -49,18 +49,24 @@ export function ProfileInfoCard({
         floated={false}
         className="mx-0 mt-0 flex items-center justify-between gap-4"
       >
-        <Typography variant="h5" className="text-surface-light">
+        <Typography className="text-surface-light text-base md:text-2xl font-semibold">
           Profile Information
         </Typography>
         {isEditable && !isInEditMode && (
           <div className="flex items-center gap-1">
-          <Tooltip content="Edit Profile">
-            <PencilIcon
-              onClick={onEnterEditMode}
-              className="h-4 w-4 cursor-pointer text-surface-light"
-            />
-          </Tooltip>
-          <ProfileGoalsSettings />
+            <Tooltip
+              content="Edit Profile"
+              animate={{
+                mount: { scale: 1, y: 0 },
+                unmount: { scale: 0, y: 25 },
+              }}
+            >
+              <PencilIcon
+                onClick={onEnterEditMode}
+                className="h-6 w-6 md:h-5 md:w-5 cursor-pointer text-surface-light"
+              />
+            </Tooltip>
+            <ProfileGoalsSettings />
           </div>
         )}
       </CardHeader>
@@ -76,7 +82,7 @@ export function ProfileInfoCard({
         <hr className="my-2 border-surface-mid" />
         <ul className="flex flex-col gap-4 p-0 mt-4">
           <DataField
-            label={"Email"}
+            label={"Email 📧"}
             value={details.email}
             isInEditMode={isInEditMode}
             editedValue={editedUserData.email}
@@ -85,7 +91,7 @@ export function ProfileInfoCard({
             }
           />
           <DataField
-            label={"Mobile"}
+            label={"Mobile 📱"}
             value={details.mobile}
             isInEditMode={isInEditMode}
             editedValue={editedUserData.mobile}
@@ -94,7 +100,7 @@ export function ProfileInfoCard({
             }
           />
           <DataField
-            label={"Location"}
+            label={"Location 📍"}
             value={details.location}
             isInEditMode={isInEditMode}
             editedValue={editedUserData.location}

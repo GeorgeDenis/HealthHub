@@ -50,7 +50,7 @@ const SearchExercises = ({ setExercises }) => {
         </Typography> */}
         <div className="flex">
           <input
-            className="rounded-lg rounded-r-none w-[240px] md:w-[440px] bg-white text-center h-10 flex items-center justify-center"
+            className="rounded-lg rounded-r-none w-[200px] sm:w-[350px] md:w-[440px] bg-white text-center h-10 flex items-center justify-center"
             value={search}
             onChange={(e) => setSearch(e.target.value.toLowerCase())}
             placeholder="Search Exercises"

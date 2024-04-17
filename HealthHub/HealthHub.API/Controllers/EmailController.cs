@@ -8,9 +8,9 @@ namespace HealthHub.API.Controllers
         [HttpGet]
         [Route("{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetLoggedFoodsData(Guid userId)
+        public async Task<IActionResult> GetLoggedFoodsData(Guid userId, [FromQuery] DateRange dateRange)
         {
-            var query = new GetUserLoggedDataQuery { UserId = userId };
+            var query = new GetUserLoggedDataQuery { UserId = userId,DateRange = dateRange };
             var result = await Mediator.Send(query);
             if (!result.Success)
             {
