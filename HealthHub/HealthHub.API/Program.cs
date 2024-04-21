@@ -7,15 +7,24 @@ using WebAPI.Services;
 using HealthHub.Application.Contracts.Interfaces;
 using HealthHub.Application.Models;
 using HealthHub.API.Services;
+using HealthHub.API.Hubs;
 
 
 var builder = WebApplication.CreateBuilder(args);
 DotNetEnv.Env.TraversePath().Load();
 
+builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddCors(options =>
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+//});
+builder.Services.AddCors(opt =>
 {
-    options.AddPolicy("Open", builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+    opt.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:5173").AllowCredentials();
+    });
 });
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 builder.Services.AddScoped<IStorageService, StorageService>();
@@ -69,7 +78,7 @@ builder.Services.AddSwaggerGen(c =>
 
     c.OperationFilter<FileResultContentTypeOperationFilter>();
 });
-
+builder.Services.AddSingleton<SharedDb>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -80,10 +89,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("Open");
+//app.UseCors("Open");
+app.UseCors("CorsPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapHub<ChatHub>("/Chat");
 app.Run();

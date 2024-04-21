@@ -17,6 +17,7 @@
     "@headlessui/react": "^1.7.18",
     "@heroicons/react": "2.0.18",
     "@material-tailwind/react": "2.1.4",
+    "@microsoft/signalr": "^8.0.0",
     "@mui/icons-material": "^5.15.11",
     "@mui/material": "^5.15.10",
     "@splidejs/react-splide": "^0.7.12",

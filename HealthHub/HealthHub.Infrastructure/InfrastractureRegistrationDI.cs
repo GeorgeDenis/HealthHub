@@ -39,6 +39,7 @@ namespace HealthHub.Infrastructure
             services.AddScoped<ILoggedStrengthExerciseRepository, LoggedStrengthExerciseRepository>();
             services.AddScoped<ILoggedCardioExerciseRepository, LoggedCardioExerciseRepository>();
             services.AddScoped<IRecipeCommentRepository, RecipeCommentRepository>();
+            services.AddScoped<IMessageRepository, MessageRepository>();
             return services;
         }
     }

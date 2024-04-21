@@ -26,8 +26,10 @@ import SearchedRecipe from "./pages/dashboard/Recipes/SearchedRecipe";
 import RecipeDetails from "./pages/dashboard/Recipes/RecipeDetails/RecipeDetails";
 import KitchenIcon from "@mui/icons-material/Kitchen";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
+import MessageIcon from '@mui/icons-material/Message';
 import Workout from "./pages/dashboard/Workout/Workout";
 import ExerciseDetails from "./pages/dashboard/Workout/ExerciseDetails/ExerciseDetails";
+import Chat from "./pages/dashboard/Chat/Chat";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -103,6 +105,12 @@ export const routes = [
         path: "/workout/:id",
         element: <ExerciseDetails />,
       },
+      {
+        icon: <MessageIcon {...icon} />,
+        name: "chat",
+        path: "/chat",
+        element: <Chat />,
+      }
     ],
   },
   {

@@ -218,6 +218,30 @@ namespace HealthHub.Infrastructure.Migrations
                     b.ToTable("MacronutrientsGoals");
                 });
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.Message", b =>
+                {
+                    b.Property<Guid>("MessageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateSent")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("Receiver")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("Sender")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("MessageId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.PasswordResetCode", b =>
                 {
                     b.Property<Guid>("PasswordResetCodeId")
