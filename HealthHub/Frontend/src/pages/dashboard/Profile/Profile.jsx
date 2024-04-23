@@ -114,6 +114,19 @@ export function Profile() {
               </Dialog>
             </div>
           )}
+          {!isOwnProfile && (
+            <div className="flex items-center justify-between flex-wrap gap-6">
+              <Button
+                className="shadow-md bg-secondary hover:bg-primary ml-auto"
+                ripple
+                onClick={() => {
+                  navigate(`/dashboard/chat/`);
+                }}
+              >
+                Send message
+              </Button>
+            </div>
+          )}
         </CardBody>
       </Card>
     </>

@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emoji-mart/data": "^1.1.2",
+    "@emoji-mart/react": "^1.1.1",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -25,6 +27,8 @@
     "aws-sdk": "^2.1587.0",
     "axios": "^1.6.7",
     "countries-list": "^3.0.6",
+    "emoji-mart": "^5.5.2",
+    "emoji-picker-react": "^4.9.2",
     "prop-types": "15.8.1",
     "react": "18.2.0",
     "react-apexcharts": "1.4.1",
