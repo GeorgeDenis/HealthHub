@@ -8,6 +8,7 @@ import SendMessageForm from "./SendMessageForm";
 import UserAvatar from "../utils/UserAvatar";
 import MessageReversed from "./MessageReversed";
 import MessageContainer from "./MessageContainer";
+import SearchUsers from "./SearchUsers";
 
 const ChatPreview = ({ joinChat, receiver, setReceiver, fetchMessages }) => {
   const currentUser = useUser();
@@ -80,6 +81,7 @@ const ChatPanel = ({
         headers: { Authorization: `Bearer ${currentUser.token}` },
       });
       if (response.status === 200) {
+        console.log("chat preview", response.data.users);
         setChatPreview(response.data.users);
       }
     } catch (error) {
@@ -101,6 +103,11 @@ const ChatPanel = ({
         <Typography variant="h4" className="text-white font-semibold">
           Messages
         </Typography>
+        <SearchUsers
+          joinChat={joinChat}
+          fetchMessages={fetchMessages}
+          setReceiver={setReceiver}
+        />
         <div
           className="flex flex-col gap-2 w-full overflow-auto max-h-[10rem] md:max-h-[30rem]"
           style={{ scrollbarWidth: "none" }}
@@ -127,6 +134,12 @@ const ChatPanel = ({
                 className="flex flex-col gap-1 overflow-auto h-[24rem] md:h-[34rem] flex-grow"
                 style={{ scrollbarWidth: "none" }}
               >
+                {!receiver && (
+                  <img
+                    className="h-[250px] md:h-[400px] w-[500px] mx-auto my-auto"
+                    src="../../../public/img/chat_banner.png"
+                  />
+                )}
                 {messages.map((msg, index) => {
                   const isLastMessage = index === messages.length - 1;
                   if (msg.sender === currentUser.userId) {
@@ -169,6 +182,7 @@ const ChatPanel = ({
               sendMessage={sendMessage}
               username={currentUser.userId}
               receiver={receiver}
+              fetchPreview={fetchPreview}
             />
           )}
         </div>

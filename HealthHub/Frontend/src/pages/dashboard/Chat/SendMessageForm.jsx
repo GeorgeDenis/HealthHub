@@ -4,7 +4,7 @@ import Picker from "@emoji-mart/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFaceSmileWink } from "@fortawesome/free-solid-svg-icons";
 
-const SendMessageForm = ({ sendMessage, username, receiver }) => {
+const SendMessageForm = ({ sendMessage, username, receiver, fetchPreview }) => {
   const [msg, setMessage] = useState("");
   const [showEmoji, setShowEmoji] = useState(false);
   const emojiPickerRef = useRef(null);
@@ -27,7 +27,9 @@ const SendMessageForm = ({ sendMessage, username, receiver }) => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showEmoji]);
-
+  useEffect(() => {
+    fetchPreview();
+  }, [sendMessage]);
   return (
     <form
       onSubmit={(e) => {
@@ -64,7 +66,6 @@ const SendMessageForm = ({ sendMessage, username, receiver }) => {
           >
             <Picker
               onEmojiSelect={(emoji) => {
-                console.log(emoji);
                 setMessage((prev) => prev + emoji.native);
               }}
               perLine={7}

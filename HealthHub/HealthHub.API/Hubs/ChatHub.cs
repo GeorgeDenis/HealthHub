@@ -8,12 +8,10 @@ namespace HealthHub.API.Hubs
 {
     public class ChatHub : Hub
     {
-        private readonly SharedDb _shared;
         private readonly IMediator _mediator;
 
-        public ChatHub(SharedDb shared, IMediator mediator)
+        public ChatHub(IMediator mediator)
         {
-            _shared = shared;
             _mediator = mediator;  // Mediator is injected through the constructor
 
         }

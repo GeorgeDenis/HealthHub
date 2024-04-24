@@ -30,10 +30,10 @@ const MessageContainer = React.forwardRef(({ message, chatPreview }, ref) => {
           unmount: { scale: 0, y: 25 },
         }}
         content={
-          <div className="w-28 text-center ">{getLocalTime(message.date)}</div>
+          <div className="w-28 text-center">{getLocalTime(message.date)}</div>
         }
       >
-        <p className="text-[#e1e1e1] py-1 px-3 bg-[#55915f] rounded-2xl text-justify max-w-[80%] md:max-w-[70%]">
+        <p className="text-[#e1e1e1] py-1 px-3 bg-[#55915f] rounded-2xl text-wrap text-balance max-w-[15rem]">
           {message.content}
         </p>
       </Tooltip>

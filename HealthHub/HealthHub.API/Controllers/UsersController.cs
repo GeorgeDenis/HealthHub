@@ -5,6 +5,7 @@ using HealthHub.Application.Features.Users.Queries.GetAll;
 using HealthHub.Application.Features.Users.Queries.GetByEmail;
 using HealthHub.Application.Features.Users.Queries.GetById;
 using HealthHub.Application.Features.Users.Queries.GetCaloriesById;
+using HealthHub.Application.Features.Users.Queries.GetUserSearchFiltered;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -109,6 +110,19 @@ namespace HealthHub.API.Controllers
                 {
                     return NotFound(result);
                 }
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [Authorize(Roles = "User")]
+        [HttpGet("search/{searchValue}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetUserSearchFiltered(string searchValue)
+        {
+            var query = new GetUserSearchFilteredQuery { SearchValue = searchValue };
+            var result = await Mediator.Send(query);
+            if (!result.Success)
+            {
                 return BadRequest(result);
             }
             return Ok(result);
