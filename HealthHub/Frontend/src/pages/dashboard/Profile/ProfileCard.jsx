@@ -12,6 +12,7 @@ import { Tooltip } from "@material-tailwind/react";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { Menu } from "@headlessui/react";
+import Badges from "./Badges";
 const isFormValid = (editedUserData) => {
   const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
   if (
@@ -264,6 +265,17 @@ const ProfileCard = ({ userData, setUserData, isEditable = false }) => {
             onSaveEdit={onSaveEdit}
             onCancelEdit={onCancelEdit}
           />
+          {
+            <div className="col-span-1 xl:col-span-2 lg:border-l border-surface-mid">
+              <Typography variant="h5" className="mb-4 text-surface-light ml-6">
+                Badges
+              </Typography>
+              <Badges
+                currentViewedId={isOwnProfile ? currentUser.userId : userId}
+                isOwnProfile={isOwnProfile}
+              />
+            </div>
+          }
         </div>
       </div>
     </>
