@@ -18,5 +18,13 @@ namespace HealthHub.Infrastructure.Repositories
                 .ToListAsync();
             return Result<List<RecipeComment>>.Success(recipeComments);
         }
+
+        public async Task<int> GetCommentsCount(Guid userId)
+        {
+            var comments = await context.RecipeComments
+                .Where(rc => rc.UserId == userId)
+                .ToListAsync();
+            return comments.Count;
+        }
     }
 }

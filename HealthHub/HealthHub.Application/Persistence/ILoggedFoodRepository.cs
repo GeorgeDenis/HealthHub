@@ -10,5 +10,6 @@ namespace HealthHub.Application.Persistence
         Task<Result<List<LoggedFoodDto>>> GetByUserIdAndDateAsync(Guid userId, DateTime date);
         Task<Result<List<LoggedFoodDto>>> GetRecentLoggedFoodByUserId(Guid userId);
         Task<Result<List<LoggedFoodDto>>> GetByUserIdAndDateInterval(Guid userId, DateRange dateRange);
+        Task<int> GetLoggedConsecutiveFoods(Guid userId);
     }
 }

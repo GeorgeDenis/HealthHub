@@ -11,5 +11,6 @@ namespace HealthHub.Application.Persistence
         Task<Result<List<LoggedCardioExerciseDto>>> GetByUserIdAndDateAsync(Guid userId, DateTime date);
         Task<Result<List<LoggedCardioExerciseDto>>> GetRecentLoggedCardioExercises(Guid userId);
         Task<Result<List<LoggedCardioExerciseDto>>> GetByUserIdAndDateInterval(Guid userId, DateRange dateRange);
+        Task<int> GetLoggedCardioExercisesCount(Guid userId);
     }
 }

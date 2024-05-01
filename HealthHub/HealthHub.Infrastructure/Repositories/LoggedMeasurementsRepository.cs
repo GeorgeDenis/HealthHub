@@ -3,6 +3,7 @@ using HealthHub.Application.Features.LoggedMeasurementsEntries;
 using HealthHub.Application.Persistence;
 using HealthHub.Domain.Common;
 using HealthHub.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HealthHub.Infrastructure.Repositories
@@ -110,6 +111,52 @@ namespace HealthHub.Infrastructure.Repositories
                     throw new ArgumentOutOfRangeException(nameof(range), range, null);
             }
         }
+
+        public async Task<int> GetLoggedConsecutiveWeeks(Guid userId)
+        {
+            var loggedMeasurements = await context.LoggedMeasurements
+                .Where(x => x.UserId == userId)
+                .OrderBy(x => x.DateLogged)
+                .ToListAsync();
+
+            if (!loggedMeasurements.Any())
+            {
+                return 0;
+            }
+
+            var weekSet = new HashSet<DateTime>();
+
+            foreach (var measurement in loggedMeasurements)
+            {
+                var date = measurement.DateLogged.Date;
+                var dayOfWeek = (int)date.DayOfWeek;
+                var weekStart = date.AddDays(-((dayOfWeek == 0 ? 7 : dayOfWeek) - 1)); 
+                weekSet.Add(weekStart);
+            }
+
+            var maxConsecutiveWeeks = 0;
+            var consecutiveWeeks = 1;
+
+            var sortedWeeks = weekSet.ToList();
+            sortedWeeks.Sort();
+
+            for (int i = 1; i < sortedWeeks.Count; i++)
+            {
+                if (sortedWeeks[i] == sortedWeeks[i - 1].AddDays(7))
+                {
+                    consecutiveWeeks++;
+                }
+                else
+                {
+                    maxConsecutiveWeeks = Math.Max(maxConsecutiveWeeks, consecutiveWeeks);
+                    consecutiveWeeks = 1; 
+                }
+            }
+            maxConsecutiveWeeks = Math.Max(maxConsecutiveWeeks, consecutiveWeeks);
+
+            return maxConsecutiveWeeks;
+        }
+
     }
 
 }

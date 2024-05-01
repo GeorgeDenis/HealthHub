@@ -29,6 +29,16 @@ namespace HealthHub.Infrastructure.Repositories
             return Result<List<MessageDto>>.Success(messages);
         }
 
+        public async Task<int> GetMessagesCountWithDifferentUsers(Guid userId)
+        {
+            var users = await context.Messages
+                .Where(m => m.Sender == userId || m.Receiver == userId)
+                .Select(m => m.Sender == userId ? m.Receiver : m.Sender)
+                .Distinct()
+                .CountAsync();
+            return users;
+        }
+
         public async Task<Result<List<Guid>>> GetUsersListByMessages(Guid userId)
         {
             var users = await context.Messages

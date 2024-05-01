@@ -6,6 +6,7 @@ using HealthHub.Application.Features.Users.Queries.GetByEmail;
 using HealthHub.Application.Features.Users.Queries.GetById;
 using HealthHub.Application.Features.Users.Queries.GetCaloriesById;
 using HealthHub.Application.Features.Users.Queries.GetUserSearchFiltered;
+using HealthHub.Application.Features.Users.Queries.GetUserStats;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -123,6 +124,22 @@ namespace HealthHub.API.Controllers
             var result = await Mediator.Send(query);
             if (!result.Success)
             {
+                return BadRequest(result);
+            }
+            return Ok(result);
+        }
+        [HttpGet("/stats")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetUserStats(string id)
+        {
+            var query = new GetUserStatsQuery { UserId = Guid.Parse(id) };
+            var result = await Mediator.Send(query);
+            if (!result.Success)
+            {
+                if (result.Message == $"User with id {id} not found")
+                {
+                    return NotFound(result);
+                }
                 return BadRequest(result);
             }
             return Ok(result);

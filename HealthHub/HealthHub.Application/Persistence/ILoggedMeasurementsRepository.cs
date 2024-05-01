@@ -12,6 +12,7 @@ namespace HealthHub.Application.Persistence
         Task<Result<LoggedMeasurementsDto>> GetLoggedMeasurementsByUserIdAndDate(Guid userId, DateTime date);
         Task<Result<List<LoggedMeasurementsDto>>> GetLoggedMeasurementsByUserId(Guid userId);
         Task<Result<List<LoggedMeasurementsDto>>> GetByUserIdAndDateInterval(Guid userId, DateRange dateRange);
+        Task<int> GetLoggedConsecutiveWeeks(Guid userId);
 
     }
 }

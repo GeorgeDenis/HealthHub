@@ -87,5 +87,13 @@ namespace HealthHub.Infrastructure.Repositories
                     throw new ArgumentOutOfRangeException(nameof(range), range, null);
             }
         }
+
+        public async Task<int> GetLoggedCardioExercisesCount(Guid userId)
+        {
+            var loggedCardioExercises = await context.LoggedCardioExercises
+                .Where(x => x.UserId == userId)
+                .ToListAsync();
+            return loggedCardioExercises.Count;
+        }
     }
 }

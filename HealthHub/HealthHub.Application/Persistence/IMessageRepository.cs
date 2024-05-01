@@ -9,5 +9,6 @@ namespace HealthHub.Application.Persistence
     {
         Task<Result<List<MessageDto>>> GetMessagesBetweenUsers(Guid user1, Guid user2);
         Task<Result<List<Guid>>> GetUsersListByMessages(Guid userId);
+        Task<int> GetMessagesCountWithDifferentUsers(Guid userId);
     }
 }

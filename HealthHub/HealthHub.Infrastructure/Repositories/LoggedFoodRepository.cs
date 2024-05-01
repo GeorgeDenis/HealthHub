@@ -98,5 +98,47 @@ namespace HealthHub.Infrastructure.Repositories
                     throw new ArgumentOutOfRangeException(nameof(range), range, null);
             }
         }
+
+        public async Task<int> GetLoggedConsecutiveFoods(Guid userId)
+        {
+            var loggedFoods = await context.LoggedFoods
+                .Where(x => x.UserId == userId)
+                .OrderBy(x => x.DateLogged)
+                .ToListAsync();
+
+            if (loggedFoods.Count == 0)
+            {
+                return 0;
+            }
+
+            var distinctDates = loggedFoods.Select(x => x.DateLogged.Date).Distinct().ToList();
+            distinctDates.Sort(); 
+
+            var consecutiveDays = 1;
+            var maxConsecutiveDays = 1;
+            var lastDate = distinctDates[0];
+
+            for (int i = 1; i < distinctDates.Count; i++)
+            {
+                var currentDate = distinctDates[i];
+                if (currentDate == lastDate.AddDays(1))
+                {
+                    consecutiveDays++;
+                }
+                else
+                {
+                    consecutiveDays = 1;
+                }
+
+                if (consecutiveDays > maxConsecutiveDays)
+                {
+                    maxConsecutiveDays = consecutiveDays;
+                }
+                lastDate = currentDate;
+            }
+
+            return maxConsecutiveDays;
+        }
+
     }
 }
