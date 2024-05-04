@@ -17,5 +17,7 @@ namespace HealthHub.Infrastructure
         public DbSet<LoggedCardioExercise> LoggedCardioExercises { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<RecipeComment> RecipeComments { get; set; }
+        public DbSet<Badge> Badges { get; set; }
+        public DbSet<UserVotedBadges> UserVotedBadges { get; set; }
     }
 }

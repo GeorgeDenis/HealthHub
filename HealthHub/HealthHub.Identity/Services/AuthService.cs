@@ -17,12 +17,13 @@ namespace HealthHub.Identity.Services
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IUserRepository userRepository;
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IBadgeRepository badgeRepository;
         private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IPasswordResetCodeRepository passwordResetCodeRepository;
         private readonly IMacronutrientsGoalRepository macronutrientsGoalRepository;
         private readonly ILoggedWeightRepository loggedWeightRepository;
         private readonly IConfiguration configuration;
-        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository, IPasswordResetCodeRepository passwordResetCodeRepository, IMacronutrientsGoalRepository macronutrientsGoalRepository, ILoggedWeightRepository loggedWeightRepository)
+        public AuthService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IConfiguration configuration, SignInManager<ApplicationUser> signInManager, IUserRepository userRepository, IPasswordResetCodeRepository passwordResetCodeRepository, IMacronutrientsGoalRepository macronutrientsGoalRepository, ILoggedWeightRepository loggedWeightRepository, IBadgeRepository badgeRepository)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -32,6 +33,7 @@ namespace HealthHub.Identity.Services
             this.passwordResetCodeRepository = passwordResetCodeRepository;
             this.macronutrientsGoalRepository = macronutrientsGoalRepository;
             this.loggedWeightRepository = loggedWeightRepository;
+            this.badgeRepository = badgeRepository;
         }
         public async Task<(int, string)> Registeration(RegistrationModel model, string role)
         {
@@ -80,6 +82,37 @@ namespace HealthHub.Identity.Services
                 var loggedWeight = LoggedWeight.Create(Guid.Parse(user.Id), model.CurrentWeight.Value);
                 await loggedWeightRepository.AddAsync(loggedWeight.Value);
             }
+
+            //var nutritionBadge = Badge.Create(BadgeConstants.NutritionBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.NutritionBadgeType);
+            //await badgeRepository.AddAsync(nutritionBadge.Value);
+
+            //var weightBadge = Badge.Create(BadgeConstants.WeightBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.WeightBadgeType);
+            //await badgeRepository.AddAsync(weightBadge.Value);
+
+            //var communityBadge = Badge.Create(BadgeConstants.CommunityBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.CommunityBadgeType);
+            //await badgeRepository.AddAsync(communityBadge.Value);
+
+            //var hydrationBadge = Badge.Create(BadgeConstants.HydrationBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.HydrationBadgeType);
+            //await badgeRepository.AddAsync(hydrationBadge.Value);
+
+            //var recipesBadge = Badge.Create(BadgeConstants.RecipesBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.RecipesBadgeType);
+            //await badgeRepository.AddAsync(recipesBadge.Value);
+
+            //var workoutBadge = Badge.Create(BadgeConstants.WorkoutBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.WorkoutBadgeType);
+            //await badgeRepository.AddAsync(workoutBadge.Value);
+
+            var challengeBadge = Badge.Create(BadgeConstants.ChallengeBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.ChallengeBadgeType,BadgeConstants.ChallengeBadgeDescription);
+            await badgeRepository.AddAsync(challengeBadge.Value);
+
+            var communityBadge = Badge.Create(BadgeConstants.CommunityBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.CommunityBadgeType,BadgeConstants.ChallengeBadgeDescription);
+            await badgeRepository.AddAsync(communityBadge.Value);
+
+            var friendlySpiritBadge = Badge.Create(BadgeConstants.FriendlySpiritBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.FriendlySpiritBadgeType,BadgeConstants.FriendlySpiritBadgeDescription);
+            await badgeRepository.AddAsync(friendlySpiritBadge.Value);
+
+            var consistencyBadge = Badge.Create(BadgeConstants.ConsistencyBadgeName, 0, Guid.Parse(user.Id), BadgeConstants.ConsistencyBadgeType, BadgeConstants.ChallengeBadgeDescription);
+            await badgeRepository.AddAsync(consistencyBadge.Value);
+
             return (1, "User created successfully!");
         }
 

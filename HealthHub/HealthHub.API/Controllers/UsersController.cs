@@ -128,7 +128,7 @@ namespace HealthHub.API.Controllers
             }
             return Ok(result);
         }
-        [HttpGet("/stats")]
+        [HttpGet("stats/{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetUserStats(string id)
         {

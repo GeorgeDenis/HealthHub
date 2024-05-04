@@ -26,6 +26,7 @@
     "apexcharts": "3.44.0",
     "aws-sdk": "^2.1587.0",
     "axios": "^1.6.7",
+    "canvas-confetti": "^1.9.3",
     "countries-list": "^3.0.6",
     "emoji-mart": "^5.5.2",
     "emoji-picker-react": "^4.9.2",

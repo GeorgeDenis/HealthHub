@@ -22,6 +22,38 @@ namespace HealthHub.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.Badge", b =>
+                {
+                    b.Property<Guid>("BadgeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("BadgeId");
+
+                    b.ToTable("Badges");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.LoggedCardioExercise", b =>
                 {
                     b.Property<Guid>("LoggedCardioExerciseId")
@@ -301,6 +333,27 @@ namespace HealthHub.Infrastructure.Migrations
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("HealthHub.Domain.Entities.UserVotedBadges", b =>
+                {
+                    b.Property<Guid>("UserVotedBadgesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("VotedId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("VoterId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("UserVotedBadgesId");
+
+                    b.ToTable("UserVotedBadges");
                 });
 #pragma warning restore 612, 618
         }
