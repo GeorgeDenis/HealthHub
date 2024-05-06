@@ -30,6 +30,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import Workout from "./pages/dashboard/Workout/Workout";
 import ExerciseDetails from "./pages/dashboard/Workout/ExerciseDetails/ExerciseDetails";
 import Chat from "./pages/dashboard/Chat/Chat";
+import ExerciseCounter from "./pages/dashboard/ExerciseCounter/ExerciseCounter";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -104,6 +105,12 @@ export const routes = [
         name: "workout-details",
         path: "/workout/:id",
         element: <ExerciseDetails />,
+      },
+      {
+        icon: <FitnessCenterIcon {...icon} />,
+        name: "exercise-counter",
+        path: "/exercise-counter",
+        element: <ExerciseCounter />,
       },
       {
         icon: <MessageIcon {...icon} />,
