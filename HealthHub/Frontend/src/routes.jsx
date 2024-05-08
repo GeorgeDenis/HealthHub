@@ -31,6 +31,7 @@ import Workout from "./pages/dashboard/Workout/Workout";
 import ExerciseDetails from "./pages/dashboard/Workout/ExerciseDetails/ExerciseDetails";
 import Chat from "./pages/dashboard/Chat/Chat";
 import ExerciseCounter from "./pages/dashboard/ExerciseCounter/ExerciseCounter";
+import BicepsCounter from "./pages/dashboard/ExerciseCounter/BicepsCounter";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -113,11 +114,17 @@ export const routes = [
         element: <ExerciseCounter />,
       },
       {
+        icon: <FitnessCenterIcon {...icon} />,
+        name: "biceps-counter",
+        path: "/exercise-counter/biceps-counter",
+        element: <BicepsCounter />,
+      },
+      {
         icon: <MessageIcon {...icon} />,
         name: "chat",
         path: "/chat",
         element: <Chat />,
-      }
+      },
     ],
   },
   {

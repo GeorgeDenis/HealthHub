@@ -28,7 +28,7 @@ def calculate_angle(a, b, c):
     return angle
 
 
-@socketio.on('connect')
+@socketio.on('connect_biceps')
 def test_connect():
     global left_counter, left_stage, right_counter, right_stage
     left_counter = 0
@@ -38,12 +38,12 @@ def test_connect():
     print('Client connected')
 
 
-@socketio.on('disconnect')
+@socketio.on('disconnect_biceps')
 def test_disconnect():
     print('Client disconnected')
 
 
-@socketio.on('reset')
+@socketio.on('reset_biceps')
 def reset_counter():
     global left_counter, left_stage, right_counter, right_stage
     left_counter = 0
@@ -53,7 +53,7 @@ def reset_counter():
     print('Counter reset')
 
 
-@socketio.on('image')
+@socketio.on('image_biceps')
 def handle_image(data):
     global left_counter, left_stage, right_counter, right_stage
     img_data = data['image']

@@ -1,103 +1,52 @@
-import React, { useEffect, useRef, useState } from "react";
-import io from "socket.io-client";
-
-const socket = io("http://localhost:5000");
+import React from "react";
+import { Card } from "@material-tailwind/react";
+import { Link } from "react-router-dom";
 
 const ExerciseCounter = () => {
-  const [data, setData] = useState({
-    leftReps: 0,
-    leftStage: "down",
-    rightReps: 0,
-    rightStage: "down",
-  });
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-      videoRef.current.srcObject = stream;
-    });
-
-    socket.on("response", (data) => {
-      const image = new Image();
-      image.src = `data:image/jpeg;base64,${data.image}`;
-      image.onload = () => {
-        const ctx = canvasRef.current.getContext("2d");
-        ctx.drawImage(
-          image,
-          0,
-          0,
-          canvasRef.current.width,
-          canvasRef.current.height,
-        );
-      };
-      setData(data.data);
-    });
-
-    return () => {
-      socket.off("response");
-    };
-  }, []);
-
-  const captureFrame = () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = videoRef.current.videoWidth;
-    canvas.height = videoRef.current.videoHeight;
-    canvas
-      .getContext("2d")
-      .drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-    const image = canvas.toDataURL("image/jpeg");
-    socket.emit("image", { image: image.split(",")[1] });
-  };
-  const handleResetCounter = () => {
-    socket.emit("reset");
-  };
-
-  useEffect(() => {
-    const interval = setInterval(captureFrame, 100);
-    return () => clearInterval(interval);
-  }, []);
-  useEffect(() => {
-    handleResetCounter();
-  }, []);
 
   return (
-    <div className="flex gap-10">
-      <div>
-        <video
-          ref={videoRef}
-          autoPlay
-          playsInline
-          style={{ width: "640px", height: "480px", display: "none" }}
-        />
-        <canvas ref={canvasRef} width="640" height="480" />
-        <button
-          className="w-20 h-10 p-2 bg-green-800 text-white rounded-md mt-4"
-          onClick={handleResetCounter}
-        >
-          Reset
-        </button>
+    <div className=" text-surface-light">
+      <div
+        className="relative mt-8 h-72 w-full overflow-hidden rounded-xl "
+        style={{
+          backgroundImage: "url('../../../public/img/ai_trainer.jpg')",
+          backgroundPosition: "center 43%",
+          backgroundSize: "cover",
+        }}
+      >
+        <div className="absolute inset-0 h-full w-full" />
       </div>
-      <div className="flex text-white gap-10">
-        <div className="flex flex-col  items-start p-2 rounded-lg w-40 h-32 bg-green-500 shadow-md gap-2">
-          <h2 className="mx-auto">Left Arm</h2>
-          <div className="flex items-center bg-green-700 p-1 rounded-lg w-20">
-            <p cl>Reps: {data.leftReps}</p>
+      <Card className="mx-3 -mt-32 md:-mt-28 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center p-4">
+        {/* <img src="../../../public/img/ai_trainer.jpg" alt="biceps" className="w-[640px] h-[480px]" /> */}
+        <div className="flex flex-col md:flex-row gap-5">
+          <div className=" min-h-[15rem] w-[18rem] rounded-xl overflow-hidden transition-transform duration-300 ease-in-out transform scale-100 hover:scale-105 bg-[#0b6e4f] flex flex-col items-center justify-center  cursor-pointer">
+            <img
+              src="../../../public/img/shoulder_press.png"
+              alt="biceps"
+              className="w-28 h-24"
+            />
+            <p className="text-white font-bold text-lg">Shoulder Press</p>
           </div>
-          <div className="flex items-center bg-green-700 p-1 rounded-lg w-24">
-            <p>Stage: {data.leftStage}</p>
+          <div className="min-h-[15rem] w-[18rem] rounded-xl overflow-hidden transition-transform duration-300 ease-in-out transform scale-100 hover:scale-105 bg-[#0b6e4f] flex flex-col items-center justify-center  cursor-pointer">
+            <img
+              src="../../../public/img/squat.png"
+              alt="biceps"
+              className="w-28 h-24"
+            />
+            <p className="text-white font-bold text-lg">Squat</p>
           </div>
+          <Link to="biceps-counter">
+            <div className="min-h-[15rem] w-[18rem] rounded-xl overflow-hidden transition-transform duration-300 ease-in-out transform scale-100 hover:scale-105 bg-[#0b6e4f] flex flex-col items-center justify-center  cursor-pointer">
+              <img
+                src="../../../public/img/biceps_curl.png"
+                alt="biceps"
+                className="w-28 h-24"
+              />
+              <p className="text-white font-bold text-lg">Biceps Curl</p>
+            </div>
+          </Link>
         </div>
-        <div className="flex flex-col  items-start p-2 rounded-lg w-40 h-32 bg-green-500 shadow-md gap-2">
-          <h2 className="mx-auto">Right Arm</h2>
-          <div className="flex items-center bg-green-700 p-1 rounded-lg w-20">
-            <p>Reps: {data.rightReps}</p>
-          </div>
-          <div className="flex items-center bg-green-700 p-1 rounded-lg w-24">
-            <p>Stage: {data.rightStage}</p>
-          </div>
-        </div>
-      </div>
+      </Card>
     </div>
   );
 };
