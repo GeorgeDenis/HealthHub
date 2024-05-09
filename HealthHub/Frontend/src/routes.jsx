@@ -6,6 +6,7 @@ import {
   ServerStackIcon,
   RectangleStackIcon,
   ScaleIcon,
+  EyeIcon,
 } from "@heroicons/react/24/solid";
 
 import { Home, Profile } from "@/pages/dashboard";
@@ -26,12 +27,15 @@ import SearchedRecipe from "./pages/dashboard/Recipes/SearchedRecipe";
 import RecipeDetails from "./pages/dashboard/Recipes/RecipeDetails/RecipeDetails";
 import KitchenIcon from "@mui/icons-material/Kitchen";
 import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
-import MessageIcon from '@mui/icons-material/Message';
+import MessageIcon from "@mui/icons-material/Message";
 import Workout from "./pages/dashboard/Workout/Workout";
 import ExerciseDetails from "./pages/dashboard/Workout/ExerciseDetails/ExerciseDetails";
 import Chat from "./pages/dashboard/Chat/Chat";
 import ExerciseCounter from "./pages/dashboard/ExerciseCounter/ExerciseCounter";
 import BicepsCounter from "./pages/dashboard/ExerciseCounter/BicepsCounter";
+import SquatCounter from "./pages/dashboard/ExerciseCounter/SquatCounter";
+import ShoulderCounter from "./pages/dashboard/ExerciseCounter/ShoulderCounter";
+import PushupCounter from "./pages/dashboard/ExerciseCounter/PushupCounter";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -108,7 +112,7 @@ export const routes = [
         element: <ExerciseDetails />,
       },
       {
-        icon: <FitnessCenterIcon {...icon} />,
+        icon: <EyeIcon {...icon} />,
         name: "exercise-counter",
         path: "/exercise-counter",
         element: <ExerciseCounter />,
@@ -118,6 +122,24 @@ export const routes = [
         name: "biceps-counter",
         path: "/exercise-counter/biceps-counter",
         element: <BicepsCounter />,
+      },
+      {
+        icon: <FitnessCenterIcon {...icon} />,
+        name: "squat-counter",
+        path: "/exercise-counter/squat-counter",
+        element: <SquatCounter />,
+      },
+      {
+        icon: <FitnessCenterIcon {...icon} />,
+        name: "shoulder-counter",
+        path: "/exercise-counter/shoulder-counter",
+        element: <ShoulderCounter />,
+      },
+      {
+        icon: <FitnessCenterIcon {...icon} />,
+        name: "pushup-counter",
+        path: "/exercise-counter/pushup-counter",
+        element: <PushupCounter />,
       },
       {
         icon: <MessageIcon {...icon} />,

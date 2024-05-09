@@ -60,7 +60,10 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   name !== "recipe-details" &&
                   name !== "other-profile" &&
                   name !== "workout-details" &&
-                  name !== "biceps-counter"
+                  name !== "biceps-counter" &&
+                  name !== "squat-counter" &&
+                  name !== "pushup-counter" &&
+                  name !== "shoulder-counter"
               )
               .map(({ icon, name, path }) => (
                 <li key={name} className="py-1 ![&>a]:flex-1">
