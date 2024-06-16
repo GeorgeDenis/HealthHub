@@ -136,7 +136,7 @@ const Badges = ({ currentViewedId, isOwnProfile }) => {
     getUserBadges().then(getUserStats().then(updateBadges()));
   }, [currentViewedId]);
   return (
-    <div className="w-[20rem] md:w-[30rem] grid grid-rows-5 sm:grid-rows-4 md:grid-rows-2 grid-flow-col p-4 rounded-lg shadow-xs dark:bg-gray-800">
+    <div className="w-[20rem] md:w-[30rem] grid grid-rows-5 sm:grid-rows-5 md:grid-rows-4 2xl:grid-rows-3 3xl:grid-rows-2 grid-flow-col p-4 rounded-lg shadow-xs dark:bg-gray-800">
       {userBadges?.map((badge, index) => {
         return (
           badge.active && (

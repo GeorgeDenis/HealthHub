@@ -157,7 +157,7 @@ const ShoulderCounter = () => {
               <div className="flex items-center bg-green-700 p-1 rounded-lg w-20">
                 <p>Reps: {data.leftReps}</p>
               </div>
-              <div className="flex items-center bg-green-700 p-1 rounded-lg w-24">
+              <div className="flex items-center bg-green-700 p-1 rounded-lg w-28">
                 <p>Stage: {data.leftStage}</p>
               </div>
             </div>
@@ -166,7 +166,7 @@ const ShoulderCounter = () => {
               <div className="flex items-center bg-green-700 p-1 rounded-lg w-20">
                 <p>Reps: {data.rightReps}</p>
               </div>
-              <div className="flex items-center bg-green-700 p-1 rounded-lg w-24">
+              <div className="flex items-center bg-green-700 p-1 rounded-lg w-28">
                 <p>Stage: {data.rightStage}</p>
               </div>
             </div>

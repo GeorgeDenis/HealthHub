@@ -25,7 +25,8 @@ namespace Infrastructure.Services
             email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = body };
 
             using var smtp = new SmtpClient();
-            await smtp.ConnectAsync(emailSettings.SmtpServer, emailSettings.SmtpPort, SecureSocketOptions.StartTls);
+            await smtp.ConnectAsync(emailSettings.SmtpServer, 
+                emailSettings.SmtpPort, SecureSocketOptions.StartTls);
             await smtp.AuthenticateAsync(emailSettings.SmtpUsername, emailSettings.SmtpPassword);
             await smtp.SendAsync(email);
             await smtp.DisconnectAsync(true);

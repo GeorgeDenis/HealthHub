@@ -7,9 +7,11 @@ namespace HealthHub.Application.Features.LoggedMeasurementsEntries.Commands.Crea
     public class CreateLoggedMeasurementsCommandHandler : IRequestHandler<CreateLoggedMeasurementsCommand, CreateLoggedMeasurementsCommandResponse>
     {
         private readonly ILoggedMeasurementsRepository loggedMeasurementsRepository;
-        public CreateLoggedMeasurementsCommandHandler(ILoggedMeasurementsRepository loggedMeasurementsRepository)
+        private readonly IUserManager userRepository;
+        public CreateLoggedMeasurementsCommandHandler(ILoggedMeasurementsRepository loggedMeasurementsRepository, IUserManager userRepository)
         {
             this.loggedMeasurementsRepository = loggedMeasurementsRepository;
+            this.userRepository = userRepository;
         }
 
         public async Task<CreateLoggedMeasurementsCommandResponse> Handle(CreateLoggedMeasurementsCommand request, CancellationToken cancellationToken)
@@ -41,6 +43,25 @@ namespace HealthHub.Application.Features.LoggedMeasurementsEntries.Commands.Crea
                 {
                     Success = false,
                     ValidationsErrors = [result.Error]
+                };
+            }
+            var user = await userRepository.FindByIdAsync(request.UserId);
+            if (!user.IsSuccess)
+            {
+                return new CreateLoggedMeasurementsCommandResponse
+                {
+                    Success = false,
+                    ValidationsErrors = ["User not found"]
+                };
+            }
+            user.Value.CurrentWeight = request.Weight;
+            var updateResult = await userRepository.UpdateAsync(user.Value);
+            if (!updateResult.IsSuccess)
+            {
+                return new CreateLoggedMeasurementsCommandResponse
+                {
+                    Success = false,
+                    ValidationsErrors = ["Failed to update user's current weight"]
                 };
             }
             return new CreateLoggedMeasurementsCommandResponse

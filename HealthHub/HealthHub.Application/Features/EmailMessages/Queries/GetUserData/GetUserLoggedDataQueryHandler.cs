@@ -85,7 +85,7 @@ namespace HealthHub.Application.Features.EmailMessages.Queries.GetUserData
                     DateLogged = strengthExercise.DateLogged
                 });
             }
-            var measurements = await loggedMeasurementsRepository.GetByUserIdAndDateInterval(request.UserId,request.DateRange);
+            var measurements = await loggedMeasurementsRepository.GetByUserIdAndDateInterval(request.UserId, request.DateRange);
             var loggedMeasurements = new List<LoggedMeasurementsExportDto>();
             foreach (var measurement in measurements.Value)
             {
@@ -127,14 +127,35 @@ namespace HealthHub.Application.Features.EmailMessages.Queries.GetUserData
 
             zipStream.Position = 0;
 
+            var days = GetDays(request.DateRange);
+
+
+            string emailBody = $@"
+<html>
+<body>
+<p>Dear {user.Value.Name},</p>
+
+<p>We hope this message finds you well.</p>
+
+<p>As requested, please find attached a ZIP archive containing your logged data for the {days}. We are committed to helping you track and achieve your fitness and health goals, and we hope this data will be valuable in your journey.</p>
+
+<p>If you have any questions or need further assistance, feel free to reach out to our support team.</p>
+
+<p>Stay healthy and keep pushing towards your goals!</p>
+
+<p>Best regards,<br />
+The HealthHub Team</p>
+</body>
+</html>";
 
             await emailService.SendEmailWithAttachmentAsync(
                 user.Value.Email,
                 "Your Logged Data",
-                "Please find attached the ZIP archive with your logged data.",
+                emailBody,
                 zipStream,
                 "logged-data.zip"
             );
+
 
             return response;
 
@@ -155,6 +176,22 @@ namespace HealthHub.Application.Features.EmailMessages.Queries.GetUserData
             using (var entryStream = zipEntry.Open())
             {
                 csvStream.CopyTo(entryStream);
+            }
+        }
+        public static string GetDays(DateRange dateRange)
+        {
+            switch (dateRange)
+            {
+                case DateRange.Last7Days:
+                    return "last 7 days";
+                case DateRange.Last90Days:
+                    return "last 90 days";
+                case DateRange.Last180Days:
+                    return "last 180 days";
+                case DateRange.LastYear:
+                    return "last year";
+                default:
+                    return "last 7 days";
             }
         }
     }

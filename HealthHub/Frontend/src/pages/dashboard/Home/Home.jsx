@@ -147,7 +147,7 @@ export function Home() {
         </div>
         <LoggedWeights />
 
-        <div className="text-center flex flex-col items-center">
+        {/* <div className="text-center flex flex-col items-center">
           <Typography variant="h4" className="text-white p-2">
             Calories Remaining: {calories}
           </Typography>
@@ -173,7 +173,7 @@ export function Home() {
               </Typography>
             </div>
           )}
-        </div>
+        </div> */}
       </Card>
     </div>
   );

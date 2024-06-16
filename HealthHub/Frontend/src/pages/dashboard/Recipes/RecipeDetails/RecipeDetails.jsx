@@ -212,15 +212,15 @@ const RecipeDetails = () => {
             {nutrition && (
               <div className="flex flex-col items-start gap-5">
                 <div className="flex items-center justify-center">
-                  <div>
+                  {/* <div>
                     <StarIcon className="text-yellow-700 cursor-pointer" />
                     <StarIcon className="text-yellow-700 cursor-pointer" />
                     <StarIcon className="text-yellow-700 cursor-pointer" />
                     <StarIcon className="text-yellow-700 cursor-pointer" />
                     <StarIcon className="text-yellow-700 cursor-pointer" />
-                  </div>
+                  </div> */}
 
-                  <p className="text-white text-sm">(121 reviews)</p>
+                  {/* <p className="text-white text-sm">(121 reviews)</p> */}
                 </div>
                 <div className="bg-surface-darkest p-5 rounded-md">
                   <p className="text-white mb-3">Nutrition per Serving</p>

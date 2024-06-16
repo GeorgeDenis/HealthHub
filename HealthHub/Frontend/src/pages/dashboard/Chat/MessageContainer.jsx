@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import UserAvatar from "../utils/UserAvatar";
 import { getLocalTime } from "./getLocalTime";
 import { Tooltip } from "@material-tailwind/react";
+import { format } from "timeago.js";
+
 const MessageContainer = React.forwardRef(({ message, chatPreview }, ref) => {
   const navigate = useNavigate();
 
@@ -36,6 +38,7 @@ const MessageContainer = React.forwardRef(({ message, chatPreview }, ref) => {
         <p className="text-[#e1e1e1] py-1 px-3 bg-[#55915f] rounded-2xl text-wrap text-balance max-w-[15rem]">
           {message.content}
         </p>
+        {/* <p className="text-[#e1e1e1]">{format(message.date)}</p> */}
       </Tooltip>
     </div>
   );

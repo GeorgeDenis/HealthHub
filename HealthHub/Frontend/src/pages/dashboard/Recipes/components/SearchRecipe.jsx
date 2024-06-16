@@ -13,7 +13,7 @@ const SearchRecipe = () => {
   };
   return (
     <form className="flex items-center mx-auto mb-10 gap-2" onSubmit={submitHandler}>
-      <input className="rounded-xl w-[20rem] h-10" type="text" value={input} onChange={handleInput}/>
+      <input className="rounded-xl w-[20rem] h-10 p-2" type="text" placeholder="Search for a recipe" value={input} onChange={handleInput}/>
       <FaSearch className=" top-3 left-3 text-gray-400" />
     </form>
   );
