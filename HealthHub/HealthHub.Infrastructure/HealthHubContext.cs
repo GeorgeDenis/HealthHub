@@ -19,5 +19,7 @@ namespace HealthHub.Infrastructure
         public DbSet<RecipeComment> RecipeComments { get; set; }
         public DbSet<Badge> Badges { get; set; }
         public DbSet<UserVotedBadges> UserVotedBadges { get; set; }
+        public DbSet<AIConversation> AIConversation { get; set; }
+        public DbSet<AIChat> AIChat { get; set; }
     }
 }

@@ -40,9 +40,6 @@ const ChatPreview = ({ joinChat, receiver, setReceiver, fetchMessages }) => {
             <p className="text-white text-sm">Hello</p>
           </div> */}
         </div>
-        <div>
-          <p className="text-white text-sm">12:00</p>
-        </div>
       </div>
     </div>
   );

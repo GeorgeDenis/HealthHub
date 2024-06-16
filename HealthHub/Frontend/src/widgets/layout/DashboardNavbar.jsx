@@ -1,9 +1,24 @@
 import { useLocation, Link } from "react-router-dom";
-import { Navbar, Typography, Button, IconButton, Breadcrumbs } from "@material-tailwind/react";
-import { UserCircleIcon, BellIcon, ClockIcon, Bars3Icon, CheckIcon} from "@heroicons/react/24/solid";
-import { useMaterialTailwindController, setOpenSidenav } from "../../context/MaterialTailwind";
+import {
+  Navbar,
+  Typography,
+  Button,
+  IconButton,
+  Breadcrumbs,
+} from "@material-tailwind/react";
+import {
+  UserCircleIcon,
+  BellIcon,
+  ClockIcon,
+  Bars3Icon,
+  CheckIcon,
+} from "@heroicons/react/24/solid";
+import {
+  useMaterialTailwindController,
+  setOpenSidenav,
+} from "../../context/MaterialTailwind";
 import { useUser } from "../../context/LoginRequired";
-
+import SmartToyIcon from "@mui/icons-material/SmartToy";
 
 export function DashboardNavbar() {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -20,9 +35,7 @@ export function DashboardNavbar() {
     >
       <div className="flex flex-col-reverse justify-between gap-6 md:flex-row md:items-center">
         <div className="capitalize text-surface-light">
-          <Breadcrumbs
-            className={"bg-transparent p-0 transition-all"}
-          >
+          <Breadcrumbs className={"bg-transparent p-0 transition-all"}>
             <Link to={`/${layout}`}>
               <Typography
                 variant="small"
@@ -40,22 +53,37 @@ export function DashboardNavbar() {
           </Breadcrumbs>
         </div>
         <div className="flex items-center">
-          
           <IconButton
             variant="text"
             color="blue-gray"
             className="grid xl:hidden"
             onClick={() => setOpenSidenav(dispatch, !openSidenav)}
           >
-            <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500"/>
+            <Bars3Icon strokeWidth={3} className="h-6 w-6 text-blue-gray-500" />
           </IconButton>
+          <Link to="/dashboard/assistant">
+            <Button
+              variant="text"
+              color="blue-gray"
+              className="hidden items-center gap-1  text-primary px-4 xl:flex normal-case"
+            >
+              <SmartToyIcon className="h-5 w-5 text-primary" />
+            </Button>
+            <IconButton
+              variant="text"
+              color="blue-gray"
+              className="grid xl:hidden"
+            >
+              <SmartToyIcon className="h-5 w-5 text-blue-gray-500" />
+            </IconButton>
+          </Link>
           <Link to="/dashboard/profile">
             <Button
               variant="text"
               color="blue-gray"
               className="hidden items-center gap-1  text-primary px-4 xl:flex normal-case"
             >
-              <UserCircleIcon className="h-5 w-5 text-primary"/>
+              <UserCircleIcon className="h-5 w-5 text-primary" />
               {username}
             </Button>
             <IconButton
@@ -63,10 +91,9 @@ export function DashboardNavbar() {
               color="blue-gray"
               className="grid xl:hidden"
             >
-              <UserCircleIcon className="h-5 w-5 text-blue-gray-500"/>
+              <UserCircleIcon className="h-5 w-5 text-blue-gray-500" />
             </IconButton>
           </Link>
-
         </div>
       </div>
     </Navbar>

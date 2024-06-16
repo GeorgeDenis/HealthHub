@@ -1,5 +1,4 @@
 ﻿using HealthHub.Domain.Common;
-using Microsoft.VisualBasic;
 
 namespace HealthHub.Domain.Entities
 {

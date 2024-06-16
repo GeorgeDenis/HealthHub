@@ -42,6 +42,8 @@ namespace HealthHub.Infrastructure
             services.AddScoped<IMessageRepository, MessageRepository>();
             services.AddScoped<IBadgeRepository, BadgeRepository>();
             services.AddScoped<IUserVotedBadgesRepository, UserVotedBadgesRepository>();
+            services.AddScoped<IAIConversationRepository, AIConversationRepository>();
+            services.AddScoped<IAIChatRepository, AIChatRepository>();
             return services;
         }
     }

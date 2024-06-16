@@ -22,6 +22,55 @@ namespace HealthHub.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("HealthHub.Domain.Entities.AIChat", b =>
+                {
+                    b.Property<Guid>("AiChatId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AiConversationId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateSent")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Sender")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("AiChatId");
+
+                    b.ToTable("AIChat");
+                });
+
+            modelBuilder.Entity("HealthHub.Domain.Entities.AIConversation", b =>
+                {
+                    b.Property<Guid>("AIConversationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateSent")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("AIConversationId");
+
+                    b.ToTable("AIConversation");
+                });
+
             modelBuilder.Entity("HealthHub.Domain.Entities.Badge", b =>
                 {
                     b.Property<Guid>("BadgeId")

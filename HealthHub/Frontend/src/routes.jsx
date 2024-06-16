@@ -36,6 +36,7 @@ import BicepsCounter from "./pages/dashboard/ExerciseCounter/BicepsCounter";
 import SquatCounter from "./pages/dashboard/ExerciseCounter/SquatCounter";
 import ShoulderCounter from "./pages/dashboard/ExerciseCounter/ShoulderCounter";
 import PushupCounter from "./pages/dashboard/ExerciseCounter/PushupCounter";
+import Assistant from "./pages/dashboard/Assistant/Assistant";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -146,6 +147,12 @@ export const routes = [
         name: "chat",
         path: "/chat",
         element: <Chat />,
+      },
+      {
+        icon: <MessageIcon {...icon} />,
+        name: "assistant",
+        path: "/assistant",
+        element: <Assistant />,
       },
     ],
   },
