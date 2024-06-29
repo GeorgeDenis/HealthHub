@@ -93,7 +93,7 @@ const CaloriePanel = ({
           <NutrientsRemaining
             totalNutrients={totalNutrients}
             macronutrientsNeeded={macronutrientsNeeded}
-            calories={calories - totalFoodsCalories - totalCardioCalories}
+            calories={calories - totalFoodsCalories + totalCardioCalories}
             setIsCaloriesShown={setIsCaloriesShown}
           />
         )}

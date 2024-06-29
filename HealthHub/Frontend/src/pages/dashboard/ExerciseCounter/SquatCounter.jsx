@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCameraRetro } from "@fortawesome/free-solid-svg-icons";
 import { Card } from "@material-tailwind/react";
+
 const socket = io("http://localhost:5000");
 
 const SquatCounter = () => {
@@ -53,7 +54,7 @@ const SquatCounter = () => {
           0,
           0,
           canvasRef.current.width,
-          canvasRef.current.height,
+          canvasRef.current.height
         );
       };
       setData(data.data);
@@ -74,6 +75,7 @@ const SquatCounter = () => {
     const image = canvas.toDataURL("image/jpeg");
     socket.emit("image_squat", { image: image.split(",")[1] });
   };
+
   const handleResetCounter = () => {
     socket.emit("reset_squat");
   };
@@ -94,9 +96,9 @@ const SquatCounter = () => {
   };
 
   return (
-    <div className=" text-surface-light">
+    <div className="text-surface-light">
       <div
-        className="relative mt-8 h-72 w-full overflow-hidden rounded-xl "
+        className="relative mt-8 h-72 w-full overflow-hidden rounded-xl"
         style={{
           backgroundImage: "url('../../../public/img/ai_trainer.jpg')",
           backgroundPosition: "center 43%",
@@ -107,15 +109,16 @@ const SquatCounter = () => {
       </div>
       <Card className="mx-3 -mt-32 md:-mt-28 mb-6 lg:mx-4 bg-surface-darkest flex flex-col items-center justify-center p-4">
         <div className="flex flex-col 3xl:flex-row gap-10">
-          <div>
+          <div className="relative w-full max-w-3xl">
             <video
               ref={videoRef}
               autoPlay
               playsInline
-              style={{ width: "640px", height: "480px", display: "none" }}
+              className="w-full h-auto md:w-[640px] md:h-[480px]"
+              style={{ display: "none" }}
             />
             {!isRecording && (
-              <div className="w-[640px] h-[480px] flex items-center justify-center border-2 border-dashed p-10">
+              <div className="flex items-center justify-center border-2 border-dashed p-10 h-auto w-full md:h-[480px] md:w-[640px]">
                 <FontAwesomeIcon
                   icon={faCameraRetro}
                   className="text-white text-6xl"
@@ -123,26 +126,30 @@ const SquatCounter = () => {
                 />
               </div>
             )}
-            {isRecording && <canvas ref={canvasRef} width="640" height="480" />}
-            <div className="flex gap-5">
-              {!isRecording && (
+            {isRecording && (
+              <canvas
+                ref={canvasRef}
+                className="w-full h-auto md:w-[640px] md:h-[480px]"
+              />
+            )}
+            <div className="flex gap-5 mt-4">
+              {!isRecording ? (
                 <button
-                  className="w-20 h-10 p-2 bg-green-800 text-white rounded-md mt-4"
+                  className="w-20 h-10 p-2 bg-green-800 text-white rounded-md"
                   onClick={handleStartRecording}
                 >
                   Start
                 </button>
-              )}
-              {isRecording && (
+              ) : (
                 <button
-                  className="w-20 h-10 p-2 bg-red-800 text-white rounded-md mt-4"
+                  className="w-20 h-10 p-2 bg-red-800 text-white rounded-md"
                   onClick={handleStopRecording}
                 >
                   Stop
                 </button>
               )}
               <button
-                className="w-20 h-10 p-2 bg-green-800 text-white rounded-md mt-4"
+                className="w-20 h-10 p-2 bg-green-800 text-white rounded-md"
                 onClick={handleResetCounter}
               >
                 Reset
@@ -150,7 +157,7 @@ const SquatCounter = () => {
             </div>
           </div>
           <div className="flex text-white gap-10">
-            <div className="flex flex-col  items-start justify-center p-2 rounded-lg w-40 h-32 bg-[#306844]  shadow-md gap-2">
+            <div className="flex flex-col items-start p-2 rounded-lg w-32 md:w-40 h-32 bg-[#306844] shadow-md gap-2">
               <div className="flex items-center bg-green-700 p-1 rounded-lg w-20">
                 <p>Reps: {data.reps}</p>
               </div>

@@ -13,8 +13,8 @@ const FatIntakeBanner = ({fatsNeeded,fatsFromFood}) => {
         </Typography>
         <div className="w-full flex flex-col items-start gap-2">
           <ProgressLevel progress={fatsFromFood * 100 / fatsNeeded} category={"Fat"} total={fatsNeeded} current={fatsFromFood} unit={"g"}/>
-          <ProgressLevel progress={200*100/2300} category={"Sodium"} total={2300} current={200} unit={"mg"}/>
-          <ProgressLevel progress={9*100/300} category={"Cholesterol"} total={300} current={9} unit={"mg"}/>
+          <ProgressLevel progress={0*100/2300} category={"Sodium"} total={2300} current={0} unit={"mg"}/>
+          <ProgressLevel progress={0*100/300} category={"Cholesterol"} total={300} current={0} unit={"mg"}/>
         </div>
       </div>
     </div>

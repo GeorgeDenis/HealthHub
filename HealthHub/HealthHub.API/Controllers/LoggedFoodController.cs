@@ -105,11 +105,14 @@ namespace HealthHub.API.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var tempFoods = JsonSerializer.Deserialize<List<FoodProductResponseByName>>(content);
+                var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+                var tempFoods = JsonSerializer.Deserialize<List<FoodProductResponseByName>>(content, options);
+
                 if (tempFoods == null)
                 {
                     return Ok(new List<FoodProductGeneralResponse>());
                 }
+
                 var foods = tempFoods.Select(ex => new FoodProductGeneralResponse
                 {
                     Name = ex.Name,
@@ -125,6 +128,7 @@ namespace HealthHub.API.Controllers
 
             return BadRequest("Error");
         }
+
 
 
 

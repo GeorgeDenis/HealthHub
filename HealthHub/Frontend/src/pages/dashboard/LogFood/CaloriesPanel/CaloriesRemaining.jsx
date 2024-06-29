@@ -48,7 +48,7 @@ const CaloriesRemaining = ({
         <Typography className="mb-1 text-surface-light">=</Typography>
         <div className="flex flex-col items-center">
           <Typography className="mb-1 text-green-400 font-semibold">
-            {calories - totalFoodsCalories - totalCardioCalories}
+            {calories - totalFoodsCalories + totalCardioCalories}
           </Typography>
           <Typography className="mb-1 text-surface-light">
             {"Remaining"}
