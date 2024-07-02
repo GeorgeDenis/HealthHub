@@ -9,10 +9,9 @@ AWS.config.update({
   },
 });
 export const s3 = new AWS.S3({
-  params: { Bucket: 'ergo-project' },
-  region: 'eu-central-1',
+  params: { Bucket: "healthhub-project" },
+  region: "eu-central-1",
 });
-
 
 const instance = axios.create({
   baseURL: "https://localhost:7016/",

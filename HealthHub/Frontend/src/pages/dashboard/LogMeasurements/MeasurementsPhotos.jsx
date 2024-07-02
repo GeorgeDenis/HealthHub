@@ -41,7 +41,7 @@ const MeasurementsPhotos = (refreshTrigger) => {
         if (photo.cloudUrl) {
           s3.getObject(
             {
-              Bucket: "ergo-project",
+              Bucket: "healthhub-project",
               Key: photo.cloudUrl,
             },
             (err, data) => {

@@ -19,7 +19,7 @@ namespace HealthHub.API.Services
                 using var client = new AmazonS3Client(credentials, config);
                 var deleteObjectRequest = new Amazon.S3.Model.DeleteObjectRequest()
                 {
-                    BucketName = "ergo-project",
+                    BucketName = "healthhub-project",
                     Key = objectName
                 };
                 client.DeleteObjectAsync(deleteObjectRequest);
@@ -36,7 +36,7 @@ namespace HealthHub.API.Services
         }
 
         public async Task<S3ResponseDto> UploadFileAsync(S3Object s3Object, AWSCredential aWSCredentials)
-        {
+         {
             var credentials = new BasicAWSCredentials(aWSCredentials.AwsKey, aWSCredentials.AwsSecretKey);
 
             var config = new AmazonS3Config()

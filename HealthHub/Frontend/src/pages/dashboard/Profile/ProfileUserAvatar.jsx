@@ -22,7 +22,7 @@ export default function ProfileUserAvatar({
     if (photoUrl) {
       s3.getObject(
         {
-          Bucket: "ergo-project",
+          Bucket: "healthhub-project",
           Key: photoUrl,
         },
         function (err, data) {

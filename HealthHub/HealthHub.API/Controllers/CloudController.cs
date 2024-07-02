@@ -43,7 +43,7 @@ namespace HealthHub.API.Controllers
             var objName = $"{Guid.NewGuid()}{fileExt}";
             var s3Object = new S3Object()
             {
-                BucketName = "ergo-project",
+                BucketName = "healthhub-project",
                 InputStream = memoryStr,
                 Name = objName
             };
@@ -89,7 +89,7 @@ namespace HealthHub.API.Controllers
             var objName = $"{Guid.NewGuid()}{fileExt}";
             var s3Object = new S3Object()
             {
-                BucketName = "ergo-project",
+                BucketName = "healthhub-project",
                 InputStream = memoryStr,
                 Name = objName
             };
