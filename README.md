@@ -47,6 +47,7 @@ distinguishes itself as a necessary tool for supporting a healthy and balanced l
 several features and user-centric approach.
   </p>
 </div>
+
 ## Tech Stack
 -  .NET 8
 -  React
@@ -54,5 +55,8 @@ several features and user-centric approach.
 -  Flask
 -  OpenCV
 -  AWS S3
+-  PostgreSQL
+  
 ## Pages
+-  Initial questionnaire
 ![image](https://github.com/user-attachments/assets/9b1af551-90ce-4e30-975f-0547ebf053f1)
