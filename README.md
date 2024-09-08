@@ -7,9 +7,8 @@
 of those passionate about fitness and nutrition and those who want to make a change in their
 lives and adopt a healthier lifestyle.
   </p>
-</div>
-
-&emsp;Using a technology stack consisting of .NET Core 8, React, Python, Flask, OpenCV,
+  <p>
+    &emsp;Using a technology stack consisting of .NET Core 8, React, Python, Flask, OpenCV,
 and a suite of external APIs, the platform stands out through its robust approach and vision
 focused on personalizing the experience of each user. The application, which is based on
 architectural principles such as Clean Architecture, MediatR, Factory Method, Repository
@@ -17,7 +16,9 @@ Pattern, and many others chosen to comply with the best standards and make Healt
 scalable platform, aims to provide support for those passionate about fitness and provide the
 community with a flexible and easy-to-use framework that will serve as support for a healthy
 lifestyle.
-&emsp;Thus, users have the opportunity to create personalized profiles, taking into account
+  </p>
+  <p>
+    &emsp;Thus, users have the opportunity to create personalized profiles, taking into account
 factors such as age, weight, height, gender, dietary preferences, and fitness goals. Based on
 an initial questionnaire, the application analyzes eating habits and current levels of physical
 activity, allowing for the generation of tailored nutritional recommendations. HealthHub
@@ -38,10 +39,14 @@ on their efforts, greatly enhances morale, especially in situations where it is 
 to measure fitness progress. Users express their respect and affection for others by casting
 votes on badges, so endorsing the community, and fostering a welcoming environment for
 personal growth.
-&emsp;HealthHub offers a whole and comprehensive platform for health monitoring and
+  </p>
+  <p>
+    &emsp;HealthHub offers a whole and comprehensive platform for health monitoring and
 improvement by skillfully combining innovative technologies with user demands. HealthHub
 distinguishes itself as a necessary tool for supporting a healthy and balanced life with its
 several features and user-centric approach.
+  </p>
+</div>
 ## Tech Stack
 -  .NET 8
 -  React
