@@ -1,7 +1,7 @@
 # Bachelor Thesis 2024
 -  Demo: https://www.youtube.com/watch?v=1mz7d5ikXvQ&feature=youtu.be
 # Description
-  HealthHub, an innovative web application designed to meet the needs
+&nbsp;HealthHub, an innovative web application designed to meet the needs
 of those passionate about fitness and nutrition and those who want to make a change in their
 lives and adopt a healthier lifestyle.
 Using a technology stack consisting of .NET Core 8, React, Python, Flask, OpenCV,
