@@ -58,5 +58,8 @@ several features and user-centric approach.
 -  PostgreSQL
   
 ## Pages
--  Initial questionnaire
+<div>
+  -  Initial questionnaire
 ![image](https://github.com/user-attachments/assets/9b1af551-90ce-4e30-975f-0547ebf053f1)
+</div>
+
