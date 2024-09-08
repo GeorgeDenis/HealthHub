@@ -60,4 +60,39 @@ several features and user-centric approach.
 ## Pages
   -  Initial questionnaire <br />
 ![image](https://github.com/user-attachments/assets/9b1af551-90ce-4e30-975f-0547ebf053f1)
+  -  Dashboard <br />
+![image](https://github.com/user-attachments/assets/a7c6b9d0-c96f-4aa9-afde-a30376d4bafb)
+  -  Log Food <br />
+![image](https://github.com/user-attachments/assets/7d07c6d0-b01f-4b87-8909-575a98664918)
+  - Log Measures <br />
+![image](https://github.com/user-attachments/assets/42eb8ea4-c7e7-4940-b986-9f26dad939a9)
+  - Recipes <br />
+![image](https://github.com/user-attachments/assets/55f4ec44-052b-4b09-97b1-adc31b12654d)
+  - Recipes Details <br />
+![image](https://github.com/user-attachments/assets/873660c7-c761-49bf-b908-e3605db5e52b)
+  - Recipes Comments <br />
+![image](https://github.com/user-attachments/assets/f730f9b4-cf1b-4fce-9c35-0b5650397562)
+  - Exercises Page <br />
+![image](https://github.com/user-attachments/assets/bfb8b9d3-e609-40f8-ac6e-7e2b0466f66c)
+  - Exercise Details <br />
+![image](https://github.com/user-attachments/assets/fcd48bc9-936f-40f8-bdb7-eda4feb40f3f)
+  - AI Assitant <br />
+![image](https://github.com/user-attachments/assets/f7ac9d11-8371-4937-aae9-4b76335fb952)
+  - AI Coach <br />
+![image](https://github.com/user-attachments/assets/98ae8491-5a03-4aa2-9222-feaa80b9b833)
+  - Real Time Chat <br />
+![image](https://github.com/user-attachments/assets/6cc5414c-d127-47b8-b867-aff4bc102b62)
+  - Profile Page <br />
+![image](https://github.com/user-attachments/assets/e71fc637-f724-4d89-9263-e09d272769c1)
+
+
+
+
+
+
+
+
+
+
+
 
