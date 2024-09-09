@@ -1,4 +1,4 @@
-# Bachelor Thesis 2024
+![image](https://github.com/user-attachments/assets/bc356afa-586b-403d-b984-35064a906a58)# Bachelor Thesis 2024
 -  Demo: https://www.youtube.com/watch?v=1mz7d5ikXvQ&feature=youtu.be
 # Description
 <div align="justify">
@@ -84,6 +84,13 @@ several features and user-centric approach.
 ![image](https://github.com/user-attachments/assets/6cc5414c-d127-47b8-b867-aff4bc102b62)
   - Profile Page <br />
 ![image](https://github.com/user-attachments/assets/e71fc637-f724-4d89-9263-e09d272769c1)
+  - Add Game <br />
+![image](https://github.com/user-attachments/assets/ab230f04-cae5-47e3-bf11-a831eb8aea3e)
+  - Delete Game <br />
+![image](https://github.com/user-attachments/assets/78027d6c-244e-4e2e-88e7-63d3cb11dc5f)
+  - Update Game <br />
+![image](https://github.com/user-attachments/assets/6d1335c2-351d-439b-9221-403907df4904)
+
 
 
 
