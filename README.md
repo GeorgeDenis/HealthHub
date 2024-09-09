@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/bc356afa-586b-403d-b984-35064a906a58)# Bachelor Thesis 2024
+# Bachelor Thesis 2024
 -  Demo: https://www.youtube.com/watch?v=1mz7d5ikXvQ&feature=youtu.be
 # Description
 <div align="justify">
